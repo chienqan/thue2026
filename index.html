@@ -94,6 +94,41 @@
       color: var(--color-text-muted);
     }
 
+    /* Mode Toggle */
+    .mode-toggle {
+      display: flex;
+      gap: var(--space-xs);
+      background: var(--color-bg);
+      padding: var(--space-xs);
+      border-radius: var(--radius-md);
+      margin-top: var(--space-md);
+    }
+
+    .mode-btn {
+      flex: 1;
+      padding: var(--space-sm) var(--space-md);
+      border: none;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--color-text-muted);
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      min-height: var(--touch-target);
+      transition: all 0.2s ease;
+    }
+
+    .mode-btn.active {
+      background: var(--color-primary);
+      color: white;
+      box-shadow: 0 2px 4px rgb(37 99 235 / 0.3);
+    }
+
+    .mode-btn:hover:not(.active) {
+      background: var(--color-border);
+    }
+
     /* Form Styles */
     fieldset {
       border: none;
@@ -109,11 +144,237 @@
       margin-bottom: var(--space-md);
     }
 
+    /* Form Fields */
+    .form-field {
+      margin-bottom: var(--space-lg);
+    }
+
+    .form-field label {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: var(--space-sm);
+    }
+
+    .label-text {
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .label-hint {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-wrapper input,
+    select {
+      width: 100%;
+      padding: var(--space-sm) var(--space-md);
+      padding-right: 40px;
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 1.125rem;
+      font-weight: 500;
+      min-height: var(--touch-target);
+      transition: border-color 0.2s;
+    }
+
+    .input-wrapper input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
+    }
+
+    .input-suffix {
+      position: absolute;
+      right: var(--space-md);
+      color: var(--color-text-muted);
+      font-weight: 500;
+      pointer-events: none;
+    }
+
+    /* Counter Input */
+    .counter-input {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .counter-input input {
+      width: 60px;
+      text-align: center;
+      padding: var(--space-sm);
+      padding-right: var(--space-sm);
+      -moz-appearance: textfield;
+    }
+
+    .counter-input input::-webkit-outer-spin-button,
+    .counter-input input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+
+    .counter-btn {
+      width: var(--touch-target);
+      height: var(--touch-target);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--color-text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .counter-btn:hover {
+      background: var(--color-bg);
+      border-color: var(--color-primary);
+    }
+
+    .counter-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Error State */
+    .error-text {
+      display: block;
+      min-height: 1.25rem;
+      margin-top: var(--space-xs);
+      font-size: 0.75rem;
+      color: var(--color-error);
+    }
+
+    .form-field.has-error input {
+      border-color: var(--color-error);
+    }
+
     /* Results Section */
-    #results {
-      margin-top: var(--space-lg);
+    .results-section {
+      margin-top: var(--space-xl);
       padding-top: var(--space-lg);
       border-top: 1px solid var(--color-border);
+    }
+
+    .result-primary {
+      text-align: center;
+      padding: var(--space-lg);
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+      border-radius: var(--radius-lg);
+      color: white;
+      margin-bottom: var(--space-lg);
+    }
+
+    .result-label {
+      display: block;
+      font-size: 0.875rem;
+      opacity: 0.9;
+      margin-bottom: var(--space-xs);
+    }
+
+    .result-value {
+      display: block;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .result-breakdown h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: var(--space-md);
+      color: var(--color-text);
+    }
+
+    .breakdown-group {
+      margin-bottom: var(--space-lg);
+    }
+
+    .breakdown-group h3 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-sm);
+    }
+
+    .breakdown-list {
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      padding: var(--space-sm);
+    }
+
+    .breakdown-item {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-sm);
+    }
+
+    .breakdown-item dt {
+      color: var(--color-text-muted);
+    }
+
+    .breakdown-item dd {
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .breakdown-item.total {
+      border-top: 1px solid var(--color-border);
+      margin-top: var(--space-xs);
+      padding-top: var(--space-sm);
+    }
+
+    .breakdown-item.total dt,
+    .breakdown-item.total dd {
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    /* Tax Bracket Details */
+    .tax-brackets {
+      margin-top: var(--space-lg);
+    }
+
+    .tax-brackets summary {
+      cursor: pointer;
+      font-size: 0.875rem;
+      color: var(--color-primary);
+      font-weight: 500;
+    }
+
+    .tax-brackets table {
+      width: 100%;
+      margin-top: var(--space-md);
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    .tax-brackets th,
+    .tax-brackets td {
+      padding: var(--space-sm);
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .tax-brackets th {
+      font-weight: 600;
+      color: var(--color-text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    .tax-brackets td:last-child {
+      text-align: right;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
     }
 
     /* Responsive Design */
@@ -129,6 +390,28 @@
 
       .calc-header h1 {
         font-size: 1.25rem;
+      }
+
+      .result-value {
+        font-size: 1.5rem;
+      }
+
+      .breakdown-item {
+        flex-direction: column;
+        gap: var(--space-xs);
+      }
+
+      .breakdown-item dd {
+        text-align: left;
+      }
+
+      .tax-brackets table {
+        font-size: 0.75rem;
+      }
+
+      .tax-brackets th,
+      .tax-brackets td {
+        padding: var(--space-xs);
       }
     }
 
@@ -150,31 +433,163 @@
     <header class="calc-header">
       <h1>Tính Thuế Thu Nhập Cá Nhân 2026</h1>
       <p class="subtitle">Công cụ tính lương Gross ↔ Net theo luật thuế mới</p>
+
+      <div class="mode-toggle" role="group" aria-label="Chọn chế độ tính">
+        <button type="button" class="mode-btn active" data-mode="gross-to-net">
+          Gross → Net
+        </button>
+        <button type="button" class="mode-btn" data-mode="net-to-gross">
+          Net → Gross
+        </button>
+      </div>
     </header>
 
     <form id="calc-form" novalidate>
-      <fieldset>
-        <legend>Thông tin thu nhập</legend>
-        <!-- Input fields will be added in Phase 03 -->
-        <p style="color: var(--color-text-muted); font-size: 0.875rem;">
-          Các trường nhập liệu sẽ được thêm trong giai đoạn tiếp theo.
-        </p>
-      </fieldset>
+      <fieldset class="input-group">
+        <legend class="sr-only">Thông tin thu nhập</legend>
 
-      <fieldset>
-        <legend>Cài đặt</legend>
-        <!-- Region, dependents will be added in Phase 03 -->
-        <p style="color: var(--color-text-muted); font-size: 0.875rem;">
-          Cài đặt vùng lương và người phụ thuộc sẽ được thêm sau.
-        </p>
+        <!-- Salary Input -->
+        <div class="form-field">
+          <label for="salary" id="salary-label">
+            <span class="label-text">Lương <span id="salary-type">Gross</span></span>
+            <span class="label-hint">VND/tháng</span>
+          </label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="salary"
+              inputmode="numeric"
+              aria-labelledby="salary-label"
+              aria-describedby="salary-error"
+              placeholder="Nhập số tiền"
+              autocomplete="off"
+            >
+            <span class="input-suffix">₫</span>
+          </div>
+          <span id="salary-error" class="error-text" role="alert"></span>
+        </div>
+
+        <!-- Dependents -->
+        <div class="form-field">
+          <label for="dependents">
+            <span class="label-text">Số người phụ thuộc</span>
+            <span class="label-hint">Giảm trừ 6.200.000₫/người</span>
+          </label>
+          <div class="counter-input">
+            <button type="button" class="counter-btn" data-action="decrement" aria-label="Giảm">−</button>
+            <input
+              type="number"
+              id="dependents"
+              value="0"
+              min="0"
+              max="10"
+              aria-label="Số người phụ thuộc"
+            >
+            <button type="button" class="counter-btn" data-action="increment" aria-label="Tăng">+</button>
+          </div>
+        </div>
+
+        <!-- Region -->
+        <div class="form-field">
+          <label for="region">
+            <span class="label-text">Vùng lương tối thiểu</span>
+            <span class="label-hint">Ảnh hưởng mức đóng BHXH</span>
+          </label>
+          <select id="region" aria-label="Chọn vùng lương">
+            <option value="I">Vùng I - 5.310.000₫</option>
+            <option value="II">Vùng II - 4.730.000₫</option>
+            <option value="III">Vùng III - 4.140.000₫</option>
+            <option value="IV">Vùng IV - 3.700.000₫</option>
+          </select>
+        </div>
       </fieldset>
     </form>
 
-    <section id="results" aria-live="polite">
-      <!-- Output will be added in Phase 03 -->
-      <p style="color: var(--color-text-muted); font-size: 0.875rem; text-align: center;">
-        Kết quả tính toán sẽ hiển thị ở đây.
-      </p>
+    <section id="results" class="results-section" aria-live="polite">
+      <div class="result-primary">
+        <span class="result-label" id="result-label">Lương Net</span>
+        <span class="result-value" id="result-value" aria-labelledby="result-label">0 ₫</span>
+      </div>
+
+      <div class="result-breakdown">
+        <h2>Chi tiết</h2>
+
+        <div class="breakdown-group">
+          <h3>Bảo hiểm bắt buộc</h3>
+          <dl class="breakdown-list">
+            <div class="breakdown-item">
+              <dt>BHXH (8%)</dt>
+              <dd id="ins-social">0 ₫</dd>
+            </div>
+            <div class="breakdown-item">
+              <dt>BHYT (1.5%)</dt>
+              <dd id="ins-health">0 ₫</dd>
+            </div>
+            <div class="breakdown-item">
+              <dt>BHTN (1%)</dt>
+              <dd id="ins-unemployment">0 ₫</dd>
+            </div>
+            <div class="breakdown-item total">
+              <dt>Tổng BH</dt>
+              <dd id="ins-total">0 ₫</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="breakdown-group">
+          <h3>Giảm trừ</h3>
+          <dl class="breakdown-list">
+            <div class="breakdown-item">
+              <dt>Bản thân</dt>
+              <dd id="ded-personal">15.500.000 ₫</dd>
+            </div>
+            <div class="breakdown-item">
+              <dt>Người phụ thuộc</dt>
+              <dd id="ded-dependents">0 ₫</dd>
+            </div>
+            <div class="breakdown-item total">
+              <dt>Tổng giảm trừ</dt>
+              <dd id="ded-total">15.500.000 ₫</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="breakdown-group">
+          <h3>Thuế TNCN</h3>
+          <dl class="breakdown-list">
+            <div class="breakdown-item">
+              <dt>Thu nhập chịu thuế</dt>
+              <dd id="taxable-income">0 ₫</dd>
+            </div>
+            <div class="breakdown-item">
+              <dt>Thuế phải nộp</dt>
+              <dd id="tax-amount">0 ₫</dd>
+            </div>
+            <div class="breakdown-item">
+              <dt>Thuế suất thực tế</dt>
+              <dd id="tax-rate">0%</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <!-- Tax Bracket Table -->
+      <details class="tax-brackets">
+        <summary>Xem chi tiết biểu thuế lũy tiến</summary>
+        <table id="bracket-table">
+          <thead>
+            <tr>
+              <th>Bậc</th>
+              <th>Thu nhập</th>
+              <th>Thuế suất</th>
+              <th>Thuế</th>
+            </tr>
+          </thead>
+          <tbody id="bracket-body">
+            <!-- Populated by JS -->
+          </tbody>
+        </table>
+      </details>
     </section>
   </main>
 
@@ -484,6 +899,240 @@
     window.netToGross = netToGross;
     window.validateInputs = validateInputs;
     window.getTaxBreakdown = getTaxBreakdown;
+
+    // ========================================
+    // Phase 03: UI Interaction Logic
+    // ========================================
+
+    // Application State
+    const state = {
+      mode: 'gross-to-net',
+      salary: 0,
+      dependents: 0,
+      region: 'I'
+    };
+
+    // DOM Elements
+    const elements = {
+      form: document.getElementById('calc-form'),
+      salaryInput: document.getElementById('salary'),
+      salaryType: document.getElementById('salary-type'),
+      salaryError: document.getElementById('salary-error'),
+      dependentsInput: document.getElementById('dependents'),
+      regionSelect: document.getElementById('region'),
+      modeButtons: document.querySelectorAll('.mode-btn'),
+      resultLabel: document.getElementById('result-label'),
+      resultValue: document.getElementById('result-value'),
+      insSocial: document.getElementById('ins-social'),
+      insHealth: document.getElementById('ins-health'),
+      insUnemployment: document.getElementById('ins-unemployment'),
+      insTotal: document.getElementById('ins-total'),
+      dedPersonal: document.getElementById('ded-personal'),
+      dedDependents: document.getElementById('ded-dependents'),
+      dedTotal: document.getElementById('ded-total'),
+      taxableIncome: document.getElementById('taxable-income'),
+      taxAmount: document.getElementById('tax-amount'),
+      taxRate: document.getElementById('tax-rate'),
+      bracketBody: document.getElementById('bracket-body')
+    };
+
+    /**
+     * Debounce utility for real-time calculation
+     */
+    function debounce(fn, delay) {
+      let timeout;
+      return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn.apply(this, args), delay);
+      };
+    }
+
+    /**
+     * Format salary input as user types (sanitized)
+     */
+    function formatSalaryInput(value) {
+      // Sanitize: only allow digits, dots, spaces, ₫ symbol
+      const sanitized = value.replace(/[^\d.\s₫]/g, '');
+      const num = VND.parse(sanitized);
+      if (num === 0 && value === '') return '';
+      return num.toLocaleString('vi-VN');
+    }
+
+    /**
+     * Update breakdown UI with calculation result
+     */
+    function updateBreakdown(result) {
+      elements.insSocial.textContent = VND.format(result.insurance.social);
+      elements.insHealth.textContent = VND.format(result.insurance.health);
+      elements.insUnemployment.textContent = VND.format(result.insurance.unemployment);
+      elements.insTotal.textContent = VND.format(result.insurance.total);
+
+      elements.dedPersonal.textContent = VND.format(TAX.PERSONAL_DEDUCTION);
+      elements.dedDependents.textContent = VND.format(TAX.DEPENDENT_DEDUCTION * state.dependents);
+      elements.dedTotal.textContent = VND.format(result.deductions);
+
+      elements.taxableIncome.textContent = VND.format(result.taxableIncome);
+      elements.taxAmount.textContent = VND.format(result.tax);
+      elements.taxRate.textContent = result.effectiveRate + '%';
+    }
+
+    /**
+     * Update tax bracket table (XSS-safe)
+     */
+    function updateBracketTable(taxableIncome) {
+      const breakdown = getTaxBreakdown(taxableIncome);
+      elements.bracketBody.textContent = '';
+
+      if (breakdown.length === 0) {
+        const emptyRow = document.createElement('tr');
+        const emptyCell = document.createElement('td');
+        emptyCell.colSpan = 4;
+        emptyCell.style.textAlign = 'center';
+        emptyCell.style.color = 'var(--color-text-muted)';
+        emptyCell.textContent = 'Không có thuế';
+        emptyRow.appendChild(emptyCell);
+        elements.bracketBody.appendChild(emptyRow);
+        return;
+      }
+
+      breakdown.forEach((item, index) => {
+        const row = document.createElement('tr');
+        const cellIndex = document.createElement('td');
+        const cellRange = document.createElement('td');
+        const cellRate = document.createElement('td');
+        const cellTax = document.createElement('td');
+
+        cellIndex.textContent = index + 1;
+        cellRange.textContent = item.range;
+        cellRate.textContent = item.rate;
+        cellTax.textContent = VND.format(item.tax);
+
+        row.appendChild(cellIndex);
+        row.appendChild(cellRange);
+        row.appendChild(cellRate);
+        row.appendChild(cellTax);
+        elements.bracketBody.appendChild(row);
+      });
+    }
+
+    /**
+     * Calculate and update UI
+     */
+    function calculate() {
+      const validation = validateInputs(state.salary, state.dependents, state.region);
+
+      if (!validation.valid) {
+        elements.salaryError.textContent = validation.errors[0];
+        elements.salaryInput.parentElement.parentElement.classList.add('has-error');
+        return;
+      }
+
+      elements.salaryError.textContent = '';
+      elements.salaryInput.parentElement.parentElement.classList.remove('has-error');
+
+      let result;
+      if (state.mode === 'gross-to-net') {
+        result = grossToNet(state.salary, state.dependents, state.region);
+        elements.resultLabel.textContent = 'Lương Net';
+        elements.resultValue.textContent = VND.format(result.netIncome);
+      } else {
+        result = netToGross(state.salary, state.dependents, state.region);
+        elements.resultLabel.textContent = 'Lương Gross';
+        elements.resultValue.textContent = VND.format(result.grossIncome);
+      }
+
+      updateBreakdown(result);
+      updateBracketTable(result.taxableIncome);
+    }
+
+    // Debounced calculation for real-time feedback
+    const debouncedCalculate = debounce(calculate, 300);
+
+    // ========================================
+    // Event Listeners
+    // ========================================
+
+    // Salary input with VND formatting
+    elements.salaryInput.addEventListener('input', (e) => {
+      const formatted = formatSalaryInput(e.target.value);
+      e.target.value = formatted;
+      state.salary = VND.parse(formatted);
+      debouncedCalculate();
+    });
+
+    // Dependents input
+    elements.dependentsInput.addEventListener('change', (e) => {
+      state.dependents = parseInt(e.target.value, 10) || 0;
+      calculate();
+    });
+
+    // Region selector
+    elements.regionSelect.addEventListener('change', (e) => {
+      state.region = e.target.value;
+      calculate();
+    });
+
+    // Counter buttons for dependents
+    document.querySelectorAll('.counter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const action = btn.dataset.action;
+        const input = elements.dependentsInput;
+        let value = parseInt(input.value, 10) || 0;
+
+        if (action === 'increment' && value < 10) value++;
+        if (action === 'decrement' && value > 0) value--;
+
+        input.value = value;
+        state.dependents = value;
+        calculate();
+      });
+    });
+
+    // Mode toggle buttons
+    elements.modeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        elements.modeButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        state.mode = btn.dataset.mode;
+        elements.salaryType.textContent = state.mode === 'gross-to-net' ? 'Gross' : 'Net';
+
+        // Clear and recalculate
+        elements.salaryInput.value = '';
+        state.salary = 0;
+        calculate();
+
+        // Focus management: return to salary input
+        elements.salaryInput.focus();
+      });
+    });
+
+    // Keyboard shortcuts for dependents input (Arrow Up/Down)
+    elements.dependentsInput.addEventListener('keydown', (e) => {
+      let value = parseInt(elements.dependentsInput.value, 10) || 0;
+
+      if (e.key === 'ArrowUp' && value < 10) {
+        e.preventDefault();
+        value++;
+        elements.dependentsInput.value = value;
+        state.dependents = value;
+        calculate();
+      } else if (e.key === 'ArrowDown' && value > 0) {
+        e.preventDefault();
+        value--;
+        elements.dependentsInput.value = value;
+        state.dependents = value;
+        calculate();
+      }
+    });
+
+    // Prevent form submission
+    elements.form.addEventListener('submit', (e) => {
+      e.preventDefault();
+    });
+
+    // Initial calculation on page load
+    calculate();
   </script>
 </body>
 </html>
