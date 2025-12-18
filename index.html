@@ -7,92 +7,90 @@
     <title>Tính Lương & Thuế TNCN 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
             /* ========================================
-               NEUTRALS - Slate Scale
+               WARM NEUTRALS - Stone Scale
                ======================================== */
-            --slate-50: #F8FAFC;
-            --slate-100: #F1F5F9;
-            --slate-200: #E2E8F0;
-            --slate-300: #CBD5E1;
-            --slate-400: #94A3B8;
-            --slate-500: #64748B;
-            --slate-600: #475569;
-            --slate-700: #334155;
-            --slate-800: #1E293B;
-            --slate-900: #0F172A;
+            --stone-50: #FAFAF9;
+            --stone-100: #F5F5F4;
+            --stone-200: #E7E5E4;
+            --stone-300: #D6D3D1;
+            --stone-400: #A8A29E;
+            --stone-500: #78716C;
+            --stone-600: #57534E;
+            --stone-700: #44403C;
+            --stone-800: #292524;
+            --stone-900: #1C1917;
 
             /* ========================================
-               SEMANTIC COLORS
+               ACCENT - Teal (Primary Interactive)
                ======================================== */
-            --bg-page: var(--slate-50);
-            --card: #FFFFFF;
-            --card-hover: var(--slate-50);
-            --border: var(--slate-200);
-            --border-light: var(--slate-100);
-
-            --text-primary: var(--slate-900);
-            --text-secondary: var(--slate-600);
-            --text-muted: var(--slate-400);
+            --teal-50: #F0FDFA;
+            --teal-100: #CCFBF1;
+            --teal-200: #99F6E4;
+            --teal-400: #2DD4BF;
+            --teal-500: #14B8A6;
+            --teal-600: #0D9488;
+            --teal-700: #0F766E;
 
             /* ========================================
-               ACCENT - Emerald (Positive States)
+               ACCENT - Emerald (Success/Positive)
                ======================================== */
             --emerald-50: #ECFDF5;
             --emerald-100: #D1FAE5;
-            --emerald-200: #A7F3D0;
             --emerald-400: #34D399;
             --emerald-500: #10B981;
             --emerald-600: #059669;
             --emerald-700: #047857;
 
             /* ========================================
-               ACCENT - Blue (Interactive Elements)
-               ======================================== */
-            --blue-50:  #EFF6FF;
-            --blue-100: #DBEAFE;
-            --blue-400: #60A5FA;
-            --blue-500: #3B82F6;
-            --blue-600: #2563EB;
-            --blue-700: #1D4ED8;
-
-            /* ========================================
                STATUS COLORS
                ======================================== */
-            --orange-400: #FB923C;
-            --orange-500: #F97316;
-            --red-500: #EF4444;
+            --amber-500: #F59E0B;
+            --rose-500: #F43F5E;
 
             /* ========================================
-               LEGACY MAPPINGS (for gradual migration)
+               SEMANTIC TOKENS
                ======================================== */
+            --bg-page: #FAFAF8;
+            --bg-card: #FFFFFF;
+            --bg-elevated: #FFFFFF;
+            --border-default: rgba(0, 0, 0, 0.06);
+            --border-subtle: rgba(0, 0, 0, 0.04);
+
+            --text-primary: var(--stone-900);
+            --text-secondary: var(--stone-600);
+            --text-muted: var(--stone-400);
+
+            /* ========================================
+               SPACING & RADII
+               ======================================== */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+
+            /* ========================================
+               SHADOWS - Layered & Warm
+               ======================================== */
+            --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.04);
+            --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(0, 0, 0, 0.04);
+            --shadow-teal: 0 4px 16px rgba(13, 148, 136, 0.2);
+            --shadow-emerald: 0 4px 16px rgba(16, 185, 129, 0.25);
+
+            /* Legacy mappings */
             --green-50: var(--emerald-50);
             --green-100: var(--emerald-100);
-            --green-200: var(--emerald-200);
             --green-400: var(--emerald-400);
             --green-500: var(--emerald-500);
             --green-600: var(--emerald-600);
             --green-700: var(--emerald-700);
-
-            /* ========================================
-               RADII
-               ======================================== */
-            --radius-sm: 10px;
-            --radius-md: 14px;
-            --radius-lg: 20px;
-
-            /* ========================================
-               SHADOWS - Neutral (No Color Tint)
-               ======================================== */
-            --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.06);
-            --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
-            --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
-            --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 8px -2px rgba(15, 23, 42, 0.04);
-            --shadow-card-hover: 0 8px 30px -4px rgba(15, 23, 42, 0.1), 0 4px 12px -4px rgba(15, 23, 42, 0.06);
-            --shadow-emerald: 0 4px 20px -2px rgba(16, 185, 129, 0.25);
         }
 
         * {
@@ -101,82 +99,121 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Be Vietnam Pro', -apple-system, sans-serif;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
             background: var(--bg-page);
             color: var(--text-primary);
             min-height: 100vh;
-            line-height: 1.5;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Left Column Header Card - Same style as input card */
-        .header-card {
-            background: var(--card);
-            border-radius: var(--radius-lg);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            box-shadow: var(--shadow-card);
-            margin-bottom: 16px;
-            transition: all 0.3s ease;
+        /* ========================================
+           HEADER
+           ======================================== */
+        .site-header {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-default);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.9);
         }
 
-        .header-card:hover {
-            box-shadow: var(--shadow-card-hover);
-            transform: translateY(-2px);
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        .header-card-inner {
+        .logo {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 18px 22px;
-            background: linear-gradient(to bottom, rgba(248, 250, 252, 0.5), transparent);
         }
 
-        .logo-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--blue-50), var(--blue-100));
-            border-radius: var(--radius-sm);
+        .logo-mark {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--teal-500), var(--teal-600));
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--blue-600);
-            flex-shrink: 0;
+            color: white;
+            box-shadow: var(--shadow-teal);
         }
 
-        .logo-icon svg {
-            width: 18px;
-            height: 18px;
+        .logo-mark svg {
+            width: 20px;
+            height: 20px;
         }
 
-        .logo-text h1 {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .logo-text p {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        /* Main Layout */
-        main {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 28px;
-            display: grid;
-            grid-template-columns: 400px 1fr;
-            gap: 28px;
-            align-items: start;
-            position: relative;
-            z-index: 1;
-        }
-
-        .left-column {
+        .logo-text {
             display: flex;
             flex-direction: column;
+        }
+
+        .logo-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .logo-subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--emerald-50);
+            color: var(--emerald-700);
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 100px;
+            border: 1px solid var(--emerald-100);
+        }
+
+        .header-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--emerald-500);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.9); }
+        }
+
+        /* ========================================
+           MAIN LAYOUT
+           ======================================== */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 32px;
+            align-items: start;
         }
 
         @media (max-width: 1024px) {
@@ -186,58 +223,43 @@
             }
         }
 
-        /* Cards */
+        /* ========================================
+           INPUT SECTION
+           ======================================== */
+        .input-section {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            position: sticky;
+            top: 100px;
+        }
+
+        @media (max-width: 1024px) {
+            .input-section {
+                position: static;
+            }
+        }
+
         .card {
-            background: var(--card);
-            border-radius: var(--radius-lg);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            box-shadow: var(--shadow-card);
-            transition: all 0.3s ease;
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-default);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
         }
 
         .card:hover {
-            box-shadow: var(--shadow-card-hover);
-            transform: translateY(-2px);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 18px 22px;
-            border-bottom: 1px solid var(--border-light);
-            background: linear-gradient(to bottom, rgba(248, 250, 252, 0.5), transparent);
-        }
-
-        .card-header-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--blue-50), var(--blue-100));
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--blue-600);
-        }
-
-        .card-header-icon svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        .card-header h2 {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-primary);
+            box-shadow: var(--shadow-lg);
         }
 
         .card-body {
-            padding: 22px;
+            padding: 24px;
         }
 
         /* Input Groups */
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .input-group:last-child {
@@ -247,16 +269,19 @@
         .input-label {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             font-size: 13px;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--text-secondary);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
 
         .input-label svg {
             width: 14px;
             height: 14px;
+            opacity: 0.7;
         }
 
         .input-wrapper {
@@ -265,71 +290,69 @@
 
         .input-field {
             width: 100%;
-            padding: 14px 16px;
-            padding-right: 55px;
+            padding: 16px 20px;
+            padding-right: 70px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 20px;
-            font-weight: 600;
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius-md);
-            background: linear-gradient(to bottom, #ffffff, #fafbfc);
+            font-size: 24px;
+            font-weight: 700;
+            border: 2px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            background: var(--bg-card);
             color: var(--text-primary);
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
+        }
+
+        .input-field:hover {
+            border-color: var(--stone-300);
         }
 
         .input-field:focus {
             outline: none;
-            border-color: var(--blue-400);
-            background: white;
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12), 0 2px 8px rgba(59, 130, 246, 0.08);
+            border-color: var(--teal-500);
+            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1);
         }
 
         .input-field::placeholder {
-            color: var(--text-muted);
-            font-weight: 500;
+            color: var(--stone-300);
+            font-weight: 600;
         }
 
         .input-suffix {
             position: absolute;
-            right: 14px;
+            right: 16px;
             top: 50%;
             transform: translateY(-50%);
             font-size: 12px;
             font-weight: 700;
-            color: var(--blue-600);
-            background: linear-gradient(135deg, var(--blue-50), var(--blue-100));
-            padding: 5px 10px;
-            border-radius: 6px;
+            color: var(--teal-700);
+            background: var(--teal-50);
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            letter-spacing: 0.02em;
         }
 
         .input-hint {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-muted);
-            margin-top: 6px;
+            margin-top: 8px;
         }
 
         /* Counter */
-        .counter-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
         .counter-control {
-            display: flex;
+            display: inline-flex;
             align-items: stretch;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
+            border: 2px solid var(--border-default);
+            border-radius: var(--radius-md);
             overflow: hidden;
-            background: white;
+            background: var(--bg-card);
         }
 
         .counter-btn {
-            width: 40px;
+            width: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: white;
+            background: transparent;
             border: none;
             color: var(--text-secondary);
             cursor: pointer;
@@ -337,8 +360,12 @@
         }
 
         .counter-btn:hover {
-            background: var(--border-light);
-            color: var(--blue-500);
+            background: var(--stone-100);
+            color: var(--teal-600);
+        }
+
+        .counter-btn:active {
+            background: var(--stone-200);
         }
 
         .counter-btn svg {
@@ -347,17 +374,17 @@
         }
 
         .counter-input {
-            width: 50px;
+            width: 56px;
             text-align: center;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 18px;
+            font-weight: 700;
             border: none;
-            border-left: 1px solid var(--border);
-            border-right: 1px solid var(--border);
-            background: white;
+            border-left: 1px solid var(--border-default);
+            border-right: 1px solid var(--border-default);
+            background: transparent;
             color: var(--text-primary);
-            padding: 10px 0;
+            padding: 12px 0;
             -moz-appearance: textfield;
         }
 
@@ -379,25 +406,23 @@
 
         .region-option {
             position: relative;
-            padding: 14px 16px;
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius-md);
-            background: linear-gradient(to bottom, #ffffff, #fafbfc);
+            padding: 16px;
+            border: 2px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            background: var(--bg-card);
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
         }
 
         .region-option:hover {
-            border-color: var(--blue-400);
-            background: white;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.08);
+            border-color: var(--stone-300);
+            background: var(--stone-50);
         }
 
         .region-option.active {
-            border-color: var(--blue-500);
-            background: linear-gradient(135deg, var(--blue-50), #ffffff);
-            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.15), inset 0 1px 0 rgba(255,255,255,0.8);
+            border-color: var(--teal-500);
+            background: linear-gradient(135deg, var(--teal-50) 0%, rgba(255,255,255,1) 100%);
+            box-shadow: var(--shadow-teal);
         }
 
         .region-option input {
@@ -409,35 +434,34 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .region-name {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 700;
             color: var(--text-primary);
         }
 
         .region-option.active .region-name {
-            color: var(--blue-700);
+            color: var(--teal-700);
         }
 
         .region-radio {
             width: 20px;
             height: 20px;
-            border: 2px solid var(--border);
+            border: 2px solid var(--stone-300);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             background: white;
         }
 
         .region-option.active .region-radio {
-            border-color: var(--blue-500);
-            background: var(--blue-500);
-            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+            border-color: var(--teal-500);
+            background: var(--teal-500);
         }
 
         .region-radio::after {
@@ -448,7 +472,7 @@
             border-radius: 50%;
             opacity: 0;
             transform: scale(0);
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
         }
 
         .region-option.active .region-radio::after {
@@ -456,25 +480,65 @@
             transform: scale(1);
         }
 
-        .region-meta {
-            font-size: 10px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-        }
-
         .region-amount {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             color: var(--text-secondary);
         }
 
-        /* Right Column */
-        .right-column {
+        .region-option.active .region-amount {
+            color: var(--teal-600);
+        }
+
+        /* Info Banner */
+        .info-banner {
+            background: linear-gradient(135deg, var(--teal-50) 0%, rgba(240, 253, 250, 0.5) 100%);
+            border: 1px solid var(--teal-100);
+            border-radius: var(--radius-lg);
+            padding: 16px 20px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .info-banner-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--teal-500);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .info-banner-icon svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .info-banner-content h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--teal-800);
+            margin-bottom: 2px;
+        }
+
+        .info-banner-content p {
+            font-size: 13px;
+            color: var(--teal-700);
+            line-height: 1.5;
+        }
+
+        /* ========================================
+           RESULTS SECTION
+           ======================================== */
+        .results-section {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
         }
 
         /* Results Grid */
@@ -491,125 +555,108 @@
         }
 
         .result-card {
-            background: var(--card);
-            border-radius: var(--radius-lg);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            padding: 24px;
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-default);
+            padding: 28px;
             position: relative;
-            box-shadow: var(--shadow-card);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
         }
 
         .result-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-card-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
-        .result-card--new {
-            border: 2px solid var(--green-500);
-            background: linear-gradient(160deg, #ffffff 0%, #fafffe 40%, var(--green-50) 100%);
-            box-shadow:
-                0 8px 32px -8px rgba(35, 197, 94, 0.3),
-                0 4px 16px -4px rgba(0, 0, 0, 0.06);
-            position: relative;
-            overflow: hidden;
+        .result-card--highlight {
+            border: 2px solid var(--emerald-400);
+            background: linear-gradient(160deg, #ffffff 0%, var(--emerald-50) 100%);
+            box-shadow: var(--shadow-emerald);
         }
 
-        .result-card--new::before {
+        .result-card--highlight::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, var(--green-400), var(--green-500));
+            background: linear-gradient(90deg, var(--emerald-400), var(--emerald-500));
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
         }
 
-        .result-card--new::after {
-            content: '';
-            position: absolute;
-            top: 4px;
-            right: 0;
-            width: 120px;
-            height: 120px;
-            background: radial-gradient(circle, rgba(35, 197, 94, 0.08) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .result-card--new:hover {
-            border-color: var(--green-400);
-            box-shadow:
-                0 16px 48px -12px rgba(35, 197, 94, 0.4),
-                0 8px 24px -8px rgba(0, 0, 0, 0.08);
-            transform: translateY(-5px);
+        .result-card--highlight:hover {
+            border-color: var(--emerald-500);
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.2);
         }
 
         .result-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.06em;
             padding: 6px 14px;
-            border-radius: 20px;
-            margin-bottom: 16px;
+            border-radius: 100px;
+            margin-bottom: 20px;
         }
 
-        .result-badge--old {
-            background: #f1f5f9;
-            color: var(--text-secondary);
-            border: 1px solid #e2e8f0;
+        .result-badge--default {
+            background: var(--stone-100);
+            color: var(--stone-600);
         }
 
-        .result-badge--new {
-            background: var(--green-500);
+        .result-badge--success {
+            background: var(--emerald-500);
             color: white;
-            box-shadow: 0 2px 8px rgba(35, 197, 94, 0.3);
         }
 
-        .result-badge--new::before {
+        .result-badge--success::before {
             content: '';
             width: 6px;
             height: 6px;
             background: white;
             border-radius: 50%;
-            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
         }
 
         .result-label {
             font-size: 13px;
             color: var(--text-muted);
+            font-weight: 500;
             margin-bottom: 6px;
         }
 
         .result-amount {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 34px;
+            font-size: 36px;
             font-weight: 700;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
         }
 
-        .result-card--old .result-amount {
+        .result-card--default .result-amount {
             color: var(--text-primary);
         }
 
-        .result-card--new .result-amount {
-            color: var(--green-500);
-            font-weight: 700;
+        .result-card--highlight .result-amount {
+            color: var(--emerald-600);
         }
 
         .result-amount .currency {
-            font-size: 22px;
+            font-size: 24px;
+            opacity: 0.6;
             margin-left: 2px;
-            opacity: 0.7;
         }
 
         .result-details {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-subtle);
         }
 
         .result-row {
@@ -626,162 +673,95 @@
         .result-row-value {
             font-family: 'JetBrains Mono', monospace;
             font-weight: 600;
+            font-size: 13px;
         }
 
-        .result-card--old .result-row-value {
+        .result-card--default .result-row-value {
             color: var(--text-primary);
         }
 
-        .result-card--new .result-row-value {
-            color: var(--green-500);
-            font-weight: 600;
+        .result-card--highlight .result-row-value {
+            color: var(--emerald-600);
         }
 
-        /* Savings Badge */
+        /* Savings Box */
         .savings-box {
             margin-top: 20px;
-            padding: 14px 18px;
-            background: var(--green-500);
-            border: none;
-            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            background: linear-gradient(135deg, var(--emerald-500), var(--emerald-600));
+            border-radius: var(--radius-lg);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: var(--shadow-emerald);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 12px -2px rgba(35, 197, 94, 0.4);
         }
 
-        .savings-box::before {
+        .savings-box::after {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-            animation: shimmer 2.5s ease-in-out infinite;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            animation: shimmer 3s ease-in-out infinite;
         }
 
         @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
 
         .savings-label {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             color: rgba(255, 255, 255, 0.9);
-            position: relative;
-            z-index: 1;
         }
 
         .savings-value {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 700;
-            color: #ffffff;
-            position: relative;
-            z-index: 1;
+            color: white;
         }
 
         .savings-value svg {
             width: 18px;
             height: 18px;
-            color: #ffffff;
         }
 
-        /* Chart Card */
+        /* ========================================
+           CHART SECTION
+           ======================================== */
         .chart-card {
-            background: var(--card);
-            border-radius: var(--radius-lg);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            padding: 24px;
-            box-shadow: var(--shadow-card);
-            transition: all 0.3s ease;
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-default);
+            padding: 28px;
+            box-shadow: var(--shadow-md);
         }
 
-        .chart-card:hover {
-            box-shadow: var(--shadow-card-hover);
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
         }
 
         .chart-title {
-            font-size: 15px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 24px;
-        }
-
-        .chart-container {
-            height: 200px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            gap: 70px;
-            padding-bottom: 30px;
-            position: relative;
-        }
-
-        .chart-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .chart-bars {
-            display: flex;
-            gap: 10px;
-            align-items: flex-end;
-            height: 140px;
-        }
-
-        .chart-bar {
-            width: 55px;
-            border-radius: 6px 6px 0 0;
-            position: relative;
-            transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .chart-bar--old {
-            background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%);
-        }
-
-        .chart-bar--new {
-            background: linear-gradient(180deg, var(--green-400) 0%, var(--green-500) 100%);
-            box-shadow: 0 4px 12px rgba(35, 197, 94, 0.35);
-        }
-
-        .chart-bar-value {
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            white-space: nowrap;
-            margin-bottom: 6px;
-        }
-
-        .chart-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-align: center;
-            font-weight: 500;
         }
 
         .chart-legend {
             display: flex;
-            justify-content: center;
-            gap: 28px;
-            margin-top: 20px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border-light);
+            gap: 20px;
         }
 
         .legend-item {
@@ -794,21 +774,80 @@
         }
 
         .legend-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
         }
 
         .legend-dot--old {
-            background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%);
+            background: var(--stone-300);
         }
 
         .legend-dot--new {
-            background: linear-gradient(180deg, var(--green-400) 0%, var(--green-500) 100%);
-            box-shadow: 0 2px 6px rgba(35, 197, 94, 0.35);
+            background: var(--emerald-500);
         }
 
-        /* Detail Cards */
+        .chart-container {
+            height: 180px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 80px;
+            padding-bottom: 40px;
+        }
+
+        .chart-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chart-bars {
+            display: flex;
+            gap: 8px;
+            align-items: flex-end;
+            height: 120px;
+        }
+
+        .chart-bar {
+            width: 48px;
+            border-radius: 6px 6px 0 0;
+            position: relative;
+            transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .chart-bar--old {
+            background: linear-gradient(180deg, var(--stone-300), var(--stone-400));
+        }
+
+        .chart-bar--new {
+            background: linear-gradient(180deg, var(--emerald-400), var(--emerald-500));
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .chart-bar-value {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            margin-bottom: 8px;
+        }
+
+        .chart-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* ========================================
+           DETAILS SECTION
+           ======================================== */
         .details-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -822,29 +861,24 @@
         }
 
         .detail-card {
-            background: var(--card);
-            border-radius: var(--radius-lg);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            padding: 22px;
-            box-shadow: var(--shadow-card);
-            transition: all 0.3s ease;
-        }
-
-        .detail-card:hover {
-            box-shadow: var(--shadow-card-hover);
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-default);
+            padding: 24px;
+            box-shadow: var(--shadow-md);
         }
 
         .detail-card h3 {
             font-size: 15px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
-        .detail-card p {
+        .detail-card > p {
             font-size: 12px;
             color: var(--text-muted);
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
 
         .detail-table {
@@ -855,13 +889,13 @@
 
         .detail-table th {
             text-align: left;
-            padding: 10px 0;
+            padding: 12px 0;
             font-weight: 600;
             color: var(--text-muted);
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--border-default);
             font-size: 10px;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.05em;
         }
 
         .detail-table th:not(:first-child) {
@@ -869,9 +903,9 @@
         }
 
         .detail-table td {
-            padding: 10px 0;
+            padding: 12px 0;
             color: var(--text-secondary);
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-subtle);
         }
 
         .detail-table td:not(:first-child) {
@@ -881,12 +915,12 @@
         }
 
         .detail-table .text-green {
-            color: var(--green-600);
+            color: var(--emerald-600);
             font-weight: 600;
         }
 
         .detail-table .text-red {
-            color: var(--red-500);
+            color: var(--rose-500);
         }
 
         .detail-table .text-bold {
@@ -894,101 +928,101 @@
             color: var(--text-primary);
         }
 
-        /* Info Box */
-        .info-box {
-            background: linear-gradient(135deg, var(--blue-50), rgba(59, 130, 246, 0.08));
-            border: 1px solid var(--blue-100);
-            border-radius: var(--radius-md);
-            padding: 16px 18px;
-            display: flex;
-            gap: 12px;
-            margin-top: 22px;
-        }
-
-        .info-box svg {
-            width: 18px;
-            height: 18px;
-            color: var(--blue-500);
-            flex-shrink: 0;
-        }
-
-        .info-box-content h4 {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--blue-700);
-            margin-bottom: 2px;
-        }
-
-        .info-box-content p {
-            font-size: 12px;
-            color: var(--blue-700);
-            opacity: 0.8;
-        }
-
-        /* Responsive */
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
         @media (max-width: 768px) {
+            .header-inner {
+                padding: 12px 16px;
+            }
+
+            .header-badge {
+                display: none;
+            }
+
             main {
                 padding: 16px;
+                gap: 20px;
             }
-
 
             .result-amount {
-                font-size: 26px;
+                font-size: 28px;
+            }
+
+            .chart-container {
+                gap: 40px;
             }
         }
+
+        /* ========================================
+           ANIMATIONS
+           ======================================== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card, .result-card, .chart-card, .detail-card {
+            animation: fadeInUp 0.5s ease-out both;
+        }
+
+        .result-card:nth-child(2) { animation-delay: 0.1s; }
+        .chart-card { animation-delay: 0.2s; }
+        .detail-card:nth-child(1) { animation-delay: 0.3s; }
+        .detail-card:nth-child(2) { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-mark">
+                    <i data-lucide="calculator"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-title">Tính Thuế TNCN 2026</span>
+                    <span class="logo-subtitle">So sánh luật cũ & mới</span>
+                </div>
+            </div>
+            <div class="header-badge">Hiệu lực từ 1/1/2026</div>
+        </div>
+    </header>
 
     <main>
-        <!-- Left Column: Header + Inputs -->
-        <div class="left-column">
-            <!-- Header Card (same style as input card) -->
-            <div class="header-card">
-                <div class="header-card-inner">
-                    <div class="logo-icon">
-                        <i data-lucide="trending-up"></i>
-                    </div>
-                    <div class="logo-text">
-                        <h1>Tính Lương/ Thuế TNCN 2026</h1>
-                        <p>So sánh luật cũ & mới (Hiệu lực 1/1/2026)</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Input Card -->
+        <!-- Input Section -->
+        <section class="input-section">
             <div class="card">
-            <div class="card-header">
-                <div class="card-header-icon">
-                    <i data-lucide="file-text"></i>
-                </div>
-                <h2>Nhập thông tin lương</h2>
-            </div>
-            <div class="card-body">
-                <!-- Salary Input -->
-                <div class="input-group">
-                    <label class="input-label">Tổng thu nhập (Gross) / Tháng (VND)</label>
-                    <div class="input-wrapper">
-                        <input
-                            type="text"
-                            id="salary"
-                            class="input-field"
-                            placeholder="0"
-                            inputmode="numeric"
-                            autocomplete="off"
-                            autofocus>
-                        <span class="input-suffix">VND</span>
+                <div class="card-body">
+                    <!-- Salary Input -->
+                    <div class="input-group">
+                        <label class="input-label">Thu nhập Gross / Tháng</label>
+                        <div class="input-wrapper">
+                            <input
+                                type="text"
+                                id="salary"
+                                class="input-field"
+                                placeholder="0"
+                                inputmode="numeric"
+                                autocomplete="off"
+                                autofocus>
+                            <span class="input-suffix">VND</span>
+                        </div>
+                        <p class="input-hint">Tổng lương chưa trừ bảo hiểm và thuế</p>
                     </div>
-                    <p class="input-hint">Lương tổng chưa trừ bảo hiểm và thuế</p>
-                </div>
 
-                <!-- Dependents -->
-                <div class="input-group">
-                    <label class="input-label">
-                        <i data-lucide="users"></i>
-                        Số người phụ thuộc
-                    </label>
-                    <div class="counter-row">
+                    <!-- Dependents -->
+                    <div class="input-group">
+                        <label class="input-label">
+                            <i data-lucide="users"></i>
+                            Số người phụ thuộc
+                        </label>
                         <div class="counter-control">
                             <button type="button" class="counter-btn" data-action="decrement">
                                 <i data-lucide="minus"></i>
@@ -1005,101 +1039,98 @@
                             </button>
                         </div>
                     </div>
-                </div>
 
-                <!-- Region -->
-                <div class="input-group">
-                    <label class="input-label">Vùng lương tối thiểu</label>
-                    <div class="region-grid" id="region-grid">
-                        <label class="region-option active" data-region="I">
-                            <input type="radio" name="region" value="I" checked>
-                            <div class="region-header">
-                                <span class="region-name">Vùng I</span>
-                                <span class="region-radio"></span>
-                            </div>
-                            <div class="region-meta">MỨC TỐI THIỂU:</div>
-                            <div class="region-amount">5.310.000</div>
-                        </label>
-                        <label class="region-option" data-region="II">
-                            <input type="radio" name="region" value="II">
-                            <div class="region-header">
-                                <span class="region-name">Vùng II</span>
-                                <span class="region-radio"></span>
-                            </div>
-                            <div class="region-meta">MỨC TỐI THIỂU:</div>
-                            <div class="region-amount">4.730.000</div>
-                        </label>
-                        <label class="region-option" data-region="III">
-                            <input type="radio" name="region" value="III">
-                            <div class="region-header">
-                                <span class="region-name">Vùng III</span>
-                                <span class="region-radio"></span>
-                            </div>
-                            <div class="region-meta">MỨC TỐI THIỂU:</div>
-                            <div class="region-amount">4.140.000</div>
-                        </label>
-                        <label class="region-option" data-region="IV">
-                            <input type="radio" name="region" value="IV">
-                            <div class="region-header">
-                                <span class="region-name">Vùng IV</span>
-                                <span class="region-radio"></span>
-                            </div>
-                            <div class="region-meta">MỨC TỐI THIỂU:</div>
-                            <div class="region-amount">3.700.000</div>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Info Box -->
-                <div class="info-box">
-                    <i data-lucide="info"></i>
-                    <div class="info-box-content">
-                        <h4>Thông tin giảm trừ mới (từ 1/1/2026)</h4>
-                        <p>Bản thân: 15.5 triệu · Người phụ thuộc: 6.2 triệu/người</p>
+                    <!-- Region -->
+                    <div class="input-group">
+                        <label class="input-label">Vùng lương tối thiểu</label>
+                        <div class="region-grid" id="region-grid">
+                            <label class="region-option active" data-region="I">
+                                <input type="radio" name="region" value="I" checked>
+                                <div class="region-header">
+                                    <span class="region-name">Vùng I</span>
+                                    <span class="region-radio"></span>
+                                </div>
+                                <div class="region-amount">5.310.000 đ</div>
+                            </label>
+                            <label class="region-option" data-region="II">
+                                <input type="radio" name="region" value="II">
+                                <div class="region-header">
+                                    <span class="region-name">Vùng II</span>
+                                    <span class="region-radio"></span>
+                                </div>
+                                <div class="region-amount">4.730.000 đ</div>
+                            </label>
+                            <label class="region-option" data-region="III">
+                                <input type="radio" name="region" value="III">
+                                <div class="region-header">
+                                    <span class="region-name">Vùng III</span>
+                                    <span class="region-radio"></span>
+                                </div>
+                                <div class="region-amount">4.140.000 đ</div>
+                            </label>
+                            <label class="region-option" data-region="IV">
+                                <input type="radio" name="region" value="IV">
+                                <div class="region-header">
+                                    <span class="region-name">Vùng IV</span>
+                                    <span class="region-radio"></span>
+                                </div>
+                                <div class="region-amount">3.700.000 đ</div>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>
-        </div>
 
-        <!-- Right Column: Results -->
-        <div class="right-column">
+            <!-- Info Banner -->
+            <div class="info-banner">
+                <div class="info-banner-icon">
+                    <i data-lucide="sparkles"></i>
+                </div>
+                <div class="info-banner-content">
+                    <h4>Mức giảm trừ mới (từ 1/1/2026)</h4>
+                    <p>Bản thân: <strong>15.5 triệu</strong> · Người phụ thuộc: <strong>6.2 triệu</strong>/người</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section">
             <!-- Result Cards -->
             <div class="results-grid">
                 <!-- Old Law -->
-                <div class="result-card result-card--old">
-                    <span class="result-badge result-badge--old">QUY ĐỊNH CŨ</span>
+                <div class="result-card result-card--default">
+                    <span class="result-badge result-badge--default">Quy định cũ</span>
                     <div class="result-label">Thực lĩnh (Net)</div>
                     <div class="result-amount" id="old-net">0<span class="currency">đ</span></div>
                     <div class="result-details">
                         <div class="result-row">
-                            <span class="result-row-label">Thuế phải đóng:</span>
+                            <span class="result-row-label">Thuế phải đóng</span>
                             <span class="result-row-value" id="old-tax">0 đ</span>
                         </div>
                         <div class="result-row">
-                            <span class="result-row-label">Tổng giảm trừ:</span>
+                            <span class="result-row-label">Tổng giảm trừ</span>
                             <span class="result-row-value" id="old-deduction">0 đ</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- New Law -->
-                <div class="result-card result-card--new">
-                    <span class="result-badge result-badge--new">MỚI (SAU 1/1/2026)</span>
+                <div class="result-card result-card--highlight">
+                    <span class="result-badge result-badge--success">Quy định mới</span>
                     <div class="result-label">Thực lĩnh (Net)</div>
                     <div class="result-amount" id="new-net">0<span class="currency">đ</span></div>
                     <div class="result-details">
                         <div class="result-row">
-                            <span class="result-row-label">Thuế phải đóng:</span>
+                            <span class="result-row-label">Thuế phải đóng</span>
                             <span class="result-row-value" id="new-tax">0 đ</span>
                         </div>
                         <div class="result-row">
-                            <span class="result-row-label">Tổng giảm trừ:</span>
+                            <span class="result-row-label">Tổng giảm trừ</span>
                             <span class="result-row-value" id="new-deduction">0 đ</span>
                         </div>
                     </div>
                     <div class="savings-box">
-                        <span class="savings-label">Bạn tiết kiệm được:</span>
+                        <span class="savings-label">Tiết kiệm được</span>
                         <span class="savings-value" id="savings-value">
                             0 đ
                             <i data-lucide="trending-up"></i>
@@ -1110,7 +1141,19 @@
 
             <!-- Chart -->
             <div class="chart-card">
-                <h3 class="chart-title">Biểu đồ so sánh</h3>
+                <div class="chart-header">
+                    <h3 class="chart-title">Biểu đồ so sánh</h3>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <span class="legend-dot legend-dot--old"></span>
+                            Cũ
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot legend-dot--new"></span>
+                            Mới
+                        </div>
+                    </div>
+                </div>
                 <div class="chart-container">
                     <div class="chart-group">
                         <div class="chart-bars">
@@ -1121,7 +1164,7 @@
                                 <span class="chart-bar-value" id="chart-tax-new-val">0</span>
                             </div>
                         </div>
-                        <span class="chart-label">Thuế phải đóng (Tháng)</span>
+                        <span class="chart-label">Thuế / tháng</span>
                     </div>
                     <div class="chart-group">
                         <div class="chart-bars">
@@ -1132,17 +1175,7 @@
                                 <span class="chart-bar-value" id="chart-net-new-val">0</span>
                             </div>
                         </div>
-                        <span class="chart-label">Thực lĩnh (Net)</span>
-                    </div>
-                </div>
-                <div class="chart-legend">
-                    <div class="legend-item">
-                        <span class="legend-dot legend-dot--old"></span>
-                        Quy định cũ
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-dot legend-dot--new"></span>
-                        Quy định mới
+                        <span class="chart-label">Thực lĩnh</span>
                     </div>
                 </div>
             </div>
@@ -1150,7 +1183,7 @@
             <!-- Details -->
             <div class="details-grid">
                 <div class="detail-card">
-                    <h3>Diễn giải chi tiết (VNĐ)</h3>
+                    <h3>Chi tiết tính toán</h3>
                     <p id="region-info">Áp dụng vùng I - Mức lương tối thiểu 5.310.000 đ</p>
                     <table class="detail-table">
                         <thead>
@@ -1164,8 +1197,8 @@
                     </table>
                 </div>
                 <div class="detail-card">
-                    <h3>(*) Chi tiết thuế thu nhập cá nhân (VNĐ)</h3>
-                    <p>Diễn giải theo từng bậc lũy tiến</p>
+                    <h3>Chi tiết thuế lũy tiến</h3>
+                    <p>Diễn giải theo từng bậc thuế suất</p>
                     <table class="detail-table">
                         <thead>
                             <tr>
@@ -1179,7 +1212,7 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </section>
     </main>
 
     <script>
@@ -1322,7 +1355,7 @@
         function updateChart(oldR, newR) {
             const maxTax = Math.max(oldR.tax, newR.tax, 1);
             const maxNet = Math.max(oldR.net, newR.net, 1);
-            const maxHeight = 120;
+            const maxHeight = 100;
 
             els.chartTaxOld.style.height = Math.max(4, (oldR.tax / maxTax) * maxHeight) + 'px';
             els.chartTaxNew.style.height = Math.max(4, (newR.tax / maxTax) * maxHeight) + 'px';
@@ -1358,7 +1391,7 @@
             // Chart
             updateChart(oldR, newR);
 
-            // Details table - show deductions only when salary entered
+            // Details table
             const rows = [
                 ['Lương Gross', oldR.gross, newR.gross],
                 ['Bảo hiểm (10.5%)', -oldR.ins, -newR.ins],
