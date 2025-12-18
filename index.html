@@ -220,10 +220,270 @@
     // Export VND utility to window for testing and Phase 02/03 usage
     window.VND = VND;
 
-    // Log initialization for debugging
-    console.log('VND Utility initialized');
-    console.log('Test VND.format(1000000):', VND.format(1000000));
-    console.log('Test VND.parse("1.000.000 ₫"):', VND.parse("1.000.000 ₫"));
+    /**
+     * TAX Constants - Vietnam 2026 Tax Law
+     * Effective from January 1, 2026
+     */
+    const TAX = {
+      // 2026 Progressive Tax Brackets (5 levels)
+      BRACKETS: [
+        { upper: 10_000_000, rate: 0.05 },
+        { upper: 30_000_000, rate: 0.10 },
+        { upper: 60_000_000, rate: 0.20 },
+        { upper: 100_000_000, rate: 0.30 },
+        { upper: Infinity, rate: 0.35 }
+      ],
+
+      // Deductions (VND/month)
+      PERSONAL_DEDUCTION: 15_500_000,
+      DEPENDENT_DEDUCTION: 6_200_000,
+
+      // Insurance Rates (employee portion)
+      INSURANCE: {
+        SOCIAL: 0.08,      // 8%
+        HEALTH: 0.015,     // 1.5%
+        UNEMPLOYMENT: 0.01 // 1%
+      },
+
+      // Regional Minimum Wages 2026 (VND)
+      REGIONS: {
+        I: { name: 'Vùng I', minWage: 5_310_000 },
+        II: { name: 'Vùng II', minWage: 4_730_000 },
+        III: { name: 'Vùng III', minWage: 4_140_000 },
+        IV: { name: 'Vùng IV', minWage: 3_700_000 }
+      },
+
+      // National minimum wage (for social/health caps)
+      NATIONAL_MIN_WAGE: 5_310_000,
+
+      // Cap multiplier (20x minimum wage)
+      CAP_MULTIPLIER: 20
+    };
+
+    /**
+     * Calculate progressive income tax
+     * @param {number} taxableIncome - Income after deductions
+     * @returns {number} Tax amount (rounded to VND)
+     */
+    function calculateTax(taxableIncome) {
+      if (taxableIncome <= 0) return 0;
+
+      let totalTax = 0;
+      let previousUpper = 0;
+
+      for (const bracket of TAX.BRACKETS) {
+        if (taxableIncome > bracket.upper) {
+          // Full bracket
+          totalTax += (bracket.upper - previousUpper) * bracket.rate;
+          previousUpper = bracket.upper;
+        } else {
+          // Partial bracket (last applicable)
+          totalTax += (taxableIncome - previousUpper) * bracket.rate;
+          break;
+        }
+      }
+
+      return Math.round(totalTax);
+    }
+
+    /**
+     * Calculate insurance contributions with regional caps
+     * @param {number} grossIncome - Gross salary
+     * @param {string} regionKey - Region key (I, II, III, IV)
+     * @returns {Object} Insurance breakdown {social, health, unemployment, total}
+     */
+    function calculateInsurance(grossIncome, regionKey) {
+      const region = TAX.REGIONS[regionKey];
+      if (!region) {
+        return { social: 0, health: 0, unemployment: 0, total: 0 };
+      }
+
+      const nationalCap = TAX.NATIONAL_MIN_WAGE * TAX.CAP_MULTIPLIER;
+      const regionalCap = region.minWage * TAX.CAP_MULTIPLIER;
+
+      // Calculate each with individual caps
+      const social = Math.min(
+        grossIncome * TAX.INSURANCE.SOCIAL,
+        nationalCap * TAX.INSURANCE.SOCIAL
+      );
+
+      const health = Math.min(
+        grossIncome * TAX.INSURANCE.HEALTH,
+        nationalCap * TAX.INSURANCE.HEALTH
+      );
+
+      const unemployment = Math.min(
+        grossIncome * TAX.INSURANCE.UNEMPLOYMENT,
+        regionalCap * TAX.INSURANCE.UNEMPLOYMENT
+      );
+
+      return {
+        social: Math.round(social),
+        health: Math.round(health),
+        unemployment: Math.round(unemployment),
+        total: Math.round(social + health + unemployment)
+      };
+    }
+
+    /**
+     * Calculate total deductions (personal + dependents)
+     * @param {number} numDependents - Number of dependents
+     * @returns {number} Total deduction amount
+     */
+    function calculateDeductions(numDependents) {
+      const personal = TAX.PERSONAL_DEDUCTION;
+      const dependent = TAX.DEPENDENT_DEDUCTION * Math.max(0, numDependents);
+      return personal + dependent;
+    }
+
+    /**
+     * Convert gross salary to net salary
+     * @param {number} grossIncome - Gross salary
+     * @param {number} numDependents - Number of dependents
+     * @param {string} regionKey - Region key (I, II, III, IV)
+     * @returns {Object} Complete tax calculation result
+     */
+    function grossToNet(grossIncome, numDependents, regionKey) {
+      const insurance = calculateInsurance(grossIncome, regionKey);
+      const deductions = calculateDeductions(numDependents);
+
+      // Taxable income = Gross - Insurance - Deductions (floor at 0)
+      const taxableIncome = Math.max(0, grossIncome - insurance.total - deductions);
+      const tax = calculateTax(taxableIncome);
+
+      // Net = Gross - Insurance - Tax
+      const netIncome = grossIncome - insurance.total - tax;
+
+      // Effective rate (avoid division by zero)
+      const effectiveRate = grossIncome > 0
+        ? (tax / grossIncome) * 100
+        : 0;
+
+      return {
+        grossIncome: Math.round(grossIncome),
+        insurance,
+        deductions,
+        taxableIncome,
+        tax,
+        netIncome: Math.round(netIncome),
+        effectiveRate: effectiveRate.toFixed(2)
+      };
+    }
+
+    /**
+     * Convert net salary to gross salary using binary search
+     * @param {number} targetNet - Target net salary
+     * @param {number} numDependents - Number of dependents
+     * @param {string} regionKey - Region key (I, II, III, IV)
+     * @returns {Object} Complete tax calculation result
+     */
+    function netToGross(targetNet, numDependents, regionKey) {
+      const EPSILON = 100; // VND precision tolerance
+      const MAX_ITERATIONS = 50;
+
+      // Edge case: very low or zero net
+      if (targetNet <= 0) {
+        return grossToNet(0, numDependents, regionKey);
+      }
+
+      // Binary search bounds
+      let low = targetNet;
+      let high = targetNet * 2.5; // Account for ~60% max effective deduction
+
+      for (let i = 0; i < MAX_ITERATIONS; i++) {
+        const mid = (low + high) / 2;
+        const result = grossToNet(mid, numDependents, regionKey);
+        const diff = result.netIncome - targetNet;
+
+        if (Math.abs(diff) <= EPSILON) {
+          return result;
+        }
+
+        if (diff < 0) {
+          low = mid;
+        } else {
+          high = mid;
+        }
+      }
+
+      // Return best approximation
+      return grossToNet((low + high) / 2, numDependents, regionKey);
+    }
+
+    /**
+     * Validate calculation inputs
+     * @param {number} salary - Salary amount
+     * @param {number} numDependents - Number of dependents
+     * @param {string} regionKey - Region key
+     * @returns {Object} Validation result {valid, errors}
+     */
+    function validateInputs(salary, numDependents, regionKey) {
+      const errors = [];
+
+      if (typeof salary !== 'number' || isNaN(salary)) {
+        errors.push('Vui lòng nhập số tiền hợp lệ');
+      } else if (salary < 0) {
+        errors.push('Số tiền không được âm');
+      } else if (salary > 10_000_000_000) {
+        errors.push('Số tiền vượt quá giới hạn (10 tỷ VND)');
+      }
+
+      if (!Number.isInteger(numDependents) || numDependents < 0) {
+        errors.push('Số người phụ thuộc không hợp lệ');
+      } else if (numDependents > 10) {
+        errors.push('Số người phụ thuộc tối đa là 10');
+      }
+
+      if (!TAX.REGIONS[regionKey]) {
+        errors.push('Vùng lương không hợp lệ');
+      }
+
+      return { valid: errors.length === 0, errors };
+    }
+
+    /**
+     * Get detailed tax bracket breakdown for UI display
+     * @param {number} taxableIncome - Taxable income
+     * @returns {Array} Breakdown by bracket
+     */
+    function getTaxBreakdown(taxableIncome) {
+      if (taxableIncome <= 0) return [];
+
+      const breakdown = [];
+      let previousUpper = 0;
+
+      for (const bracket of TAX.BRACKETS) {
+        if (taxableIncome > previousUpper) {
+          const taxableInBracket = Math.min(
+            taxableIncome - previousUpper,
+            bracket.upper - previousUpper
+          );
+          const taxInBracket = taxableInBracket * bracket.rate;
+
+          breakdown.push({
+            range: `${VND.format(previousUpper)} - ${bracket.upper === Infinity ? '...' : VND.format(bracket.upper)}`,
+            rate: `${bracket.rate * 100}%`,
+            taxable: taxableInBracket,
+            tax: Math.round(taxInBracket)
+          });
+
+          previousUpper = bracket.upper;
+          if (taxableIncome <= bracket.upper) break;
+        }
+      }
+
+      return breakdown;
+    }
+
+    // Export all functions to window for testing and Phase 03 usage
+    window.TAX = TAX;
+    window.calculateTax = calculateTax;
+    window.calculateInsurance = calculateInsurance;
+    window.calculateDeductions = calculateDeductions;
+    window.grossToNet = grossToNet;
+    window.netToGross = netToGross;
+    window.validateInputs = validateInputs;
+    window.getTaxBreakdown = getTaxBreakdown;
   </script>
 </body>
 </html>
