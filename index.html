@@ -1,1138 +1,1344 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Công cụ tính thuế thu nhập cá nhân 2026 - Tính lương Gross sang Net và ngược lại">
-  <title>Tính Thuế Thu Nhập Cá Nhân 2026</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Công cụ tính thuế thu nhập cá nhân 2026 - So sánh luật cũ và mới">
+    <title>Tính Lương & Thuế TNCN 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-start: #f0f4ff;
+            --bg-end: #e8f5e9;
+            --card: #ffffff;
+            --card-hover: #fafbff;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
 
-  <!-- Google Fonts - Be Vietnam Pro -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+            --text-primary: #1a1f36;
+            --text-secondary: #525f7f;
+            --text-muted: #8898aa;
 
-  <style>
-    /* CSS Custom Properties */
-    :root {
-      /* Colors */
-      --color-primary: #2563eb;
-      --color-primary-dark: #1d4ed8;
-      --color-success: #16a34a;
-      --color-error: #dc2626;
-      --color-bg: #f8fafc;
-      --color-surface: #ffffff;
-      --color-text: #1e293b;
-      --color-text-muted: #64748b;
-      --color-border: #e2e8f0;
+            --blue-50: #eff6ff;
+            --blue-100: #dbeafe;
+            --blue-400: #60a5fa;
+            --blue-500: #3b82f6;
+            --blue-600: #2563eb;
+            --blue-700: #1d4ed8;
 
-      /* Typography */
-      --font-family: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
-      --font-size-base: 16px;
-      --line-height: 1.6;
+            --green-50: #ecfdf5;
+            --green-100: #d1fae5;
+            --green-400: #34d399;
+            --green-500: #10b981;
+            --green-600: #059669;
+            --green-700: #047857;
 
-      /* Spacing */
-      --space-xs: 4px;
-      --space-sm: 8px;
-      --space-md: 16px;
-      --space-lg: 24px;
-      --space-xl: 32px;
+            --orange-400: #fb923c;
+            --orange-500: #f97316;
+            --red-500: #ef4444;
 
-      /* Touch targets (WCAG 2.2) */
-      --touch-target: 44px;
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
 
-      /* Border radius */
-      --radius-sm: 4px;
-      --radius-md: 8px;
-      --radius-lg: 12px;
-    }
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.04);
+            --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.04);
+            --shadow-card: 0 4px 20px -2px rgba(59, 130, 246, 0.08), 0 2px 8px -2px rgba(0,0,0,0.04);
+            --shadow-card-hover: 0 8px 30px -4px rgba(59, 130, 246, 0.15), 0 4px 12px -4px rgba(0,0,0,0.06);
+            --shadow-green: 0 4px 20px -2px rgba(16, 185, 129, 0.2);
+        }
 
-    /* CSS Reset */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    html {
-      font-size: var(--font-size-base);
-    }
+        body {
+            font-family: 'Be Vietnam Pro', -apple-system, sans-serif;
+            background: #F9FAFC;
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+        }
 
-    body {
-      font-family: var(--font-family);
-      line-height: var(--line-height);
-      color: var(--color-text);
-      background: var(--color-bg);
-      min-height: 100vh;
-      padding: var(--space-md);
-    }
+        /* Left Column Header Card - Same style as input card */
+        .header-card {
+            background: var(--card);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: var(--shadow-card);
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
 
-    /* Calculator Container */
-    .calculator {
-      max-width: 600px;
-      margin: 0 auto;
-      background: var(--color-surface);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-      padding: var(--space-lg);
-    }
+        .header-card:hover {
+            box-shadow: var(--shadow-card-hover);
+            transform: translateY(-2px);
+        }
 
-    /* Header */
-    .calc-header {
-      text-align: center;
-      margin-bottom: var(--space-lg);
-    }
+        .header-card-inner {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 22px;
+            background: linear-gradient(to bottom, rgba(248, 250, 252, 0.5), transparent);
+        }
 
-    .calc-header h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--color-text);
-      margin-bottom: var(--space-xs);
-    }
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--blue-50), var(--blue-100));
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--blue-600);
+            flex-shrink: 0;
+        }
 
-    .calc-header .subtitle {
-      font-size: 0.875rem;
-      color: var(--color-text-muted);
-    }
+        .logo-icon svg {
+            width: 18px;
+            height: 18px;
+        }
 
-    /* Mode Toggle */
-    .mode-toggle {
-      display: flex;
-      gap: var(--space-xs);
-      background: var(--color-bg);
-      padding: var(--space-xs);
-      border-radius: var(--radius-md);
-      margin-top: var(--space-md);
-    }
+        .logo-text h1 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
 
-    .mode-btn {
-      flex: 1;
-      padding: var(--space-sm) var(--space-md);
-      border: none;
-      border-radius: var(--radius-sm);
-      background: transparent;
-      color: var(--color-text-muted);
-      font-family: inherit;
-      font-size: 0.875rem;
-      font-weight: 500;
-      cursor: pointer;
-      min-height: var(--touch-target);
-      transition: all 0.2s ease;
-    }
+        .logo-text p {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
 
-    .mode-btn.active {
-      background: var(--color-primary);
-      color: white;
-      box-shadow: 0 2px 4px rgb(37 99 235 / 0.3);
-    }
+        /* Main Layout */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 28px;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 28px;
+            align-items: start;
+            position: relative;
+            z-index: 1;
+        }
 
-    .mode-btn:hover:not(.active) {
-      background: var(--color-border);
-    }
+        .left-column {
+            display: flex;
+            flex-direction: column;
+        }
 
-    /* Form Styles */
-    fieldset {
-      border: none;
-      margin-bottom: var(--space-lg);
-    }
+        @media (max-width: 1024px) {
+            main {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+        }
 
-    legend {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--color-text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: var(--space-md);
-    }
+        /* Cards */
+        .card {
+            background: var(--card);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s ease;
+        }
 
-    /* Form Fields */
-    .form-field {
-      margin-bottom: var(--space-lg);
-    }
+        .card:hover {
+            box-shadow: var(--shadow-card-hover);
+            transform: translateY(-2px);
+        }
 
-    .form-field label {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: var(--space-sm);
-    }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 22px;
+            border-bottom: 1px solid var(--border-light);
+            background: linear-gradient(to bottom, rgba(248, 250, 252, 0.5), transparent);
+        }
 
-    .label-text {
-      font-weight: 600;
-      color: var(--color-text);
-    }
+        .card-header-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--blue-50), var(--blue-100));
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--blue-600);
+        }
 
-    .label-hint {
-      font-size: 0.75rem;
-      color: var(--color-text-muted);
-    }
+        .card-header-icon svg {
+            width: 18px;
+            height: 18px;
+        }
 
-    .input-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
+        .card-header h2 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
 
-    .input-wrapper input,
-    select {
-      width: 100%;
-      padding: var(--space-sm) var(--space-md);
-      padding-right: 40px;
-      border: 2px solid var(--color-border);
-      border-radius: var(--radius-md);
-      font-family: inherit;
-      font-size: 1.125rem;
-      font-weight: 500;
-      min-height: var(--touch-target);
-      transition: border-color 0.2s;
-    }
+        .card-body {
+            padding: 22px;
+        }
 
-    .input-wrapper input:focus,
-    select:focus {
-      outline: none;
-      border-color: var(--color-primary);
-      box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
-    }
+        /* Input Groups */
+        .input-group {
+            margin-bottom: 20px;
+        }
 
-    .input-suffix {
-      position: absolute;
-      right: var(--space-md);
-      color: var(--color-text-muted);
-      font-weight: 500;
-      pointer-events: none;
-    }
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
 
-    /* Counter Input */
-    .counter-input {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-    }
+        .input-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
 
-    .counter-input input {
-      width: 60px;
-      text-align: center;
-      padding: var(--space-sm);
-      padding-right: var(--space-sm);
-      -moz-appearance: textfield;
-    }
+        .input-label svg {
+            width: 14px;
+            height: 14px;
+        }
 
-    .counter-input input::-webkit-outer-spin-button,
-    .counter-input input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-    }
+        .input-wrapper {
+            position: relative;
+        }
 
-    .counter-btn {
-      width: var(--touch-target);
-      height: var(--touch-target);
-      border: 2px solid var(--color-border);
-      border-radius: var(--radius-md);
-      background: var(--color-surface);
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--color-text);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
+        .input-field {
+            width: 100%;
+            padding: 14px 16px;
+            padding-right: 55px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px;
+            font-weight: 600;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-md);
+            background: linear-gradient(to bottom, #ffffff, #fafbfc);
+            color: var(--text-primary);
+            transition: all 0.25s ease;
+        }
 
-    .counter-btn:hover {
-      background: var(--color-bg);
-      border-color: var(--color-primary);
-    }
+        .input-field:focus {
+            outline: none;
+            border-color: var(--blue-400);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12), 0 2px 8px rgba(59, 130, 246, 0.08);
+        }
 
-    .counter-btn:active {
-      transform: scale(0.95);
-    }
+        .input-field::placeholder {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
 
-    /* Error State */
-    .error-text {
-      display: block;
-      min-height: 1.25rem;
-      margin-top: var(--space-xs);
-      font-size: 0.75rem;
-      color: var(--color-error);
-    }
+        .input-suffix {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--blue-600);
+            background: linear-gradient(135deg, var(--blue-50), var(--blue-100));
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
 
-    .form-field.has-error input {
-      border-color: var(--color-error);
-    }
+        .input-hint {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
 
-    /* Results Section */
-    .results-section {
-      margin-top: var(--space-xl);
-      padding-top: var(--space-lg);
-      border-top: 1px solid var(--color-border);
-    }
+        /* Counter */
+        .counter-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-    .result-primary {
-      text-align: center;
-      padding: var(--space-lg);
-      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-      border-radius: var(--radius-lg);
-      color: white;
-      margin-bottom: var(--space-lg);
-    }
+        .counter-control {
+            display: flex;
+            align-items: stretch;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: white;
+        }
 
-    .result-label {
-      display: block;
-      font-size: 0.875rem;
-      opacity: 0.9;
-      margin-bottom: var(--space-xs);
-    }
+        .counter-btn {
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
 
-    .result-value {
-      display: block;
-      font-size: 2rem;
-      font-weight: 700;
-    }
+        .counter-btn:hover {
+            background: var(--border-light);
+            color: var(--blue-500);
+        }
 
-    .result-breakdown h2 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: var(--space-md);
-      color: var(--color-text);
-    }
+        .counter-btn svg {
+            width: 16px;
+            height: 16px;
+        }
 
-    .breakdown-group {
-      margin-bottom: var(--space-lg);
-    }
+        .counter-input {
+            width: 50px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-left: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            background: white;
+            color: var(--text-primary);
+            padding: 10px 0;
+            -moz-appearance: textfield;
+        }
 
-    .breakdown-group h3 {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--color-text-muted);
-      margin-bottom: var(--space-sm);
-    }
+        .counter-input::-webkit-outer-spin-button,
+        .counter-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
 
-    .breakdown-list {
-      background: var(--color-bg);
-      border-radius: var(--radius-md);
-      padding: var(--space-sm);
-    }
+        .counter-input:focus {
+            outline: none;
+        }
 
-    .breakdown-item {
-      display: flex;
-      justify-content: space-between;
-      padding: var(--space-sm);
-    }
+        /* Region Grid */
+        .region-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
 
-    .breakdown-item dt {
-      color: var(--color-text-muted);
-    }
+        .region-option {
+            position: relative;
+            padding: 14px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-md);
+            background: linear-gradient(to bottom, #ffffff, #fafbfc);
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
 
-    .breakdown-item dd {
-      font-weight: 500;
-      font-variant-numeric: tabular-nums;
-    }
+        .region-option:hover {
+            border-color: var(--blue-400);
+            background: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.08);
+        }
 
-    .breakdown-item.total {
-      border-top: 1px solid var(--color-border);
-      margin-top: var(--space-xs);
-      padding-top: var(--space-sm);
-    }
+        .region-option.active {
+            border-color: var(--blue-500);
+            background: linear-gradient(135deg, var(--blue-50), #ffffff);
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.15), inset 0 1px 0 rgba(255,255,255,0.8);
+        }
 
-    .breakdown-item.total dt,
-    .breakdown-item.total dd {
-      font-weight: 600;
-      color: var(--color-text);
-    }
+        .region-option input {
+            position: absolute;
+            opacity: 0;
+        }
 
-    /* Tax Bracket Details */
-    .tax-brackets {
-      margin-top: var(--space-lg);
-    }
+        .region-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
 
-    .tax-brackets summary {
-      cursor: pointer;
-      font-size: 0.875rem;
-      color: var(--color-primary);
-      font-weight: 500;
-    }
+        .region-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
 
-    .tax-brackets table {
-      width: 100%;
-      margin-top: var(--space-md);
-      border-collapse: collapse;
-      font-size: 0.875rem;
-    }
+        .region-option.active .region-name {
+            color: var(--blue-700);
+        }
 
-    .tax-brackets th,
-    .tax-brackets td {
-      padding: var(--space-sm);
-      text-align: left;
-      border-bottom: 1px solid var(--color-border);
-    }
+        .region-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            background: white;
+        }
 
-    .tax-brackets th {
-      font-weight: 600;
-      color: var(--color-text-muted);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-    }
+        .region-option.active .region-radio {
+            border-color: var(--blue-500);
+            background: var(--blue-500);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
 
-    .tax-brackets td:last-child {
-      text-align: right;
-      font-weight: 500;
-      font-variant-numeric: tabular-nums;
-    }
+        .region-radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.2s ease;
+        }
 
-    /* Responsive Design */
-    @media (max-width: 480px) {
-      body {
-        padding: var(--space-sm);
-      }
+        .region-option.active .region-radio::after {
+            opacity: 1;
+            transform: scale(1);
+        }
 
-      .calculator {
-        padding: var(--space-md);
-        border-radius: var(--radius-md);
-      }
+        .region-meta {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
 
-      .calc-header h1 {
-        font-size: 1.25rem;
-      }
+        .region-amount {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
 
-      .result-value {
-        font-size: 1.5rem;
-      }
+        /* Right Column */
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-      .breakdown-item {
-        flex-direction: column;
-        gap: var(--space-xs);
-      }
+        /* Results Grid */
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
 
-      .breakdown-item dd {
-        text-align: left;
-      }
+        @media (max-width: 640px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
 
-      .tax-brackets table {
-        font-size: 0.75rem;
-      }
+        .result-card {
+            background: var(--card);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            padding: 22px;
+            position: relative;
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s ease;
+        }
 
-      .tax-brackets th,
-      .tax-brackets td {
-        padding: var(--space-xs);
-      }
-    }
+        .result-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-card-hover);
+        }
 
-    /* Screen reader only utility */
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      border: 0;
-    }
-  </style>
+        .result-card--new {
+            border-color: var(--green-400);
+            border-width: 2px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--green-50) 100%);
+            box-shadow: var(--shadow-green);
+        }
+
+        .result-card--new:hover {
+            box-shadow: 0 8px 30px -4px rgba(16, 185, 129, 0.25);
+        }
+
+        .result-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 5px 12px;
+            border-radius: 6px;
+            margin-bottom: 14px;
+        }
+
+        .result-badge--old {
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            color: var(--text-secondary);
+        }
+
+        .result-badge--new {
+            background: linear-gradient(135deg, var(--green-400), var(--green-500));
+            color: white;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .result-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .result-amount {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .result-card--old .result-amount {
+            color: var(--text-primary);
+        }
+
+        .result-card--new .result-amount {
+            color: var(--green-600);
+            text-shadow: 0 2px 4px rgba(16, 185, 129, 0.1);
+        }
+
+        .result-amount .currency {
+            font-size: 22px;
+            margin-left: 2px;
+            opacity: 0.7;
+        }
+
+        .result-details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .result-row-label {
+            color: var(--text-muted);
+        }
+
+        .result-row-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+        }
+
+        .result-card--old .result-row-value {
+            color: var(--text-secondary);
+        }
+
+        .result-card--new .result-row-value {
+            color: var(--green-600);
+        }
+
+        /* Savings Badge */
+        .savings-box {
+            margin-top: 18px;
+            padding: 14px 16px;
+            background: linear-gradient(135deg, var(--green-50), rgba(16, 185, 129, 0.1));
+            border: 1px solid var(--green-100);
+            border-radius: var(--radius-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .savings-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--green-700);
+        }
+
+        .savings-value {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--green-600);
+        }
+
+        .savings-value svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Chart Card */
+        .chart-card {
+            background: var(--card);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            padding: 24px;
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s ease;
+        }
+
+        .chart-card:hover {
+            box-shadow: var(--shadow-card-hover);
+        }
+
+        .chart-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+        }
+
+        .chart-container {
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 70px;
+            padding-bottom: 30px;
+            position: relative;
+        }
+
+        .chart-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chart-bars {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+            height: 140px;
+        }
+
+        .chart-bar {
+            width: 55px;
+            border-radius: 6px 6px 0 0;
+            position: relative;
+            transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .chart-bar--old {
+            background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%);
+        }
+
+        .chart-bar--new {
+            background: linear-gradient(180deg, var(--green-400) 0%, var(--green-600) 100%);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .chart-bar-value {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            margin-bottom: 6px;
+        }
+
+        .chart-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .legend-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+        }
+
+        .legend-dot--old {
+            background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%);
+        }
+
+        .legend-dot--new {
+            background: linear-gradient(180deg, var(--green-400) 0%, var(--green-600) 100%);
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Detail Cards */
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .detail-card {
+            background: var(--card);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            padding: 22px;
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s ease;
+        }
+
+        .detail-card:hover {
+            box-shadow: var(--shadow-card-hover);
+        }
+
+        .detail-card h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .detail-card p {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .detail-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .detail-table th {
+            text-align: left;
+            padding: 10px 0;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .detail-table th:not(:first-child) {
+            text-align: right;
+        }
+
+        .detail-table td {
+            padding: 10px 0;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .detail-table td:not(:first-child) {
+            text-align: right;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+
+        .detail-table .text-green {
+            color: var(--green-600);
+            font-weight: 600;
+        }
+
+        .detail-table .text-red {
+            color: var(--red-500);
+        }
+
+        .detail-table .text-bold {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, var(--blue-50), rgba(59, 130, 246, 0.08));
+            border: 1px solid var(--blue-100);
+            border-radius: var(--radius-md);
+            padding: 16px 18px;
+            display: flex;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .info-box svg {
+            width: 18px;
+            height: 18px;
+            color: var(--blue-500);
+            flex-shrink: 0;
+        }
+
+        .info-box-content h4 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--blue-600);
+            margin-bottom: 2px;
+        }
+
+        .info-box-content p {
+            font-size: 12px;
+            color: var(--blue-600);
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            main {
+                padding: 16px;
+            }
+
+
+            .result-amount {
+                font-size: 26px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <main class="calculator">
-    <header class="calc-header">
-      <h1>Tính Thuế Thu Nhập Cá Nhân 2026</h1>
-      <p class="subtitle">Công cụ tính lương Gross ↔ Net theo luật thuế mới</p>
 
-      <div class="mode-toggle" role="group" aria-label="Chọn chế độ tính">
-        <button type="button" class="mode-btn active" data-mode="gross-to-net">
-          Gross → Net
-        </button>
-        <button type="button" class="mode-btn" data-mode="net-to-gross">
-          Net → Gross
-        </button>
-      </div>
-    </header>
+    <main>
+        <!-- Left Column: Header + Inputs -->
+        <div class="left-column">
+            <!-- Header Card (same style as input card) -->
+            <div class="header-card">
+                <div class="header-card-inner">
+                    <div class="logo-icon">
+                        <i data-lucide="trending-up"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Tính Lương/ Thuế TNCN 2026</h1>
+                        <p>So sánh luật cũ & mới (Hiệu lực 1/1/2026)</p>
+                    </div>
+                </div>
+            </div>
 
-    <form id="calc-form" novalidate>
-      <fieldset class="input-group">
-        <legend class="sr-only">Thông tin thu nhập</legend>
+            <!-- Input Card -->
+            <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon">
+                    <i data-lucide="file-text"></i>
+                </div>
+                <h2>Nhập thông tin lương</h2>
+            </div>
+            <div class="card-body">
+                <!-- Salary Input -->
+                <div class="input-group">
+                    <label class="input-label">Tổng thu nhập (Gross) / Tháng (VND)</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="text"
+                            id="salary"
+                            class="input-field"
+                            placeholder="0"
+                            inputmode="numeric"
+                            autocomplete="off"
+                            autofocus>
+                        <span class="input-suffix">VND</span>
+                    </div>
+                    <p class="input-hint">Lương tổng chưa trừ bảo hiểm và thuế</p>
+                </div>
 
-        <!-- Salary Input -->
-        <div class="form-field">
-          <label for="salary" id="salary-label">
-            <span class="label-text">Lương <span id="salary-type">Gross</span></span>
-            <span class="label-hint">VND/tháng</span>
-          </label>
-          <div class="input-wrapper">
-            <input
-              type="text"
-              id="salary"
-              inputmode="numeric"
-              aria-labelledby="salary-label"
-              aria-describedby="salary-error"
-              placeholder="Nhập số tiền"
-              autocomplete="off"
-            >
-            <span class="input-suffix">₫</span>
-          </div>
-          <span id="salary-error" class="error-text" role="alert"></span>
+                <!-- Dependents -->
+                <div class="input-group">
+                    <label class="input-label">
+                        <i data-lucide="users"></i>
+                        Số người phụ thuộc
+                    </label>
+                    <div class="counter-row">
+                        <div class="counter-control">
+                            <button type="button" class="counter-btn" data-action="decrement">
+                                <i data-lucide="minus"></i>
+                            </button>
+                            <input
+                                type="number"
+                                id="dependents"
+                                class="counter-input"
+                                value="0"
+                                min="0"
+                                max="10">
+                            <button type="button" class="counter-btn" data-action="increment">
+                                <i data-lucide="plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Region -->
+                <div class="input-group">
+                    <label class="input-label">Vùng lương tối thiểu</label>
+                    <div class="region-grid" id="region-grid">
+                        <label class="region-option active" data-region="I">
+                            <input type="radio" name="region" value="I" checked>
+                            <div class="region-header">
+                                <span class="region-name">Vùng I</span>
+                                <span class="region-radio"></span>
+                            </div>
+                            <div class="region-meta">MỨC TỐI THIỂU:</div>
+                            <div class="region-amount">5.310.000</div>
+                        </label>
+                        <label class="region-option" data-region="II">
+                            <input type="radio" name="region" value="II">
+                            <div class="region-header">
+                                <span class="region-name">Vùng II</span>
+                                <span class="region-radio"></span>
+                            </div>
+                            <div class="region-meta">MỨC TỐI THIỂU:</div>
+                            <div class="region-amount">4.730.000</div>
+                        </label>
+                        <label class="region-option" data-region="III">
+                            <input type="radio" name="region" value="III">
+                            <div class="region-header">
+                                <span class="region-name">Vùng III</span>
+                                <span class="region-radio"></span>
+                            </div>
+                            <div class="region-meta">MỨC TỐI THIỂU:</div>
+                            <div class="region-amount">4.140.000</div>
+                        </label>
+                        <label class="region-option" data-region="IV">
+                            <input type="radio" name="region" value="IV">
+                            <div class="region-header">
+                                <span class="region-name">Vùng IV</span>
+                                <span class="region-radio"></span>
+                            </div>
+                            <div class="region-meta">MỨC TỐI THIỂU:</div>
+                            <div class="region-amount">3.700.000</div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Info Box -->
+                <div class="info-box">
+                    <i data-lucide="info"></i>
+                    <div class="info-box-content">
+                        <h4>Thông tin giảm trừ mới (từ 1/1/2026)</h4>
+                        <p>Bản thân: 15.5 triệu · Người phụ thuộc: 6.2 triệu/người</p>
+                    </div>
+                </div>
+            </div>
+            </div>
         </div>
 
-        <!-- Dependents -->
-        <div class="form-field">
-          <label for="dependents">
-            <span class="label-text">Số người phụ thuộc</span>
-            <span class="label-hint">Giảm trừ 6.200.000₫/người</span>
-          </label>
-          <div class="counter-input">
-            <button type="button" class="counter-btn" data-action="decrement" aria-label="Giảm">−</button>
-            <input
-              type="number"
-              id="dependents"
-              value="0"
-              min="0"
-              max="10"
-              aria-label="Số người phụ thuộc"
-            >
-            <button type="button" class="counter-btn" data-action="increment" aria-label="Tăng">+</button>
-          </div>
+        <!-- Right Column: Results -->
+        <div class="right-column">
+            <!-- Result Cards -->
+            <div class="results-grid">
+                <!-- Old Law -->
+                <div class="result-card result-card--old">
+                    <span class="result-badge result-badge--old">QUY ĐỊNH CŨ</span>
+                    <div class="result-label">Thực lĩnh (Net)</div>
+                    <div class="result-amount" id="old-net">0<span class="currency">đ</span></div>
+                    <div class="result-details">
+                        <div class="result-row">
+                            <span class="result-row-label">Thuế phải đóng:</span>
+                            <span class="result-row-value" id="old-tax">0 đ</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-row-label">Tổng giảm trừ:</span>
+                            <span class="result-row-value" id="old-deduction">0 đ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Law -->
+                <div class="result-card result-card--new">
+                    <span class="result-badge result-badge--new">MỚI (SAU 1/1/2026)</span>
+                    <div class="result-label">Thực lĩnh (Net)</div>
+                    <div class="result-amount" id="new-net">0<span class="currency">đ</span></div>
+                    <div class="result-details">
+                        <div class="result-row">
+                            <span class="result-row-label">Thuế phải đóng:</span>
+                            <span class="result-row-value" id="new-tax">0 đ</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-row-label">Tổng giảm trừ:</span>
+                            <span class="result-row-value" id="new-deduction">0 đ</span>
+                        </div>
+                    </div>
+                    <div class="savings-box">
+                        <span class="savings-label">Bạn tiết kiệm được:</span>
+                        <span class="savings-value" id="savings-value">
+                            0 đ
+                            <i data-lucide="trending-up"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart -->
+            <div class="chart-card">
+                <h3 class="chart-title">Biểu đồ so sánh</h3>
+                <div class="chart-container">
+                    <div class="chart-group">
+                        <div class="chart-bars">
+                            <div class="chart-bar chart-bar--old" id="chart-tax-old" style="height: 0px;">
+                                <span class="chart-bar-value" id="chart-tax-old-val">0</span>
+                            </div>
+                            <div class="chart-bar chart-bar--new" id="chart-tax-new" style="height: 0px;">
+                                <span class="chart-bar-value" id="chart-tax-new-val">0</span>
+                            </div>
+                        </div>
+                        <span class="chart-label">Thuế phải đóng (Tháng)</span>
+                    </div>
+                    <div class="chart-group">
+                        <div class="chart-bars">
+                            <div class="chart-bar chart-bar--old" id="chart-net-old" style="height: 0px;">
+                                <span class="chart-bar-value" id="chart-net-old-val">0</span>
+                            </div>
+                            <div class="chart-bar chart-bar--new" id="chart-net-new" style="height: 0px;">
+                                <span class="chart-bar-value" id="chart-net-new-val">0</span>
+                            </div>
+                        </div>
+                        <span class="chart-label">Thực lĩnh (Net)</span>
+                    </div>
+                </div>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <span class="legend-dot legend-dot--old"></span>
+                        Quy định cũ
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot legend-dot--new"></span>
+                        Quy định mới
+                    </div>
+                </div>
+            </div>
+
+            <!-- Details -->
+            <div class="details-grid">
+                <div class="detail-card">
+                    <h3>Diễn giải chi tiết (VNĐ)</h3>
+                    <p id="region-info">Áp dụng vùng I - Mức lương tối thiểu 5.310.000 đ</p>
+                    <table class="detail-table">
+                        <thead>
+                            <tr>
+                                <th>Khoản mục</th>
+                                <th>Cũ</th>
+                                <th>Mới</th>
+                            </tr>
+                        </thead>
+                        <tbody id="details-body"></tbody>
+                    </table>
+                </div>
+                <div class="detail-card">
+                    <h3>(*) Chi tiết thuế thu nhập cá nhân (VNĐ)</h3>
+                    <p>Diễn giải theo từng bậc lũy tiến</p>
+                    <table class="detail-table">
+                        <thead>
+                            <tr>
+                                <th>Bậc</th>
+                                <th>Thuế suất</th>
+                                <th>Cũ</th>
+                                <th>Mới</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bracket-body"></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+    </main>
 
-        <!-- Region -->
-        <div class="form-field">
-          <label for="region">
-            <span class="label-text">Vùng lương tối thiểu</span>
-            <span class="label-hint">Ảnh hưởng mức đóng BHXH</span>
-          </label>
-          <select id="region" aria-label="Chọn vùng lương">
-            <option value="I">Vùng I - 5.310.000₫</option>
-            <option value="II">Vùng II - 4.730.000₫</option>
-            <option value="III">Vùng III - 4.140.000₫</option>
-            <option value="IV">Vùng IV - 3.700.000₫</option>
-          </select>
-        </div>
-      </fieldset>
-    </form>
+    <script>
+        lucide.createIcons();
 
-    <section id="results" class="results-section" aria-live="polite">
-      <div class="result-primary">
-        <span class="result-label" id="result-label">Lương Net</span>
-        <span class="result-value" id="result-value" aria-labelledby="result-label">0 ₫</span>
-      </div>
+        // ========================================
+        // Constants
+        // ========================================
 
-      <div class="result-breakdown">
-        <h2>Chi tiết</h2>
+        const VND = {
+            format: (n) => typeof n === 'number' && !isNaN(n) ? Math.round(n).toLocaleString('vi-VN') : '0',
+            formatUnit: (n) => VND.format(n) + ' đ',
+            formatShort: (n) => {
+                if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+                if (n >= 1000) return (n / 1000).toFixed(0) + 'K';
+                return n.toString();
+            },
+            parse: (s) => parseInt(String(s).replace(/[^\d]/g, ''), 10) || 0
+        };
 
-        <div class="breakdown-group">
-          <h3>Bảo hiểm bắt buộc</h3>
-          <dl class="breakdown-list">
-            <div class="breakdown-item">
-              <dt>BHXH (8%)</dt>
-              <dd id="ins-social">0 ₫</dd>
-            </div>
-            <div class="breakdown-item">
-              <dt>BHYT (1.5%)</dt>
-              <dd id="ins-health">0 ₫</dd>
-            </div>
-            <div class="breakdown-item">
-              <dt>BHTN (1%)</dt>
-              <dd id="ins-unemployment">0 ₫</dd>
-            </div>
-            <div class="breakdown-item total">
-              <dt>Tổng BH</dt>
-              <dd id="ins-total">0 ₫</dd>
-            </div>
-          </dl>
-        </div>
+        const TAX_OLD = {
+            BRACKETS: [
+                { upper: 5_000_000, rate: 0.05 },
+                { upper: 10_000_000, rate: 0.10 },
+                { upper: 18_000_000, rate: 0.15 },
+                { upper: 32_000_000, rate: 0.20 },
+                { upper: 52_000_000, rate: 0.25 },
+                { upper: 80_000_000, rate: 0.30 },
+                { upper: Infinity, rate: 0.35 }
+            ],
+            PERSONAL: 11_000_000,
+            DEPENDENT: 4_400_000
+        };
 
-        <div class="breakdown-group">
-          <h3>Giảm trừ</h3>
-          <dl class="breakdown-list">
-            <div class="breakdown-item">
-              <dt>Bản thân</dt>
-              <dd id="ded-personal">15.500.000 ₫</dd>
-            </div>
-            <div class="breakdown-item">
-              <dt>Người phụ thuộc</dt>
-              <dd id="ded-dependents">0 ₫</dd>
-            </div>
-            <div class="breakdown-item total">
-              <dt>Tổng giảm trừ</dt>
-              <dd id="ded-total">15.500.000 ₫</dd>
-            </div>
-          </dl>
-        </div>
+        const TAX_NEW = {
+            BRACKETS: [
+                { upper: 10_000_000, rate: 0.05 },
+                { upper: 30_000_000, rate: 0.10 },
+                { upper: 60_000_000, rate: 0.20 },
+                { upper: 100_000_000, rate: 0.30 },
+                { upper: Infinity, rate: 0.35 }
+            ],
+            PERSONAL: 15_500_000,
+            DEPENDENT: 6_200_000
+        };
 
-        <div class="breakdown-group">
-          <h3>Thuế TNCN</h3>
-          <dl class="breakdown-list">
-            <div class="breakdown-item">
-              <dt>Thu nhập chịu thuế</dt>
-              <dd id="taxable-income">0 ₫</dd>
-            </div>
-            <div class="breakdown-item">
-              <dt>Thuế phải nộp</dt>
-              <dd id="tax-amount">0 ₫</dd>
-            </div>
-            <div class="breakdown-item">
-              <dt>Thuế suất thực tế</dt>
-              <dd id="tax-rate">0%</dd>
-            </div>
-          </dl>
-        </div>
-      </div>
+        const REGIONS = {
+            I: { min: 5_310_000, label: 'I' },
+            II: { min: 4_730_000, label: 'II' },
+            III: { min: 4_140_000, label: 'III' },
+            IV: { min: 3_700_000, label: 'IV' }
+        };
 
-      <!-- Tax Bracket Table -->
-      <details class="tax-brackets">
-        <summary>Xem chi tiết biểu thuế lũy tiến</summary>
-        <table id="bracket-table">
-          <thead>
-            <tr>
-              <th>Bậc</th>
-              <th>Thu nhập</th>
-              <th>Thuế suất</th>
-              <th>Thuế</th>
-            </tr>
-          </thead>
-          <tbody id="bracket-body">
-            <!-- Populated by JS -->
-          </tbody>
-        </table>
-      </details>
-    </section>
-  </main>
+        const BASE_WAGE = 5_310_000;
+        const CAP_MULT = 20;
 
-  <script>
-    /**
-     * VND Currency Formatting Utility
-     * Handles Vietnamese Dong formatting and parsing
-     */
-    const VND = {
-      formatter: new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND',
-        maximumFractionDigits: 0
-      }),
+        // ========================================
+        // Calculations
+        // ========================================
 
-      /**
-       * Format a number as VND currency string
-       * @param {number} amount - The amount to format
-       * @returns {string} Formatted VND string (e.g., "1.000.000 ₫")
-       */
-      format(amount) {
-        if (typeof amount !== 'number' || isNaN(amount)) {
-          return this.formatter.format(0);
-        }
-        return this.formatter.format(Math.round(amount));
-      },
-
-      /**
-       * Parse a VND currency string to number
-       * @param {string} str - The string to parse (e.g., "1.000.000 ₫")
-       * @returns {number} Parsed number value
-       */
-      parse(str) {
-        if (typeof str !== 'string') {
-          return 0;
-        }
-        // Remove VND symbol (₫), spaces, and dot separators
-        const cleaned = str.replace(/[^\d-]/g, '');
-        return parseInt(cleaned, 10) || 0;
-      }
-    };
-
-    // Export VND utility to window for testing and Phase 02/03 usage
-    window.VND = VND;
-
-    /**
-     * TAX Constants - Vietnam 2026 Tax Law
-     * Effective from January 1, 2026
-     */
-    const TAX = {
-      // 2026 Progressive Tax Brackets (5 levels)
-      BRACKETS: [
-        { upper: 10_000_000, rate: 0.05 },
-        { upper: 30_000_000, rate: 0.10 },
-        { upper: 60_000_000, rate: 0.20 },
-        { upper: 100_000_000, rate: 0.30 },
-        { upper: Infinity, rate: 0.35 }
-      ],
-
-      // Deductions (VND/month)
-      PERSONAL_DEDUCTION: 15_500_000,
-      DEPENDENT_DEDUCTION: 6_200_000,
-
-      // Insurance Rates (employee portion)
-      INSURANCE: {
-        SOCIAL: 0.08,      // 8%
-        HEALTH: 0.015,     // 1.5%
-        UNEMPLOYMENT: 0.01 // 1%
-      },
-
-      // Regional Minimum Wages 2026 (VND)
-      REGIONS: {
-        I: { name: 'Vùng I', minWage: 5_310_000 },
-        II: { name: 'Vùng II', minWage: 4_730_000 },
-        III: { name: 'Vùng III', minWage: 4_140_000 },
-        IV: { name: 'Vùng IV', minWage: 3_700_000 }
-      },
-
-      // National minimum wage (for social/health caps)
-      NATIONAL_MIN_WAGE: 5_310_000,
-
-      // Cap multiplier (20x minimum wage)
-      CAP_MULTIPLIER: 20
-    };
-
-    /**
-     * Calculate progressive income tax
-     * @param {number} taxableIncome - Income after deductions
-     * @returns {number} Tax amount (rounded to VND)
-     */
-    function calculateTax(taxableIncome) {
-      if (taxableIncome <= 0) return 0;
-
-      let totalTax = 0;
-      let previousUpper = 0;
-
-      for (const bracket of TAX.BRACKETS) {
-        if (taxableIncome > bracket.upper) {
-          // Full bracket
-          totalTax += (bracket.upper - previousUpper) * bracket.rate;
-          previousUpper = bracket.upper;
-        } else {
-          // Partial bracket (last applicable)
-          totalTax += (taxableIncome - previousUpper) * bracket.rate;
-          break;
-        }
-      }
-
-      return Math.round(totalTax);
-    }
-
-    /**
-     * Calculate insurance contributions with regional caps
-     * @param {number} grossIncome - Gross salary
-     * @param {string} regionKey - Region key (I, II, III, IV)
-     * @returns {Object} Insurance breakdown {social, health, unemployment, total}
-     */
-    function calculateInsurance(grossIncome, regionKey) {
-      const region = TAX.REGIONS[regionKey];
-      if (!region) {
-        return { social: 0, health: 0, unemployment: 0, total: 0 };
-      }
-
-      const nationalCap = TAX.NATIONAL_MIN_WAGE * TAX.CAP_MULTIPLIER;
-      const regionalCap = region.minWage * TAX.CAP_MULTIPLIER;
-
-      // Calculate each with individual caps
-      const social = Math.min(
-        grossIncome * TAX.INSURANCE.SOCIAL,
-        nationalCap * TAX.INSURANCE.SOCIAL
-      );
-
-      const health = Math.min(
-        grossIncome * TAX.INSURANCE.HEALTH,
-        nationalCap * TAX.INSURANCE.HEALTH
-      );
-
-      const unemployment = Math.min(
-        grossIncome * TAX.INSURANCE.UNEMPLOYMENT,
-        regionalCap * TAX.INSURANCE.UNEMPLOYMENT
-      );
-
-      return {
-        social: Math.round(social),
-        health: Math.round(health),
-        unemployment: Math.round(unemployment),
-        total: Math.round(social + health + unemployment)
-      };
-    }
-
-    /**
-     * Calculate total deductions (personal + dependents)
-     * @param {number} numDependents - Number of dependents
-     * @returns {number} Total deduction amount
-     */
-    function calculateDeductions(numDependents) {
-      const personal = TAX.PERSONAL_DEDUCTION;
-      const dependent = TAX.DEPENDENT_DEDUCTION * Math.max(0, numDependents);
-      return personal + dependent;
-    }
-
-    /**
-     * Convert gross salary to net salary
-     * @param {number} grossIncome - Gross salary
-     * @param {number} numDependents - Number of dependents
-     * @param {string} regionKey - Region key (I, II, III, IV)
-     * @returns {Object} Complete tax calculation result
-     */
-    function grossToNet(grossIncome, numDependents, regionKey) {
-      const insurance = calculateInsurance(grossIncome, regionKey);
-      const deductions = calculateDeductions(numDependents);
-
-      // Taxable income = Gross - Insurance - Deductions (floor at 0)
-      const taxableIncome = Math.max(0, grossIncome - insurance.total - deductions);
-      const tax = calculateTax(taxableIncome);
-
-      // Net = Gross - Insurance - Tax
-      const netIncome = grossIncome - insurance.total - tax;
-
-      // Effective rate (avoid division by zero)
-      const effectiveRate = grossIncome > 0
-        ? (tax / grossIncome) * 100
-        : 0;
-
-      return {
-        grossIncome: Math.round(grossIncome),
-        insurance,
-        deductions,
-        taxableIncome,
-        tax,
-        netIncome: Math.round(netIncome),
-        effectiveRate: effectiveRate.toFixed(2)
-      };
-    }
-
-    /**
-     * Convert net salary to gross salary using binary search
-     * @param {number} targetNet - Target net salary
-     * @param {number} numDependents - Number of dependents
-     * @param {string} regionKey - Region key (I, II, III, IV)
-     * @returns {Object} Complete tax calculation result
-     */
-    function netToGross(targetNet, numDependents, regionKey) {
-      const EPSILON = 100; // VND precision tolerance
-      const MAX_ITERATIONS = 50;
-
-      // Edge case: very low or zero net
-      if (targetNet <= 0) {
-        return grossToNet(0, numDependents, regionKey);
-      }
-
-      // Binary search bounds
-      let low = targetNet;
-      let high = targetNet * 2.5; // Account for ~60% max effective deduction
-
-      for (let i = 0; i < MAX_ITERATIONS; i++) {
-        const mid = (low + high) / 2;
-        const result = grossToNet(mid, numDependents, regionKey);
-        const diff = result.netIncome - targetNet;
-
-        if (Math.abs(diff) <= EPSILON) {
-          return result;
+        function calcTax(income, brackets) {
+            if (income <= 0) return 0;
+            let tax = 0, prev = 0;
+            for (const b of brackets) {
+                if (income > b.upper) {
+                    tax += (b.upper - prev) * b.rate;
+                    prev = b.upper;
+                } else {
+                    tax += (income - prev) * b.rate;
+                    break;
+                }
+            }
+            return Math.round(tax);
         }
 
-        if (diff < 0) {
-          low = mid;
-        } else {
-          high = mid;
+        function calcInsurance(gross, region) {
+            const nationalCap = BASE_WAGE * CAP_MULT;
+            const regionalCap = REGIONS[region].min * CAP_MULT;
+            const si = Math.min(gross * 0.08, nationalCap * 0.08);
+            const hi = Math.min(gross * 0.015, nationalCap * 0.015);
+            const ui = Math.min(gross * 0.01, regionalCap * 0.01);
+            return Math.round(si + hi + ui);
         }
-      }
 
-      // Return best approximation
-      return grossToNet((low + high) / 2, numDependents, regionKey);
-    }
-
-    /**
-     * Validate calculation inputs
-     * @param {number} salary - Salary amount
-     * @param {number} numDependents - Number of dependents
-     * @param {string} regionKey - Region key
-     * @returns {Object} Validation result {valid, errors}
-     */
-    function validateInputs(salary, numDependents, regionKey) {
-      const errors = [];
-
-      if (typeof salary !== 'number' || isNaN(salary)) {
-        errors.push('Vui lòng nhập số tiền hợp lệ');
-      } else if (salary < 0) {
-        errors.push('Số tiền không được âm');
-      } else if (salary > 10_000_000_000) {
-        errors.push('Số tiền vượt quá giới hạn (10 tỷ VND)');
-      }
-
-      if (!Number.isInteger(numDependents) || numDependents < 0) {
-        errors.push('Số người phụ thuộc không hợp lệ');
-      } else if (numDependents > 10) {
-        errors.push('Số người phụ thuộc tối đa là 10');
-      }
-
-      if (!TAX.REGIONS[regionKey]) {
-        errors.push('Vùng lương không hợp lệ');
-      }
-
-      return { valid: errors.length === 0, errors };
-    }
-
-    /**
-     * Get detailed tax bracket breakdown for UI display
-     * @param {number} taxableIncome - Taxable income
-     * @returns {Array} Breakdown by bracket
-     */
-    function getTaxBreakdown(taxableIncome) {
-      if (taxableIncome <= 0) return [];
-
-      const breakdown = [];
-      let previousUpper = 0;
-
-      for (const bracket of TAX.BRACKETS) {
-        if (taxableIncome > previousUpper) {
-          const taxableInBracket = Math.min(
-            taxableIncome - previousUpper,
-            bracket.upper - previousUpper
-          );
-          const taxInBracket = taxableInBracket * bracket.rate;
-
-          breakdown.push({
-            range: `${VND.format(previousUpper)} - ${bracket.upper === Infinity ? '...' : VND.format(bracket.upper)}`,
-            rate: `${bracket.rate * 100}%`,
-            taxable: taxableInBracket,
-            tax: Math.round(taxInBracket)
-          });
-
-          previousUpper = bracket.upper;
-          if (taxableIncome <= bracket.upper) break;
+        function grossToNet(gross, deps, region, tax) {
+            const ins = calcInsurance(gross, region);
+            const deduct = tax.PERSONAL + tax.DEPENDENT * deps;
+            const taxable = Math.max(0, gross - ins - deduct);
+            const taxAmt = calcTax(taxable, tax.BRACKETS);
+            return { gross, ins, deduct, taxable, tax: taxAmt, net: Math.round(gross - ins - taxAmt) };
         }
-      }
 
-      return breakdown;
-    }
+        function getTaxBreakdown(income, brackets) {
+            if (income <= 0) return [];
+            const result = [];
+            let prev = 0;
+            for (let i = 0; i < brackets.length; i++) {
+                const b = brackets[i];
+                if (income > prev) {
+                    const amt = Math.min(income - prev, b.upper - prev);
+                    result.push({ rate: `${b.rate * 100}%`, tax: Math.round(amt * b.rate) });
+                    prev = b.upper;
+                    if (income <= b.upper) break;
+                }
+            }
+            return result;
+        }
 
-    // Export all functions to window for testing and Phase 03 usage
-    window.TAX = TAX;
-    window.calculateTax = calculateTax;
-    window.calculateInsurance = calculateInsurance;
-    window.calculateDeductions = calculateDeductions;
-    window.grossToNet = grossToNet;
-    window.netToGross = netToGross;
-    window.validateInputs = validateInputs;
-    window.getTaxBreakdown = getTaxBreakdown;
+        // ========================================
+        // State & UI
+        // ========================================
 
-    // ========================================
-    // Phase 03: UI Interaction Logic
-    // ========================================
+        const state = { salary: 0, deps: 0, region: 'I' };
 
-    // Application State
-    const state = {
-      mode: 'gross-to-net',
-      salary: 0,
-      dependents: 0,
-      region: 'I'
-    };
+        const $ = (id) => document.getElementById(id);
+        const els = {
+            salary: $('salary'),
+            deps: $('dependents'),
+            regionGrid: $('region-grid'),
+            regionInfo: $('region-info'),
+            oldNet: $('old-net'),
+            oldTax: $('old-tax'),
+            oldDeduct: $('old-deduction'),
+            newNet: $('new-net'),
+            newTax: $('new-tax'),
+            newDeduct: $('new-deduction'),
+            savings: $('savings-value'),
+            details: $('details-body'),
+            brackets: $('bracket-body'),
+            chartTaxOld: $('chart-tax-old'),
+            chartTaxNew: $('chart-tax-new'),
+            chartNetOld: $('chart-net-old'),
+            chartNetNew: $('chart-net-new'),
+            chartTaxOldVal: $('chart-tax-old-val'),
+            chartTaxNewVal: $('chart-tax-new-val'),
+            chartNetOldVal: $('chart-net-old-val'),
+            chartNetNewVal: $('chart-net-new-val')
+        };
 
-    // DOM Elements
-    const elements = {
-      form: document.getElementById('calc-form'),
-      salaryInput: document.getElementById('salary'),
-      salaryType: document.getElementById('salary-type'),
-      salaryError: document.getElementById('salary-error'),
-      dependentsInput: document.getElementById('dependents'),
-      regionSelect: document.getElementById('region'),
-      modeButtons: document.querySelectorAll('.mode-btn'),
-      resultLabel: document.getElementById('result-label'),
-      resultValue: document.getElementById('result-value'),
-      insSocial: document.getElementById('ins-social'),
-      insHealth: document.getElementById('ins-health'),
-      insUnemployment: document.getElementById('ins-unemployment'),
-      insTotal: document.getElementById('ins-total'),
-      dedPersonal: document.getElementById('ded-personal'),
-      dedDependents: document.getElementById('ded-dependents'),
-      dedTotal: document.getElementById('ded-total'),
-      taxableIncome: document.getElementById('taxable-income'),
-      taxAmount: document.getElementById('tax-amount'),
-      taxRate: document.getElementById('tax-rate'),
-      bracketBody: document.getElementById('bracket-body')
-    };
+        function updateChart(oldR, newR) {
+            const maxTax = Math.max(oldR.tax, newR.tax, 1);
+            const maxNet = Math.max(oldR.net, newR.net, 1);
+            const maxHeight = 120;
 
-    /**
-     * Debounce utility for real-time calculation
-     */
-    function debounce(fn, delay) {
-      let timeout;
-      return function(...args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => fn.apply(this, args), delay);
-      };
-    }
+            els.chartTaxOld.style.height = Math.max(4, (oldR.tax / maxTax) * maxHeight) + 'px';
+            els.chartTaxNew.style.height = Math.max(4, (newR.tax / maxTax) * maxHeight) + 'px';
+            els.chartNetOld.style.height = Math.max(4, (oldR.net / maxNet) * maxHeight) + 'px';
+            els.chartNetNew.style.height = Math.max(4, (newR.net / maxNet) * maxHeight) + 'px';
 
-    /**
-     * Format salary input as user types (sanitized)
-     */
-    function formatSalaryInput(value) {
-      // Sanitize: only allow digits, dots, spaces, ₫ symbol
-      const sanitized = value.replace(/[^\d.\s₫]/g, '');
-      const num = VND.parse(sanitized);
-      if (num === 0 && value === '') return '';
-      return num.toLocaleString('vi-VN');
-    }
+            els.chartTaxOldVal.textContent = VND.formatShort(oldR.tax);
+            els.chartTaxNewVal.textContent = VND.formatShort(newR.tax);
+            els.chartNetOldVal.textContent = VND.formatShort(oldR.net);
+            els.chartNetNewVal.textContent = VND.formatShort(newR.net);
+        }
 
-    /**
-     * Update breakdown UI with calculation result
-     */
-    function updateBreakdown(result) {
-      elements.insSocial.textContent = VND.format(result.insurance.social);
-      elements.insHealth.textContent = VND.format(result.insurance.health);
-      elements.insUnemployment.textContent = VND.format(result.insurance.unemployment);
-      elements.insTotal.textContent = VND.format(result.insurance.total);
+        function update() {
+            const oldR = grossToNet(state.salary, state.deps, state.region, TAX_OLD);
+            const newR = grossToNet(state.salary, state.deps, state.region, TAX_NEW);
+            const save = newR.net - oldR.net;
+            const hasSalary = state.salary > 0;
 
-      elements.dedPersonal.textContent = VND.format(TAX.PERSONAL_DEDUCTION);
-      elements.dedDependents.textContent = VND.format(TAX.DEPENDENT_DEDUCTION * state.dependents);
-      elements.dedTotal.textContent = VND.format(result.deductions);
+            els.oldNet.innerHTML = `${VND.format(oldR.net)}<span class="currency">đ</span>`;
+            els.oldTax.textContent = VND.formatUnit(oldR.tax);
+            els.oldDeduct.textContent = hasSalary ? VND.formatUnit(oldR.deduct) : '0 đ';
 
-      elements.taxableIncome.textContent = VND.format(result.taxableIncome);
-      elements.taxAmount.textContent = VND.format(result.tax);
-      elements.taxRate.textContent = result.effectiveRate + '%';
-    }
+            els.newNet.innerHTML = `${VND.format(newR.net)}<span class="currency">đ</span>`;
+            els.newTax.textContent = VND.formatUnit(newR.tax);
+            els.newDeduct.textContent = hasSalary ? VND.formatUnit(newR.deduct) : '0 đ';
 
-    /**
-     * Update tax bracket table (XSS-safe)
-     */
-    function updateBracketTable(taxableIncome) {
-      const breakdown = getTaxBreakdown(taxableIncome);
-      elements.bracketBody.textContent = '';
+            els.savings.innerHTML = `${VND.formatUnit(Math.max(0, save))} <i data-lucide="trending-up"></i>`;
+            lucide.createIcons();
 
-      if (breakdown.length === 0) {
-        const emptyRow = document.createElement('tr');
-        const emptyCell = document.createElement('td');
-        emptyCell.colSpan = 4;
-        emptyCell.style.textAlign = 'center';
-        emptyCell.style.color = 'var(--color-text-muted)';
-        emptyCell.textContent = 'Không có thuế';
-        emptyRow.appendChild(emptyCell);
-        elements.bracketBody.appendChild(emptyRow);
-        return;
-      }
+            // Region info
+            els.regionInfo.textContent = `Áp dụng vùng ${state.region} - Mức lương tối thiểu ${VND.format(REGIONS[state.region].min)} đ`;
 
-      breakdown.forEach((item, index) => {
-        const row = document.createElement('tr');
-        const cellIndex = document.createElement('td');
-        const cellRange = document.createElement('td');
-        const cellRate = document.createElement('td');
-        const cellTax = document.createElement('td');
+            // Chart
+            updateChart(oldR, newR);
 
-        cellIndex.textContent = index + 1;
-        cellRange.textContent = item.range;
-        cellRate.textContent = item.rate;
-        cellTax.textContent = VND.format(item.tax);
+            // Details table - show deductions only when salary entered
+            const rows = [
+                ['Lương Gross', oldR.gross, newR.gross],
+                ['Bảo hiểm (10.5%)', -oldR.ins, -newR.ins],
+                ['Giảm trừ bản thân', hasSalary ? -TAX_OLD.PERSONAL : 0, hasSalary ? -TAX_NEW.PERSONAL : 0],
+                [`Giảm trừ NPT (×${state.deps})`, hasSalary ? -TAX_OLD.DEPENDENT * state.deps : 0, hasSalary ? -TAX_NEW.DEPENDENT * state.deps : 0],
+                ['Thu nhập chịu thuế', oldR.taxable, newR.taxable],
+                ['Thuế TNCN (*)', -oldR.tax, -newR.tax, 'negative'],
+                ['Thực lĩnh (Net)', oldR.net, newR.net, 'bold']
+            ];
 
-        row.appendChild(cellIndex);
-        row.appendChild(cellRange);
-        row.appendChild(cellRate);
-        row.appendChild(cellTax);
-        elements.bracketBody.appendChild(row);
-      });
-    }
+            els.details.innerHTML = rows.map(([label, old, newVal, type]) => `
+                <tr>
+                    <td class="${type === 'bold' ? 'text-bold' : ''}">${label}</td>
+                    <td class="${type === 'negative' ? 'text-red' : ''}">${VND.format(old)}</td>
+                    <td class="text-green ${type === 'bold' ? 'text-bold' : ''}">${VND.format(newVal)}</td>
+                </tr>
+            `).join('');
 
-    /**
-     * Calculate and update UI
-     */
-    function calculate() {
-      const validation = validateInputs(state.salary, state.dependents, state.region);
+            // Brackets table
+            const oldBr = getTaxBreakdown(oldR.taxable, TAX_OLD.BRACKETS);
+            const newBr = getTaxBreakdown(newR.taxable, TAX_NEW.BRACKETS);
+            const rates = ['5%', '10%', '20%', '30%', '35%'];
 
-      if (!validation.valid) {
-        elements.salaryError.textContent = validation.errors[0];
-        elements.salaryInput.parentElement.parentElement.classList.add('has-error');
-        return;
-      }
+            if (oldBr.length === 0 && newBr.length === 0) {
+                els.brackets.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:20px">Không có thuế</td></tr>';
+            } else {
+                els.brackets.innerHTML = rates.map((r, i) => {
+                    const o = oldBr.find(x => x.rate === r);
+                    const n = newBr.find(x => x.rate === r);
+                    return `
+                        <tr>
+                            <td>Bậc ${i + 1}</td>
+                            <td>${r}</td>
+                            <td>${o ? VND.format(o.tax) : '—'}</td>
+                            <td class="text-green">${n ? VND.format(n.tax) : '—'}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
 
-      elements.salaryError.textContent = '';
-      elements.salaryInput.parentElement.parentElement.classList.remove('has-error');
+        // ========================================
+        // Events
+        // ========================================
 
-      let result;
-      if (state.mode === 'gross-to-net') {
-        result = grossToNet(state.salary, state.dependents, state.region);
-        elements.resultLabel.textContent = 'Lương Net';
-        elements.resultValue.textContent = VND.format(result.netIncome);
-      } else {
-        result = netToGross(state.salary, state.dependents, state.region);
-        elements.resultLabel.textContent = 'Lương Gross';
-        elements.resultValue.textContent = VND.format(result.grossIncome);
-      }
+        let timeout;
+        els.salary.addEventListener('input', (e) => {
+            const val = e.target.value.replace(/[^\d]/g, '');
+            const num = parseInt(val, 10) || 0;
+            e.target.value = num > 0 ? num.toLocaleString('vi-VN') : '';
+            state.salary = num;
+            clearTimeout(timeout);
+            timeout = setTimeout(update, 100);
+        });
 
-      updateBreakdown(result);
-      updateBracketTable(result.taxableIncome);
-    }
+        document.querySelectorAll('.counter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                let v = parseInt(els.deps.value, 10) || 0;
+                if (btn.dataset.action === 'increment' && v < 10) v++;
+                if (btn.dataset.action === 'decrement' && v > 0) v--;
+                els.deps.value = v;
+                state.deps = v;
+                update();
+            });
+        });
 
-    // Debounced calculation for real-time feedback
-    const debouncedCalculate = debounce(calculate, 300);
+        els.deps.addEventListener('change', (e) => {
+            state.deps = Math.max(0, Math.min(10, parseInt(e.target.value, 10) || 0));
+            e.target.value = state.deps;
+            update();
+        });
 
-    // ========================================
-    // Event Listeners
-    // ========================================
+        // Region selection
+        els.regionGrid.querySelectorAll('.region-option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                els.regionGrid.querySelectorAll('.region-option').forEach(o => o.classList.remove('active'));
+                opt.classList.add('active');
+                state.region = opt.dataset.region;
+                update();
+            });
+        });
 
-    // Salary input with VND formatting
-    elements.salaryInput.addEventListener('input', (e) => {
-      const formatted = formatSalaryInput(e.target.value);
-      e.target.value = formatted;
-      state.salary = VND.parse(formatted);
-      debouncedCalculate();
-    });
+        update();
 
-    // Dependents input
-    elements.dependentsInput.addEventListener('change', (e) => {
-      state.dependents = parseInt(e.target.value, 10) || 0;
-      calculate();
-    });
-
-    // Region selector
-    elements.regionSelect.addEventListener('change', (e) => {
-      state.region = e.target.value;
-      calculate();
-    });
-
-    // Counter buttons for dependents
-    document.querySelectorAll('.counter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const action = btn.dataset.action;
-        const input = elements.dependentsInput;
-        let value = parseInt(input.value, 10) || 0;
-
-        if (action === 'increment' && value < 10) value++;
-        if (action === 'decrement' && value > 0) value--;
-
-        input.value = value;
-        state.dependents = value;
-        calculate();
-      });
-    });
-
-    // Mode toggle buttons
-    elements.modeButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        elements.modeButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        state.mode = btn.dataset.mode;
-        elements.salaryType.textContent = state.mode === 'gross-to-net' ? 'Gross' : 'Net';
-
-        // Clear and recalculate
-        elements.salaryInput.value = '';
-        state.salary = 0;
-        calculate();
-
-        // Focus management: return to salary input
-        elements.salaryInput.focus();
-      });
-    });
-
-    // Keyboard shortcuts for dependents input (Arrow Up/Down)
-    elements.dependentsInput.addEventListener('keydown', (e) => {
-      let value = parseInt(elements.dependentsInput.value, 10) || 0;
-
-      if (e.key === 'ArrowUp' && value < 10) {
-        e.preventDefault();
-        value++;
-        elements.dependentsInput.value = value;
-        state.dependents = value;
-        calculate();
-      } else if (e.key === 'ArrowDown' && value > 0) {
-        e.preventDefault();
-        value--;
-        elements.dependentsInput.value = value;
-        state.dependents = value;
-        calculate();
-      }
-    });
-
-    // Prevent form submission
-    elements.form.addEventListener('submit', (e) => {
-      e.preventDefault();
-    });
-
-    // Initial calculation on page load
-    calculate();
-  </script>
+        // Export for testing
+        window.VND = VND;
+        window.grossToNet = grossToNet;
+        window.calcTax = calcTax;
+    </script>
 </body>
 </html>
