@@ -12,39 +12,30 @@
     <style>
         :root {
             /* ========================================
-               WARM NEUTRALS - Stone Scale
+               COOL NEUTRALS - Slate Scale
                ======================================== */
-            --stone-50: #FAFAF9;
-            --stone-100: #F5F5F4;
-            --stone-200: #E7E5E4;
-            --stone-300: #D6D3D1;
-            --stone-400: #A8A29E;
-            --stone-500: #78716C;
-            --stone-600: #57534E;
-            --stone-700: #44403C;
-            --stone-800: #292524;
-            --stone-900: #1C1917;
+            --slate-50: #F8FAFC;
+            --slate-100: #F1F5F9;
+            --slate-200: #E2E8F0;
+            --slate-300: #CBD5E1;
+            --slate-400: #94A3B8;
+            --slate-500: #64748B;
+            --slate-600: #475569;
+            --slate-700: #334155;
+            --slate-800: #1E293B;
+            --slate-900: #0F172A;
 
             /* ========================================
-               ACCENT - Teal (Primary Interactive)
-               ======================================== */
-            --teal-50: #F0FDFA;
-            --teal-100: #CCFBF1;
-            --teal-200: #99F6E4;
-            --teal-400: #2DD4BF;
-            --teal-500: #14B8A6;
-            --teal-600: #0D9488;
-            --teal-700: #0F766E;
-
-            /* ========================================
-               ACCENT - Emerald (Success/Positive)
+               ACCENT - Emerald (Primary Interactive)
                ======================================== */
             --emerald-50: #ECFDF5;
             --emerald-100: #D1FAE5;
+            --emerald-200: #A7F3D0;
             --emerald-400: #34D399;
             --emerald-500: #10B981;
             --emerald-600: #059669;
             --emerald-700: #047857;
+            --emerald-800: #065F46;
 
             /* ========================================
                STATUS COLORS
@@ -61,9 +52,9 @@
             --border-default: rgba(0, 0, 0, 0.06);
             --border-subtle: rgba(0, 0, 0, 0.04);
 
-            --text-primary: var(--stone-900);
-            --text-secondary: var(--stone-600);
-            --text-muted: var(--stone-400);
+            --text-primary: var(--slate-900);
+            --text-secondary: var(--slate-600);
+            --text-muted: var(--slate-400);
 
             /* ========================================
                SPACING & RADII
@@ -81,16 +72,7 @@
             --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.04);
             --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.04);
             --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(0, 0, 0, 0.04);
-            --shadow-teal: 0 4px 16px rgba(13, 148, 136, 0.2);
             --shadow-emerald: 0 4px 16px rgba(16, 185, 129, 0.25);
-
-            /* Legacy mappings */
-            --green-50: var(--emerald-50);
-            --green-100: var(--emerald-100);
-            --green-400: var(--emerald-400);
-            --green-500: var(--emerald-500);
-            --green-600: var(--emerald-600);
-            --green-700: var(--emerald-700);
         }
 
         * {
@@ -144,13 +126,13 @@
         .logo-mark {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, var(--teal-500), var(--teal-600));
+            background: linear-gradient(135deg, var(--emerald-500), var(--emerald-600));
             border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            box-shadow: var(--shadow-teal);
+            box-shadow: var(--shadow-emerald);
         }
 
         .logo-mark svg {
@@ -303,17 +285,17 @@
         }
 
         .input-field:hover {
-            border-color: var(--stone-300);
+            border-color: var(--slate-300);
         }
 
         .input-field:focus {
             outline: none;
-            border-color: var(--teal-500);
-            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1);
+            border-color: var(--emerald-500);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
         }
 
         .input-field::placeholder {
-            color: var(--stone-300);
+            color: var(--slate-300);
             font-weight: 600;
         }
 
@@ -324,8 +306,8 @@
             transform: translateY(-50%);
             font-size: 12px;
             font-weight: 700;
-            color: var(--teal-700);
-            background: var(--teal-50);
+            color: var(--emerald-700);
+            background: var(--emerald-50);
             padding: 6px 12px;
             border-radius: var(--radius-sm);
             letter-spacing: 0.02em;
@@ -360,12 +342,12 @@
         }
 
         .counter-btn:hover {
-            background: var(--stone-100);
-            color: var(--teal-600);
+            background: var(--slate-100);
+            color: var(--emerald-600);
         }
 
         .counter-btn:active {
-            background: var(--stone-200);
+            background: var(--slate-200);
         }
 
         .counter-btn svg {
@@ -415,14 +397,14 @@
         }
 
         .region-option:hover {
-            border-color: var(--stone-300);
-            background: var(--stone-50);
+            border-color: var(--slate-300);
+            background: var(--slate-50);
         }
 
         .region-option.active {
-            border-color: var(--teal-500);
-            background: linear-gradient(135deg, var(--teal-50) 0%, rgba(255,255,255,1) 100%);
-            box-shadow: var(--shadow-teal);
+            border-color: var(--emerald-500);
+            background: linear-gradient(135deg, var(--emerald-50) 0%, rgba(255,255,255,1) 100%);
+            box-shadow: var(--shadow-emerald);
         }
 
         .region-option input {
@@ -444,13 +426,13 @@
         }
 
         .region-option.active .region-name {
-            color: var(--teal-700);
+            color: var(--emerald-700);
         }
 
         .region-radio {
             width: 20px;
             height: 20px;
-            border: 2px solid var(--stone-300);
+            border: 2px solid var(--slate-300);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -460,8 +442,8 @@
         }
 
         .region-option.active .region-radio {
-            border-color: var(--teal-500);
-            background: var(--teal-500);
+            border-color: var(--emerald-500);
+            background: var(--emerald-500);
         }
 
         .region-radio::after {
@@ -488,13 +470,13 @@
         }
 
         .region-option.active .region-amount {
-            color: var(--teal-600);
+            color: var(--emerald-600);
         }
 
         /* Info Banner */
         .info-banner {
-            background: linear-gradient(135deg, var(--teal-50) 0%, rgba(240, 253, 250, 0.5) 100%);
-            border: 1px solid var(--teal-100);
+            background: linear-gradient(135deg, var(--emerald-50) 0%, rgba(236, 253, 245, 0.5) 100%);
+            border: 1px solid var(--emerald-100);
             border-radius: var(--radius-lg);
             padding: 16px 20px;
             display: flex;
@@ -505,7 +487,7 @@
         .info-banner-icon {
             width: 32px;
             height: 32px;
-            background: var(--teal-500);
+            background: var(--emerald-500);
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
@@ -522,13 +504,13 @@
         .info-banner-content h4 {
             font-size: 13px;
             font-weight: 700;
-            color: var(--teal-800);
+            color: var(--emerald-800);
             margin-bottom: 2px;
         }
 
         .info-banner-content p {
             font-size: 13px;
-            color: var(--teal-700);
+            color: var(--emerald-700);
             line-height: 1.5;
         }
 
@@ -583,7 +565,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, var(--emerald-400), var(--teal-400), var(--emerald-500));
+            background: linear-gradient(90deg, var(--emerald-400), var(--emerald-500), var(--emerald-600));
             border-radius: var(--radius-xl) var(--radius-xl) 0 0;
         }
 
@@ -606,8 +588,8 @@
         }
 
         .result-badge--default {
-            background: var(--stone-100);
-            color: var(--stone-600);
+            background: var(--slate-100);
+            color: var(--slate-600);
         }
 
         .result-badge--success {
@@ -781,7 +763,7 @@
         }
 
         .legend-dot--old {
-            background: var(--stone-300);
+            background: var(--slate-300);
         }
 
         .legend-dot--new {
@@ -819,7 +801,7 @@
         }
 
         .chart-bar--old {
-            background: linear-gradient(180deg, var(--stone-300), var(--stone-400));
+            background: linear-gradient(180deg, var(--slate-300), var(--slate-400));
         }
 
         .chart-bar--new {
