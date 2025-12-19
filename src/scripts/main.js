@@ -2,6 +2,9 @@ import { createIcons, Users, Minus, Plus, Sparkles, TrendingUp } from 'lucide';
 import { TAX_OLD, TAX_NEW, REGIONS } from './constants.js';
 import { grossToNet, getTaxBreakdown } from './calculator.js';
 import { VND } from './format.js';
+
+// Self-hosted fonts - Vietnamese + Latin subsets
+import '../styles/fonts.css';
 import '../styles/main.css';
 
 // Initialize Lucide icons

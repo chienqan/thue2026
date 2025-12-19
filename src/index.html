@@ -33,10 +33,9 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- Preload critical assets -->
+  <link rel="preload" href="/scripts/main.js" as="script" crossorigin>
+  <link rel="modulepreload" href="/scripts/main.js">
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -116,14 +115,14 @@
                 <stop offset="100%" stop-color="#059669"/>
               </linearGradient>
             </defs>
-            <rect width="32" height="32" rx="7" fill="url(#logo-grad)"/>
-            <rect x="6" y="5" width="20" height="7" rx="2" fill="#fff"/>
-            <rect x="6" y="14.5" width="5.5" height="5.5" rx="1.2" fill="#fff"/>
-            <rect x="13.25" y="14.5" width="5.5" height="5.5" rx="1.2" fill="#fff"/>
-            <rect x="20.5" y="14.5" width="5.5" height="5.5" rx="1.2" fill="#fff"/>
-            <rect x="6" y="22" width="5.5" height="5.5" rx="1.2" fill="#fff"/>
-            <rect x="13.25" y="22" width="5.5" height="5.5" rx="1.2" fill="#fff"/>
-            <rect x="20.5" y="22" width="5.5" height="5.5" rx="1.2" fill="#fff"/>
+            <rect width="32" height="32" rx="8" fill="url(#logo-grad)"/>
+            <rect x="9" y="9" width="14" height="3.5" rx="1" fill="#fff"/>
+            <rect x="9" y="14" width="3.5" height="3.5" rx="0.8" fill="#fff"/>
+            <rect x="14.25" y="14" width="3.5" height="3.5" rx="0.8" fill="#fff"/>
+            <rect x="19.5" y="14" width="3.5" height="3.5" rx="0.8" fill="#fff"/>
+            <rect x="9" y="19" width="3.5" height="3.5" rx="0.8" fill="#fff"/>
+            <rect x="14.25" y="19" width="3.5" height="3.5" rx="0.8" fill="#fff"/>
+            <rect x="19.5" y="19" width="3.5" height="3.5" rx="0.8" fill="#fff"/>
           </svg>
         </div>
         <div class="logo-text">
