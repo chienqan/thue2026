@@ -110,6 +110,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(135deg, var(--emerald-500), var(--emerald-600));
+    border-radius: 12px;
 }
 
 .logo-mark svg {
