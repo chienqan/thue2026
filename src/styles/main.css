@@ -34,7 +34,8 @@
     /* ========================================
        SEMANTIC TOKENS
        ======================================== */
-    --bg-page: #F9FAFB;
+    /* --bg-page: #F9FAFB; */
+    --bg-page: #F9FAFD;
     --bg-card: #FFFFFF;
     --bg-elevated: #FFFFFF;
     --border-default: rgba(0, 0, 0, 0.06);
