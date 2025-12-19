@@ -211,7 +211,7 @@
             margin: 0 auto;
             padding: 32px;
             display: grid;
-            grid-template-columns: 420px 1fr;
+            grid-template-columns: 360px 1fr;
             gap: 32px;
             align-items: start;
         }
@@ -562,6 +562,7 @@
             position: relative;
             box-shadow: var(--shadow-md);
             transition: all 0.3s ease;
+            overflow: hidden;
         }
 
         .result-card:hover {
@@ -581,8 +582,8 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--emerald-400), var(--emerald-500));
+            height: 3px;
+            background: linear-gradient(90deg, var(--emerald-400), var(--teal-400), var(--emerald-500));
             border-radius: var(--radius-xl) var(--radius-xl) 0 0;
         }
 
@@ -686,10 +687,10 @@
 
         /* Savings Box */
         .savings-box {
-            margin-top: 20px;
-            padding: 16px 20px;
+            margin-top: 16px;
+            padding: 12px 16px;
             background: linear-gradient(135deg, var(--emerald-500), var(--emerald-600));
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius-md);
             display: flex;
             justify-content: space-between;
             align-items: center;
