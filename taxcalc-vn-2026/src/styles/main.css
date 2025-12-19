@@ -1,0 +1,13 @@
+/* Main CSS - Phase 01 Placeholder */
+/* Will be populated in Phase 02: Code Extraction */
+
+:root {
+  --bg-page: #F9FAFB;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  background: var(--bg-page);
+  margin: 0;
+  padding: 20px;
+}
