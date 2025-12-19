@@ -545,7 +545,7 @@
         .results-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 24px;
+            gap: 20px;
         }
 
         @media (max-width: 640px) {
@@ -554,249 +554,108 @@
             }
         }
 
-        /* Result Card Base */
         .result-card {
             background: var(--bg-card);
             border-radius: var(--radius-xl);
-            padding: 32px;
+            border: 1px solid var(--border-default);
+            padding: 28px;
             position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Glass effect overlay */
-        .result-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
-            z-index: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .result-card > * {
-            position: relative;
-            z-index: 1;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
         }
 
         .result-card:hover {
-            transform: translateY(-6px) scale(1.01);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
-        /* Default Card (Old Law) */
-        .result-card--default {
-            border: 1px solid var(--stone-200);
-            box-shadow:
-                0 4px 20px rgba(0, 0, 0, 0.04),
-                0 8px 32px rgba(0, 0, 0, 0.02);
-            background: linear-gradient(145deg, #ffffff 0%, var(--stone-50) 100%);
-        }
-
-        .result-card--default::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--stone-300), var(--stone-400));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .result-card--default:hover {
-            border-color: var(--stone-300);
-            box-shadow:
-                0 8px 30px rgba(0, 0, 0, 0.08),
-                0 16px 48px rgba(0, 0, 0, 0.04);
-        }
-
-        .result-card--default:hover::after {
-            opacity: 1;
-        }
-
-        /* Highlight Card (New Law) */
         .result-card--highlight {
-            border: 2px solid var(--emerald-300);
-            box-shadow:
-                0 4px 20px rgba(16, 185, 129, 0.12),
-                0 8px 40px rgba(16, 185, 129, 0.08);
-            background: linear-gradient(145deg, #ffffff 0%, var(--emerald-50) 50%, rgba(240, 253, 250, 0.8) 100%);
+            border: 2px solid var(--emerald-400);
+            background: linear-gradient(160deg, #ffffff 0%, var(--emerald-50) 100%);
+            box-shadow: var(--shadow-emerald);
         }
 
-        .result-card--highlight::after {
+        .result-card--highlight::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, var(--emerald-400), var(--teal-400), var(--emerald-500));
-            background-size: 200% 100%;
-            animation: gradientFlow 3s ease infinite;
-        }
-
-        @keyframes gradientFlow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+            background: linear-gradient(90deg, var(--emerald-400), var(--emerald-500));
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
         }
 
         .result-card--highlight:hover {
-            border-color: var(--emerald-400);
-            box-shadow:
-                0 12px 40px rgba(16, 185, 129, 0.2),
-                0 20px 60px rgba(16, 185, 129, 0.1);
+            border-color: var(--emerald-500);
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.2);
         }
 
-        /* Floating particles for highlight card */
-        .result-card--highlight .card-particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .result-card--highlight .card-particles::before,
-        .result-card--highlight .card-particles::after {
-            content: '';
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
-            animation: float 8s ease-in-out infinite;
-        }
-
-        .result-card--highlight .card-particles::before {
-            top: -20px;
-            right: -20px;
-        }
-
-        .result-card--highlight .card-particles::after {
-            bottom: 40px;
-            left: -30px;
-            animation-delay: -4s;
-            width: 80px;
-            height: 80px;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
-            50% { transform: translate(-10px, 10px) scale(1.1); opacity: 0.8; }
-        }
-
-        /* Badge Styles */
         .result-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            padding: 8px 16px;
+            letter-spacing: 0.06em;
+            padding: 6px 14px;
             border-radius: 100px;
-            margin-bottom: 24px;
-            transition: all 0.3s ease;
+            margin-bottom: 20px;
         }
 
         .result-badge--default {
-            background: linear-gradient(135deg, var(--stone-100), var(--stone-200));
+            background: var(--stone-100);
             color: var(--stone-600);
-            border: 1px solid var(--stone-200);
-        }
-
-        .result-card--default:hover .result-badge--default {
-            background: linear-gradient(135deg, var(--stone-200), var(--stone-300));
-            transform: scale(1.02);
         }
 
         .result-badge--success {
-            background: linear-gradient(135deg, var(--emerald-500), var(--teal-500));
+            background: var(--emerald-500);
             color: white;
-            border: none;
-            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
         }
 
         .result-badge--success::before {
             content: '';
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             background: white;
             border-radius: 50%;
-            animation: pulse-dot 2s ease-in-out infinite;
         }
 
-        @keyframes pulse-dot {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.3); opacity: 0.7; }
-        }
-
-        .result-card--highlight:hover .result-badge--success {
-            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
-            transform: scale(1.02);
-        }
-
-        /* Labels */
         .result-label {
             font-size: 13px;
             color: var(--text-muted);
             font-weight: 500;
-            margin-bottom: 8px;
-            letter-spacing: 0.02em;
+            margin-bottom: 6px;
         }
 
-        /* Amount Display */
         .result-amount {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 40px;
+            font-size: 36px;
             font-weight: 700;
-            margin-bottom: 24px;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
         }
 
         .result-card--default .result-amount {
-            color: var(--stone-800);
-        }
-
-        .result-card--default:hover .result-amount {
-            color: var(--stone-900);
+            color: var(--text-primary);
         }
 
         .result-card--highlight .result-amount {
-            background: linear-gradient(135deg, var(--emerald-600), var(--teal-600));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .result-card--highlight:hover .result-amount {
-            background: linear-gradient(135deg, var(--emerald-500), var(--teal-500));
-            -webkit-background-clip: text;
-            background-clip: text;
+            color: var(--emerald-600);
         }
 
         .result-amount .currency {
-            font-size: 26px;
-            opacity: 0.5;
-            margin-left: 4px;
+            font-size: 24px;
+            opacity: 0.6;
+            margin-left: 2px;
         }
 
-        /* Details Section */
         .result-details {
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            padding-top: 20px;
+            gap: 12px;
+            padding-top: 16px;
             border-top: 1px solid var(--border-subtle);
         }
 
@@ -805,28 +664,20 @@
             justify-content: space-between;
             align-items: center;
             font-size: 13px;
-            padding: 4px 0;
-            transition: all 0.2s ease;
-        }
-
-        .result-card:hover .result-row {
-            transform: translateX(2px);
         }
 
         .result-row-label {
             color: var(--text-muted);
-            font-weight: 500;
         }
 
         .result-row-value {
             font-family: 'JetBrains Mono', monospace;
             font-weight: 600;
-            font-size: 14px;
-            transition: all 0.2s ease;
+            font-size: 13px;
         }
 
         .result-card--default .result-row-value {
-            color: var(--stone-700);
+            color: var(--text-primary);
         }
 
         .result-card--highlight .result-row-value {
@@ -835,44 +686,27 @@
 
         /* Savings Box */
         .savings-box {
-            margin-top: 24px;
-            padding: 18px 24px;
-            background: linear-gradient(135deg, var(--emerald-500) 0%, var(--teal-500) 50%, var(--emerald-600) 100%);
-            background-size: 200% 200%;
-            animation: gradientShift 4s ease infinite;
+            margin-top: 20px;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, var(--emerald-500), var(--emerald-600));
             border-radius: var(--radius-lg);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow:
-                0 4px 16px rgba(16, 185, 129, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-emerald);
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
         }
 
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .savings-box:hover {
-            box-shadow:
-                0 8px 24px rgba(16, 185, 129, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            transform: scale(1.02);
-        }
-
-        .savings-box::before {
+        .savings-box::after {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: shimmer 2.5s ease-in-out infinite;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            animation: shimmer 3s ease-in-out infinite;
         }
 
         @keyframes shimmer {
@@ -883,34 +717,22 @@
         .savings-label {
             font-size: 13px;
             font-weight: 600;
-            color: rgba(255, 255, 255, 0.95);
-            letter-spacing: 0.02em;
-            position: relative;
-            z-index: 1;
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .savings-value {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 20px;
             font-weight: 700;
+            font-size: 18px;
             color: white;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .savings-value svg {
-            width: 20px;
-            height: 20px;
-            animation: bounce-arrow 1.5s ease-in-out infinite;
-        }
-
-        @keyframes bounce-arrow {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
+            width: 18px;
+            height: 18px;
         }
 
         /* ========================================
@@ -1294,7 +1116,6 @@
 
                 <!-- New Law -->
                 <div class="result-card result-card--highlight">
-                    <div class="card-particles"></div>
                     <span class="result-badge result-badge--success">Quy định mới</span>
                     <div class="result-label">Thực lĩnh (Net)</div>
                     <div class="result-amount" id="new-net">0<span class="currency">đ</span></div>
