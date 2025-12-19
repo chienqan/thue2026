@@ -1,15 +1,19 @@
 {
-  "name": "my-project",
+  "name": "taxcalc-vn-2026",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Vietnamese Tax Calculator 2026 - Compare old vs new regulations",
+  "type": "module",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "dependencies": {
+    "lucide": "^0.562.0"
+  },
   "devDependencies": {
-    "jsdom": "^27.3.0"
+    "terser": "^5.44.1",
+    "vite": "^7.3.0"
   }
 }

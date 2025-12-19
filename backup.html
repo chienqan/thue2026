@@ -287,7 +287,7 @@
         .input-field:focus {
             outline: none;
             border-color: var(--emerald-500);
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+            /* box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1); */
         }
 
         .input-field::placeholder {
@@ -550,11 +550,18 @@
         /* Old regulation - subdued, de-emphasized */
         .result-card--default {
             background: linear-gradient(135deg, var(--slate-50) 0%, #FAFBFC 100%);
-            opacity: 0.92;
+            border: 1px solid var(--slate-200);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
         }
 
-        .result-card--default:hover {
-            opacity: 1;
+        .result-card--default .result-badge {
+            align-self: flex-start;
+        }
+
+        .result-card--default .result-details {
+            margin-top: auto;
         }
 
         /* New regulation - clean emphasis */
@@ -635,6 +642,28 @@
             color: var(--emerald-600);
         }
 
+        /* Net Gain Indicator */
+        .net-gain-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--emerald-600);
+            background: var(--emerald-50);
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            margin-top: -12px;
+            margin-bottom: 16px;
+            border: 1px solid var(--emerald-100);
+        }
+
+        .net-gain-indicator svg {
+            width: 14px;
+            height: 14px;
+        }
+
         .result-amount .currency {
             font-size: 24px;
             opacity: 0.6;
@@ -672,42 +701,6 @@
 
         .result-card--highlight .result-row-value {
             color: var(--emerald-600);
-        }
-
-        /* Savings Box - Professional fintech style */
-        .savings-box {
-            margin-top: 20px;
-            padding: 14px 18px;
-            background: var(--emerald-600);
-            border-radius: var(--radius-md);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 8px rgba(5, 150, 105, 0.2);
-        }
-
-        .savings-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.9);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .savings-value {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            font-size: 15px;
-            color: white;
-        }
-
-        .savings-value svg {
-            width: 15px;
-            height: 15px;
-            opacity: 0.85;
         }
 
         /* ========================================
@@ -966,7 +959,7 @@
                     <span class="logo-subtitle">So sánh luật cũ & mới</span>
                 </div>
             </div>
-            <div class="header-badge">Hiệu lực từ 1/1/2026</div>
+            <div class="header-badge">Hiệu lực từ 1/7/2026</div>
         </div>
     </header>
 
@@ -1062,7 +1055,7 @@
                     <i data-lucide="sparkles"></i>
                 </div>
                 <div class="info-banner-content">
-                    <h4>Mức giảm trừ mới (từ 1/1/2026)</h4>
+                    <h4>Mức giảm trừ mới (từ 1/7/2026)</h4>
                     <p>Bản thân: <strong>15.5 triệu</strong> · Người phụ thuộc: <strong>6.2 triệu</strong>/người</p>
                 </div>
             </div>
@@ -1094,6 +1087,10 @@
                     <span class="result-badge result-badge--success">Quy định mới</span>
                     <div class="result-label">Thực lĩnh (Net)</div>
                     <div class="result-amount" id="new-net">0<span class="currency">đ</span></div>
+                    <div class="net-gain-indicator" id="net-gain">
+                        <i data-lucide="trending-up"></i>
+                        <span id="net-gain-text">+0 / tháng</span>
+                    </div>
                     <div class="result-details">
                         <div class="result-row">
                             <span class="result-row-label">Thuế phải đóng</span>
@@ -1103,13 +1100,6 @@
                             <span class="result-row-label">Tổng giảm trừ</span>
                             <span class="result-row-value" id="new-deduction">0 đ</span>
                         </div>
-                    </div>
-                    <div class="savings-box">
-                        <span class="savings-label">Tiết kiệm được</span>
-                        <span class="savings-value" id="savings-value">
-                            0 đ
-                            <i data-lucide="trending-up"></i>
-                        </span>
                     </div>
                 </div>
             </div>
@@ -1300,7 +1290,7 @@
         // State & UI
         // ========================================
 
-        const state = { salary: 0, deps: 0, region: 'I' };
+        const state = { salary: 100000000, deps: 0, region: 'I' };
 
         const $ = (id) => document.getElementById(id);
         const els = {
@@ -1314,7 +1304,8 @@
             newNet: $('new-net'),
             newTax: $('new-tax'),
             newDeduct: $('new-deduction'),
-            savings: $('savings-value'),
+            netGain: $('net-gain'),
+            netGainText: $('net-gain-text'),
             details: $('details-body'),
             brackets: $('bracket-body'),
             chartTaxOld: $('chart-tax-old'),
@@ -1355,9 +1346,22 @@
 
             els.newNet.innerHTML = `${VND.format(newR.net)}<span class="currency">đ</span>`;
             els.newTax.textContent = VND.formatUnit(newR.tax);
+
+            // New card deduction
             els.newDeduct.textContent = hasSalary ? VND.formatUnit(newR.deduct) : '0 đ';
 
-            els.savings.innerHTML = `${VND.formatUnit(Math.max(0, save))} <i data-lucide="trending-up"></i>`;
+            // Net gain indicator
+            const netGain = newR.net - oldR.net;
+            if (netGain > 0 && hasSalary) {
+                const netGainFormatted = netGain >= 1000000
+                    ? `+${(netGain / 1000000).toFixed(2).replace('.00', '')} triệu`
+                    : `+${VND.format(netGain)}`;
+                els.netGainText.textContent = `${netGainFormatted} / tháng`;
+                els.netGain.style.display = 'inline-flex';
+            } else {
+                els.netGain.style.display = 'none';
+            }
+
             lucide.createIcons();
 
             // Region info
@@ -1449,6 +1453,8 @@
             });
         });
 
+        // Initialize salary input with default value
+        els.salary.value = state.salary.toLocaleString('vi-VN');
         update();
 
         // Export for testing

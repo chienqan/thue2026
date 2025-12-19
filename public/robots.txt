@@ -1,0 +1,6 @@
+# robots.txt for Thue2026.com
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://thue2026.com/sitemap.xml
