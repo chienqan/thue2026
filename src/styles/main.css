@@ -602,7 +602,7 @@ main {
 
 /* Clean badge for new regulation */
 .result-badge--success {
-    background: var(--emerald-600);
+    background: var(--emerald-700);
     color: white;
     box-shadow: 0 1px 3px rgba(5, 150, 105, 0.2);
 }
