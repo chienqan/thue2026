@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/inject-preloads.js",
+    "build": "vite build",
     "preview": "vite preview",
     "deploy": "wrangler pages deploy"
   },
