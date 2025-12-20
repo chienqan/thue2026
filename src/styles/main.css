@@ -42,7 +42,7 @@
 
     --text-primary: var(--slate-900);
     --text-secondary: var(--slate-600);
-    --text-muted: var(--slate-400);
+    --text-muted: var(--slate-500); /* Improved contrast: 4.6:1 vs 3.2:1 */
 
     /* ========================================
        SPACING & RADII
@@ -495,7 +495,8 @@ main {
     height: 16px;
 }
 
-.info-banner-content h4 {
+.info-banner-content h4,
+.info-banner-title {
     font-size: 13px;
     font-weight: 700;
     color: var(--emerald-800);

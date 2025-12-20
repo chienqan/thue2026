@@ -141,9 +141,9 @@
         <div class="card-body">
           <!-- Salary Input -->
           <div class="input-group">
-            <label class="input-label">
+            <label class="input-label" for="salary">
               Thu nhập Gross / Tháng
-              <span class="tooltip" data-tip="Tổng thu nhập trước khi trừ bảo hiểm và thuế">?</span>
+              <span class="tooltip" data-tip="Tổng thu nhập trước khi trừ bảo hiểm và thuế" role="tooltip" aria-label="Thông tin">?</span>
             </label>
             <div class="input-wrapper">
               <input
@@ -153,10 +153,11 @@
                 placeholder="0"
                 inputmode="numeric"
                 autocomplete="off"
+                aria-describedby="salary-hint"
                 autofocus>
-              <span class="input-suffix">VND</span>
+              <span class="input-suffix" aria-hidden="true">VND</span>
             </div>
-            <p class="input-hint">Tổng lương chưa trừ bảo hiểm và thuế</p>
+            <p class="input-hint" id="salary-hint">Tổng lương chưa trừ bảo hiểm và thuế</p>
           </div>
 
           <!-- Dependents -->
@@ -165,9 +166,9 @@
               <i data-lucide="users"></i>
               Số người phụ thuộc
             </label>
-            <div class="counter-control">
-              <button type="button" class="counter-btn" data-action="decrement">
-                <i data-lucide="minus"></i>
+            <div class="counter-control" role="group" aria-label="Số người phụ thuộc">
+              <button type="button" class="counter-btn" data-action="decrement" aria-label="Giảm số người phụ thuộc">
+                <i data-lucide="minus" aria-hidden="true"></i>
               </button>
               <input
                 type="number"
@@ -175,9 +176,10 @@
                 class="counter-input"
                 value="0"
                 min="0"
-                max="10">
-              <button type="button" class="counter-btn" data-action="increment">
-                <i data-lucide="plus"></i>
+                max="10"
+                aria-label="Số người phụ thuộc">
+              <button type="button" class="counter-btn" data-action="increment" aria-label="Tăng số người phụ thuộc">
+                <i data-lucide="plus" aria-hidden="true"></i>
               </button>
             </div>
           </div>
@@ -229,7 +231,7 @@
           <i data-lucide="sparkles"></i>
         </div>
         <div class="info-banner-content">
-          <h4>Mức giảm trừ mới (từ 1/7/2026)</h4>
+          <h2 class="info-banner-title">Mức giảm trừ mới (từ 1/7/2026)</h2>
           <p>Bản thân: <strong>15.5 triệu</strong> · Người phụ thuộc: <strong>6.2 triệu</strong>/người</p>
         </div>
       </div>
@@ -280,13 +282,14 @@
       </div>
 
       <!-- Sticky Mobile Input Bar -->
-      <div class="sticky-input-bar" id="sticky-input-bar">
+      <div class="sticky-input-bar" id="sticky-input-bar" role="toolbar" aria-label="Nhập lương nhanh">
         <div class="sticky-input-wrapper">
           <input
             type="text"
             id="sticky-salary"
             class="sticky-input"
             placeholder="Nhập lương"
+            aria-label="Thu nhập Gross"
             inputmode="numeric"
             autocomplete="off">
           <span class="sticky-suffix">VND</span>
