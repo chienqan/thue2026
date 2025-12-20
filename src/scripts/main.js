@@ -245,6 +245,23 @@ els.salary.addEventListener('input', () => {
   els.stickySalary.value = els.salary.value;
 });
 
+// Lazy load Google Analytics on first user interaction (performance optimization)
+const loadGtag = () => {
+  if (window.gtagLoaded) return;
+  window.gtagLoaded = true;
+  const s = document.createElement('script');
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-VQ1VX81WVR';
+  s.async = true;
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-VQ1VX81WVR');
+};
+['scroll', 'click', 'touchstart', 'keydown'].forEach(e =>
+  window.addEventListener(e, loadGtag, { once: true, passive: true })
+);
+
 // Export for testing (dev only)
 if (import.meta.env.DEV) {
   window.VND = VND;
