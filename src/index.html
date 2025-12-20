@@ -42,14 +42,14 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-  <!-- Preload critical fonts (load parallel with HTML, not chained after CSS) -->
+  <!-- Preload critical JS -->
+  <link rel="modulepreload" href="/scripts/main.js">
+
+  <!-- Preload fonts (parallel with HTML) -->
   <link rel="preload" href="/fonts/plus-jakarta-sans-vietnamese.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono-vietnamese.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-
-  <!-- Preload critical JS -->
-  <link rel="modulepreload" href="/scripts/main.js">
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
