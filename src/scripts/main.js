@@ -3,9 +3,7 @@ import { TAX_OLD, TAX_NEW, REGIONS } from './constants.js';
 import { grossToNet, getTaxBreakdown } from './calculator.js';
 import { VND } from './format.js';
 
-// Self-hosted fonts - Vietnamese + Latin subsets
-import '../styles/fonts.css';
-import '../styles/main.css';
+// CSS is loaded via HTML <link> tags for optimal preloading
 
 // Initialize Lucide icons
 createIcons({
