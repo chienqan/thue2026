@@ -3,10 +3,10 @@ import { readFileSync, writeFileSync, unlinkSync } from 'fs';
 import { join } from 'path';
 import { minify } from 'html-minifier-terser';
 
-// Plugin to inline CSS and minify HTML
-function inlineCssAndMinifyHtml() {
+// Plugin to inline CSS, JS, and minify HTML (single-file output)
+function inlineAssetsAndMinifyHtml() {
   return {
-    name: 'inline-css-minify-html',
+    name: 'inline-assets-minify-html',
     enforce: 'post',
     async closeBundle() {
       const distDir = 'dist';
@@ -22,13 +22,27 @@ function inlineCssAndMinifyHtml() {
         try {
           const css = readFileSync(cssPath, 'utf-8');
           html = html.replace(match[0], `<style>${css}</style>`);
-          unlinkSync(cssPath); // Remove CSS file after inlining
+          unlinkSync(cssPath);
         } catch (e) {
-          console.warn(`Could not inline ${cssPath}`);
+          console.warn(`Could not inline CSS: ${cssPath}`);
         }
       }
 
-      // Minify HTML
+      // Find and inline JS files (module scripts)
+      const jsRegex = /<script[^>]+src="([^"]+\.js)"[^>]*><\/script>/g;
+      while ((match = jsRegex.exec(html)) !== null) {
+        const jsPath = join(distDir, match[1].replace(/^\//, ''));
+        try {
+          const js = readFileSync(jsPath, 'utf-8');
+          // Keep type="module" for ES module compatibility
+          html = html.replace(match[0], `<script type="module">${js}</script>`);
+          unlinkSync(jsPath);
+        } catch (e) {
+          console.warn(`Could not inline JS: ${jsPath}`);
+        }
+      }
+
+      // Minify HTML (includes inlined CSS and JS)
       html = await minify(html, {
         collapseWhitespace: true,
         removeComments: true,
@@ -42,13 +56,13 @@ function inlineCssAndMinifyHtml() {
       });
 
       writeFileSync(htmlPath, html);
-      console.log('✓ CSS inlined and HTML minified');
+      console.log('✓ CSS + JS inlined, HTML minified (single-file output)');
     }
   };
 }
 
 export default defineConfig({
-  plugins: [inlineCssAndMinifyHtml()],
+  plugins: [inlineAssetsAndMinifyHtml()],
   root: 'src',
   publicDir: '../public',
   build: {
