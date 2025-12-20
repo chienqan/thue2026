@@ -30,6 +30,10 @@ const els = {
   newDeduct: $('new-deduction'),
   netGain: $('net-gain'),
   netGainText: $('net-gain-text'),
+  stickyBar: $('sticky-input-bar'),
+  stickySalary: $('sticky-salary'),
+  stickyResult: $('sticky-result'),
+  stickyResultText: $('sticky-result-text'),
   details: $('details-body'),
   brackets: $('bracket-body'),
   chartTaxOld: $('chart-tax-old'),
@@ -79,8 +83,22 @@ function update() {
       : `+${VND.format(netGain)}`;
     els.netGainText.textContent = `${netGainFormatted} / tháng`;
     els.netGain.style.display = 'inline-flex';
+    // Update sticky bar for mobile
+    els.stickyResultText.textContent = `${netGainFormatted}`;
+    els.stickyResult.classList.remove('no-gain');
   } else {
     els.netGain.style.display = 'none';
+    els.stickyResultText.textContent = hasSalary ? '0 đ' : '+0';
+    els.stickyResult.classList.toggle('no-gain', hasSalary);
+  }
+
+  // Low income state - show "not yet taxed" message
+  const isLowIncome = newR.taxable <= 0 && hasSalary;
+  if (isLowIncome) {
+    els.newTax.innerHTML = '<span class="no-tax-state">Chưa đến mức chịu thuế</span>';
+    els.oldTax.innerHTML = oldR.taxable <= 0
+      ? '<span class="no-tax-state">Chưa đến mức chịu thuế</span>'
+      : VND.formatUnit(oldR.tax);
   }
 
   // Refresh icons for dynamically inserted content
@@ -113,23 +131,31 @@ function update() {
     </tr>
   `).join('');
 
-  // Brackets table
+  // Brackets table - show all brackets from both systems
   const oldBr = getTaxBreakdown(oldR.taxable, TAX_OLD.BRACKETS);
   const newBr = getTaxBreakdown(newR.taxable, TAX_NEW.BRACKETS);
-  const rates = ['5%', '10%', '20%', '30%', '35%'];
+  // OLD has 7 brackets: 5%, 10%, 15%, 20%, 25%, 30%, 35%
+  // NEW has 5 brackets: 5%, 10%, 20%, 30%, 35%
+  const allRates = ['5%', '10%', '15%', '20%', '25%', '30%', '35%'];
 
   if (oldBr.length === 0 && newBr.length === 0) {
     els.brackets.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:20px">Không có thuế</td></tr>';
   } else {
-    els.brackets.innerHTML = rates.map((r, i) => {
+    let bracketNum = 0;
+    els.brackets.innerHTML = allRates.map((r) => {
       const o = oldBr.find(x => x.rate === r);
       const n = newBr.find(x => x.rate === r);
+      // Only show row if at least one system uses this rate
+      const oldHasRate = TAX_OLD.BRACKETS.some(b => `${b.rate * 100}%` === r);
+      const newHasRate = TAX_NEW.BRACKETS.some(b => `${b.rate * 100}%` === r);
+      if (!oldHasRate && !newHasRate) return '';
+      bracketNum++;
       return `
         <tr>
-          <td>Bậc ${i + 1}</td>
+          <td>Bậc ${bracketNum}</td>
           <td>${r}</td>
-          <td>${o ? VND.format(o.tax) : '—'}</td>
-          <td class="text-green">${n ? VND.format(n.tax) : '—'}</td>
+          <td>${o ? VND.format(o.tax) : (oldHasRate ? '—' : '<span class="text-muted">N/A</span>')}</td>
+          <td class="text-green">${n ? VND.format(n.tax) : (newHasRate ? '—' : '<span class="text-muted">N/A</span>')}</td>
         </tr>
       `;
     }).join('');
@@ -176,7 +202,50 @@ els.regionGrid.querySelectorAll('.region-option').forEach(opt => {
 
 // Initialize salary input with default value
 els.salary.value = state.salary.toLocaleString('vi-VN');
+els.stickySalary.value = state.salary.toLocaleString('vi-VN');
 update();
+
+// Sticky bar - show on mobile when scrolled past salary input field
+const salaryInputGroup = els.salary.closest('.input-group');
+let stickyBarVisible = false;
+
+function checkStickyBar() {
+  if (window.innerWidth > 768) {
+    els.stickyBar.classList.remove('visible');
+    document.body.classList.remove('sticky-bar-visible');
+    return;
+  }
+
+  const rect = salaryInputGroup.getBoundingClientRect();
+  // Show immediately when salary input scrolls out of view
+  const shouldShow = rect.bottom < 0;
+
+  if (shouldShow !== stickyBarVisible) {
+    stickyBarVisible = shouldShow;
+    els.stickyBar.classList.toggle('visible', shouldShow);
+    document.body.classList.toggle('sticky-bar-visible', shouldShow);
+  }
+}
+
+window.addEventListener('scroll', checkStickyBar, { passive: true });
+window.addEventListener('resize', checkStickyBar, { passive: true });
+
+// Sync sticky salary input with main input
+els.stickySalary.addEventListener('input', (e) => {
+  const val = e.target.value.replace(/[^\d]/g, '');
+  const num = parseInt(val, 10) || 0;
+  e.target.value = num > 0 ? num.toLocaleString('vi-VN') : '';
+  state.salary = num;
+  // Sync main input
+  els.salary.value = e.target.value;
+  clearTimeout(timeout);
+  timeout = setTimeout(update, 100);
+});
+
+// Sync main input to sticky input
+els.salary.addEventListener('input', () => {
+  els.stickySalary.value = els.salary.value;
+});
 
 // Export for testing (dev only)
 if (import.meta.env.DEV) {

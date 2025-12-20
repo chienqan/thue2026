@@ -141,7 +141,10 @@
         <div class="card-body">
           <!-- Salary Input -->
           <div class="input-group">
-            <label class="input-label">Thu nhập Gross / Tháng</label>
+            <label class="input-label">
+              Thu nhập Gross / Tháng
+              <span class="tooltip" data-tip="Tổng thu nhập trước khi trừ bảo hiểm và thuế">?</span>
+            </label>
             <div class="input-wrapper">
               <input
                 type="text"
@@ -248,7 +251,7 @@
               <span class="result-row-value" id="old-tax">0 đ</span>
             </div>
             <div class="result-row">
-              <span class="result-row-label">Tổng giảm trừ</span>
+              <span class="result-row-label">Tổng giảm trừ <span class="tooltip tooltip--sm" data-tip="Bản thân + Người phụ thuộc">?</span></span>
               <span class="result-row-value" id="old-deduction">0 đ</span>
             </div>
           </div>
@@ -269,10 +272,28 @@
               <span class="result-row-value" id="new-tax">0 đ</span>
             </div>
             <div class="result-row">
-              <span class="result-row-label">Tổng giảm trừ</span>
+              <span class="result-row-label">Tổng giảm trừ <span class="tooltip tooltip--sm" data-tip="Bản thân + Người phụ thuộc">?</span></span>
               <span class="result-row-value" id="new-deduction">0 đ</span>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Sticky Mobile Input Bar -->
+      <div class="sticky-input-bar" id="sticky-input-bar">
+        <div class="sticky-input-wrapper">
+          <input
+            type="text"
+            id="sticky-salary"
+            class="sticky-input"
+            placeholder="Nhập lương"
+            inputmode="numeric"
+            autocomplete="off">
+          <span class="sticky-suffix">VND</span>
+        </div>
+        <div class="sticky-result" id="sticky-result">
+          <i data-lucide="trending-up"></i>
+          <span id="sticky-result-text">+0 / tháng</span>
         </div>
       </div>
 
