@@ -82,8 +82,8 @@
                               │
                               │ Deployed on
                               ↓
-                     Cloudflare Pages
-              (Static file hosting + edge routing)
+                       Bunny CDN
+              (Static file hosting + edge distribution)
 ```
 
 ## Data Flow Architecture
@@ -406,12 +406,11 @@ Dist Output
 ### Runtime Hosting
 
 ```
-Cloudflare Pages
+Bunny CDN
 ├─ Static file server
-├─ _headers: Security headers + cache control
-├─ _redirects: SPA routing (/* → /index.html)
-├─ Edge caching: Assets cached 1 year (immutable)
-└─ HTML: Cache-Control: max-age=0, must-revalidate
+├─ Single-file HTML output (CSS + JS inlined)
+├─ Edge caching: Assets cached globally
+└─ Global distribution via Bunny Edge network
 ```
 
 ### Caching Strategy

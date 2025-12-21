@@ -23,7 +23,7 @@ Real-time tax calculator comparing 2026 new Vietnamese salary tax regulations ag
 - **Package Manager**: Bun
 - **Icons**: Lucide v0.562.0
 - **Fonts**: Self-hosted WOFF2 (Plus Jakarta Sans, JetBrains Mono)
-- **Deployment**: Cloudflare Pages
+- **Deployment**: Bunny CDN
 
 ## Quick Start
 
@@ -87,8 +87,9 @@ src/
 public/
 ├── robots.txt             # SEO crawling rules
 ├── sitemap.xml            # SEO site structure
-├── _headers               # Cloudflare Pages security headers
-├── _redirects             # SPA routing configuration
+├── favicon.ico            # Favicon (ICO format)
+├── favicon.svg            # Favicon (SVG format)
+├── site.webmanifest       # PWA manifest
 └── og-image.png           # Social media preview
 
 docs/
@@ -177,26 +178,24 @@ Zone IV (Other):  3,700,000 VND
 
 ## Deployment
 
-### Cloudflare Pages (Current)
+### Bunny CDN (Current)
 
 ```bash
-# Push to main branch to auto-deploy
-git push origin main
+# Build for production
+bun run build
+# Upload dist/ folder to Bunny CDN storage
 ```
 
 Configuration:
 - **Build command**: `bun run build`
 - **Build output**: `dist/`
-- **Root directory**: `/`
-
-Security headers and SPA routing configured in `public/_headers` and `public/_redirects`.
+- **Single-file output**: HTML with inlined CSS + JS
 
 ### Environment
 
-- **Host**: Cloudflare Pages (global edge network)
+- **Host**: Bunny CDN (global edge network)
 - **HTTPS**: Automatic with SSL/TLS
-- **CDN**: Automatic (no config needed)
-- **Uptime SLA**: 99.95%
+- **CDN**: Global distribution via Bunny Edge
 
 ## Browser Support
 
@@ -220,7 +219,7 @@ WCAG 2.1 AA compliance in progress:
 - **100% Client-Side**: No server, no API, no data transmission
 - **Input Validation**: Strict ranges for salary (0-10B), deps (0-10), region whitelist
 - **No Tracking**: No analytics, cookies, or external requests
-- **HTTPS Only**: Enforced via Cloudflare Pages
+- **HTTPS Only**: Enforced via Bunny CDN
 - **Security Headers**: X-Frame-Options, X-Content-Type-Options configured
 
 ## Development Workflow
@@ -292,4 +291,4 @@ For issues, questions, or feedback:
 
 ---
 
-**Last Updated**: 2025-12-19 | **Status**: Active Development (Phase 03) | **Deployment**: Cloudflare Pages
+**Last Updated**: 2025-12-21 | **Status**: Active Development | **Deployment**: Bunny CDN

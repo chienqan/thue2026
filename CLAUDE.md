@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Vietnamese salary tax calculator comparing 2026 new regulations vs 2025 old regulations. Client-side SPA with real-time gross-to-net conversion.
 
-**Live**: https://thue2026.com | **Stack**: Vanilla JS + Vite + Cloudflare Pages
+**Live**: https://thue2026.com | **Stack**: Vanilla JS + Vite + Bunny CDN
 
 ## Commands
 

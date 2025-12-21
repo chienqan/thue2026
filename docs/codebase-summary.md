@@ -28,9 +28,9 @@ src/
 public/
 ├── robots.txt             # SEO: crawler directives
 ├── sitemap.xml            # SEO: site structure
-├── _headers               # Cloudflare Pages: security & cache
-├── _redirects             # Cloudflare Pages: SPA routing
-├── favicon.svg            # Brand icon
+├── favicon.ico            # Favicon (ICO format)
+├── favicon.svg            # Favicon (SVG format)
+├── site.webmanifest       # PWA manifest
 └── og-image.png           # Social sharing preview
 
 dist/                       # Production build output
@@ -170,11 +170,10 @@ Uses Vietnamese locale for separator formatting (space as thousand separator).
 - Asset hashing: `[name]-[hash].[ext]`
 - No source maps
 
-**Deployment**: Cloudflare Pages
-- Uses `_headers` for security headers & cache control
-- Uses `_redirects` for SPA routing
-- Fonts cached 1 year (immutable assets)
-- HTML cached with must-revalidate
+**Deployment**: Bunny CDN
+- Single-file HTML output (CSS + JS inlined)
+- Fonts cached via CDN edge
+- Global distribution via Bunny Edge network
 
 ## SEO Implementation
 
@@ -234,4 +233,4 @@ Uses Vietnamese locale for separator formatting (space as thousand separator).
 - [ ] Fonts load from public/fonts/
 - [ ] Calculator results accurate
 - [ ] Mobile responsive (test at 375px, 768px, 1440px)
-- [ ] Cloudflare Pages routing works (/index.html fallback)
+- [ ] CDN routing works correctly

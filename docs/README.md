@@ -120,7 +120,7 @@ docs/
 - Frontend: Vanilla JS + HTML5 + CSS3
 - Build: Vite 7.3.0 + Bun
 - Icons: Lucide v0.562.0
-- Deployment: Cloudflare Pages
+- Deployment: Bunny CDN
 - See **README.md** for full stack
 
 ### Project Status
@@ -150,7 +150,7 @@ A: **codebase-summary.md** shows directory structure. **system-architecture.md**
 A: See **README.md** (performance table) and **project-overview-pdr.md** (non-functional requirements).
 
 ### Q: How do I deploy this?
-A: **README.md** has deployment section for Cloudflare Pages. See **system-architecture.md** for deployment architecture details.
+A: **README.md** has deployment section for Bunny CDN. See **system-architecture.md** for deployment architecture details.
 
 ### Q: Is there a checklist for code review?
 A: Yes, use **code-standards.md** as a checklist for JS/HTML/CSS standards, security, and accessibility.

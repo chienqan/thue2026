@@ -212,7 +212,7 @@ Dependent Deduction: 4,400,000 VND/dependent/month
 - No third-party scripts (except Lucide icons)
 
 #### Infrastructure Security
-- HTTPS only (Cloudflare Pages)
+- HTTPS only (Bunny CDN)
 - Security headers: X-Frame-Options, X-Content-Type-Options, etc.
 - CORS not required (static hosting)
 - No authentication needed
@@ -248,17 +248,15 @@ Dependent Deduction: 4,400,000 VND/dependent/month
 ### Deployment
 
 #### Hosting
-- Platform: Cloudflare Pages
+- Platform: Bunny CDN
 - Region: Global edge network
-- Uptime: 99.95% SLA
-- CDN: Automatic, no configuration
+- CDN: Global distribution via Bunny Edge
 
 #### Build & Release
 - Build tool: Vite 7.3.0
 - Package manager: Bun
-- Deployment: Git push (automated via GitHub Actions)
+- Output: Single-file HTML (CSS + JS inlined)
 - Versioning: Semantic versioning (MAJOR.MINOR.PATCH)
-- Release cycle: Continuous deployment from main branch
 
 ## Technical Constraints
 
@@ -369,7 +367,7 @@ Per Operation: <100ms
 - [ ] Meta tag verification
 - [ ] Schema markup validation
 - [ ] Lighthouse audit & fixes
-- [ ] Cloudflare Pages deployment
+- [ ] Bunny CDN deployment
 - [ ] DNS configuration
 - [ ] Google Search Console setup
 - [ ] Analytics integration (if approved)
@@ -475,7 +473,7 @@ Per Operation: <100ms
    - Accessibility audit & fixes
 
 3. **Medium-term** (before 2026-01-20):
-   - Deploy to Cloudflare Pages
+   - Deploy to Bunny CDN
    - Configure DNS (thue2026.com)
    - Google Search Console verification
 
