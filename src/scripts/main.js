@@ -1,5 +1,5 @@
 import { createIcons, Users, Minus, Plus, Sparkles, TrendingUp } from 'lucide';
-import { TAX_OLD, TAX_NEW, REGIONS } from './constants.js';
+import { TAX_OLD, TAX_NEW, REGIONS, REGIONS_OLD, REGIONS_NEW } from './constants.js';
 import { grossToNet, getTaxBreakdown } from './calculator.js';
 import { VND } from './format.js';
 
@@ -61,8 +61,8 @@ function updateChart(oldR, newR) {
 }
 
 function update() {
-  const oldR = grossToNet(state.salary, state.deps, state.region, TAX_OLD);
-  const newR = grossToNet(state.salary, state.deps, state.region, TAX_NEW);
+  const oldR = grossToNet(state.salary, state.deps, state.region, TAX_OLD, REGIONS_OLD);
+  const newR = grossToNet(state.salary, state.deps, state.region, TAX_NEW, REGIONS_NEW);
   const hasSalary = state.salary > 0;
 
   els.oldNet.innerHTML = `${VND.format(oldR.net)}<span class="currency">đ</span>`;
@@ -113,7 +113,9 @@ function update() {
   // Details table
   const rows = [
     ['Lương Gross', oldR.gross, newR.gross],
-    ['Bảo hiểm (10.5%)', -oldR.ins, -newR.ins],
+    ['Bảo hiểm XH (8%)', -oldR.ins.si, -newR.ins.si],
+    ['Bảo hiểm YT (1.5%)', -oldR.ins.hi, -newR.ins.hi],
+    ['Bảo hiểm TN (1%)', -oldR.ins.ui, -newR.ins.ui],
     ['Giảm trừ bản thân', hasSalary ? -TAX_OLD.PERSONAL : 0, hasSalary ? -TAX_NEW.PERSONAL : 0],
     [`Giảm trừ NPT (×${state.deps})`, hasSalary ? -TAX_OLD.DEPENDENT * state.deps : 0, hasSalary ? -TAX_NEW.DEPENDENT * state.deps : 0],
     ['Thu nhập chịu thuế', oldR.taxable, newR.taxable],
@@ -162,11 +164,33 @@ function update() {
 
 // Event listeners
 let timeout;
+
+// Format digit string with thousand separators (preserves leading zeros)
+function formatDigits(str) {
+  if (!str) return '';
+  return str.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
 els.salary.addEventListener('input', (e) => {
+  // Count digits before cursor to restore position after formatting
+  const cursorPos = e.target.selectionStart;
+  const beforeCursor = e.target.value.slice(0, cursorPos).replace(/[^\d]/g, '');
+  const digitsBefore = beforeCursor.length;
+
   const val = e.target.value.replace(/[^\d]/g, '');
   const num = parseInt(val, 10) || 0;
-  e.target.value = num > 0 ? num.toLocaleString('vi-VN') : '';
+  const formatted = val ? formatDigits(val) : '';
+  e.target.value = formatted;
   state.salary = num;
+
+  // Restore cursor position (count digits to find new position)
+  let digits = 0, newPos = 0;
+  for (let i = 0; i < formatted.length && digits < digitsBefore; i++) {
+    if (/\d/.test(formatted[i])) digits++;
+    newPos = i + 1;
+  }
+  e.target.selectionStart = e.target.selectionEnd = newPos;
+
   clearTimeout(timeout);
   timeout = setTimeout(update, 100);
 });
@@ -198,9 +222,11 @@ els.regionGrid.querySelectorAll('.region-option').forEach(opt => {
   });
 });
 
-// Initialize salary input with default value
+// Initialize salary input with default value and cursor at beginning
 els.salary.value = state.salary.toLocaleString('vi-VN');
 els.stickySalary.value = state.salary.toLocaleString('vi-VN');
+els.salary.focus();
+els.salary.setSelectionRange(0, 0);
 update();
 
 // Sticky bar - show on mobile when scrolled past salary input field
@@ -230,12 +256,24 @@ window.addEventListener('resize', checkStickyBar, { passive: true });
 
 // Sync sticky salary input with main input
 els.stickySalary.addEventListener('input', (e) => {
+  const cursorPos = e.target.selectionStart;
+  const beforeCursor = e.target.value.slice(0, cursorPos).replace(/[^\d]/g, '');
+  const digitsBefore = beforeCursor.length;
+
   const val = e.target.value.replace(/[^\d]/g, '');
   const num = parseInt(val, 10) || 0;
-  e.target.value = num > 0 ? num.toLocaleString('vi-VN') : '';
+  const formatted = val ? formatDigits(val) : '';
+  e.target.value = formatted;
   state.salary = num;
-  // Sync main input
-  els.salary.value = e.target.value;
+  els.salary.value = formatted;
+
+  let digits = 0, newPos = 0;
+  for (let i = 0; i < formatted.length && digits < digitsBefore; i++) {
+    if (/\d/.test(formatted[i])) digits++;
+    newPos = i + 1;
+  }
+  e.target.selectionStart = e.target.selectionEnd = newPos;
+
   clearTimeout(timeout);
   timeout = setTimeout(update, 100);
 });

@@ -1,4 +1,4 @@
-import { REGIONS, BASE_WAGE, CAP_MULT } from './constants.js';
+import { BASE_SALARY, CAP_MULT } from './constants.js';
 
 /**
  * Calculate progressive tax based on income and brackets
@@ -19,24 +19,33 @@ export function calcTax(income, brackets) {
 }
 
 /**
- * Calculate total insurance contributions (SI + HI + UI)
+ * Calculate insurance contributions (SI + HI + UI) with breakdown
+ * @param {number} gross - Gross salary
+ * @param {string} region - Region key (I, II, III, IV)
+ * @param {object} regions - Region config with min wages (REGIONS_OLD or REGIONS_NEW)
+ * @returns {{ si: number, hi: number, ui: number, total: number }}
  */
-export function calcInsurance(gross, region) {
-  const nationalCap = BASE_WAGE * CAP_MULT;
-  const regionalCap = REGIONS[region].min * CAP_MULT;
-  const si = Math.min(gross * 0.08, nationalCap * 0.08);
-  const hi = Math.min(gross * 0.015, nationalCap * 0.015);
-  const ui = Math.min(gross * 0.01, regionalCap * 0.01);
-  return Math.round(si + hi + ui);
+export function calcInsurance(gross, region, regions) {
+  const nationalCap = BASE_SALARY * CAP_MULT;
+  const regionalCap = regions[region].min * CAP_MULT;
+  const si = Math.round(Math.min(gross * 0.08, nationalCap * 0.08));
+  const hi = Math.round(Math.min(gross * 0.015, nationalCap * 0.015));
+  const ui = Math.round(Math.min(gross * 0.01, regionalCap * 0.01));
+  return { si, hi, ui, total: si + hi + ui };
 }
 
 /**
  * Calculate net salary from gross with all deductions
+ * @param {number} gross - Gross salary
+ * @param {number} deps - Number of dependents
+ * @param {string} region - Region key (I, II, III, IV)
+ * @param {object} tax - Tax config (TAX_OLD or TAX_NEW)
+ * @param {object} regions - Region config (REGIONS_OLD or REGIONS_NEW)
  */
-export function grossToNet(gross, deps, region, tax) {
-  const ins = calcInsurance(gross, region);
+export function grossToNet(gross, deps, region, tax, regions) {
+  const ins = calcInsurance(gross, region, regions);
   const deduct = tax.PERSONAL + tax.DEPENDENT * deps;
-  const taxable = Math.max(0, gross - ins - deduct);
+  const taxable = Math.max(0, gross - ins.total - deduct);
   const taxAmt = calcTax(taxable, tax.BRACKETS);
   return {
     gross,
@@ -44,7 +53,7 @@ export function grossToNet(gross, deps, region, tax) {
     deduct,
     taxable,
     tax: taxAmt,
-    net: Math.round(gross - ins - taxAmt)
+    net: Math.round(gross - ins.total - taxAmt)
   };
 }
 

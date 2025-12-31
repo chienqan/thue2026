@@ -25,7 +25,23 @@ export const TAX_NEW = {
   DEPENDENT: 6_200_000
 };
 
-// Regional minimum wages (2026)
+// Regional minimum wages - OLD (2024)
+export const REGIONS_OLD = {
+  I: { min: 4_180_000, label: 'I' },
+  II: { min: 3_710_000, label: 'II' },
+  III: { min: 3_250_000, label: 'III' },
+  IV: { min: 2_900_000, label: 'IV' }
+};
+
+// Regional minimum wages - NEW (2025 from 1/7)
+export const REGIONS_NEW = {
+  I: { min: 4_960_000, label: 'I' },
+  II: { min: 4_410_000, label: 'II' },
+  III: { min: 3_860_000, label: 'III' },
+  IV: { min: 3_450_000, label: 'IV' }
+};
+
+// Regional minimum wages (2026) - keep for backward compatibility
 export const REGIONS = {
   I: { min: 5_310_000, label: 'I' },
   II: { min: 4_730_000, label: 'II' },
@@ -34,5 +50,6 @@ export const REGIONS = {
 };
 
 // Insurance calculation constants
-export const BASE_WAGE = 5_310_000;
+// Lương cơ sở (base salary) - used for BHXH/BHYT cap
+export const BASE_SALARY = 2_340_000;
 export const CAP_MULT = 20;
