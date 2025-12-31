@@ -58,6 +58,39 @@ export function grossToNet(gross, deps, region, tax, regions) {
 }
 
 /**
+ * Calculate gross salary from desired net using binary search
+ * @param {number} desiredNet - Target net salary
+ * @param {number} deps - Number of dependents
+ * @param {string} region - Region key (I, II, III, IV)
+ * @param {object} tax - Tax config (TAX_OLD or TAX_NEW)
+ * @param {object} regions - Region config (REGIONS_OLD or REGIONS_NEW)
+ */
+export function netToGross(desiredNet, deps, region, tax, regions) {
+  if (desiredNet <= 0) return grossToNet(0, deps, region, tax, regions);
+
+  let low = desiredNet;
+  let high = desiredNet * 3; // Upper bound for high-tax scenarios
+  const tolerance = 100; // Within 100 VND accuracy
+  const maxIterations = 50;
+  let iterations = 0;
+
+  while (high - low > tolerance && iterations < maxIterations) {
+    const mid = Math.floor((low + high) / 2);
+    const result = grossToNet(mid, deps, region, tax, regions);
+
+    if (result.net < desiredNet) {
+      low = mid;
+    } else {
+      high = mid;
+    }
+    iterations++;
+  }
+
+  const finalGross = Math.round((low + high) / 2);
+  return grossToNet(finalGross, deps, region, tax, regions);
+}
+
+/**
  * Get detailed breakdown of tax by bracket
  */
 export function getTaxBreakdown(income, brackets) {

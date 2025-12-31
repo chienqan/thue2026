@@ -168,10 +168,13 @@
         <div class="card-body">
           <!-- Salary Input -->
           <div class="input-group">
-            <label class="input-label" for="salary">
-              Thu nhập Gross / Tháng
-              <span class="tooltip" data-tip="Tổng thu nhập trước khi trừ bảo hiểm và thuế" role="tooltip" aria-label="Thông tin">?</span>
-            </label>
+            <div class="input-label-row">
+              <label class="input-label" for="salary" id="salary-label">Thu nhập Gross theo</label>
+              <div class="period-toggle" id="period-toggle">
+                <button type="button" class="period-btn active" data-period="month">Tháng</button>
+                <button type="button" class="period-btn" data-period="year">Năm</button>
+              </div>
+            </div>
             <div class="input-wrapper">
               <input
                 type="text"
@@ -213,7 +216,12 @@
 
           <!-- Region -->
           <div class="input-group">
-            <label class="input-label">Vùng lương tối thiểu</label>
+            <label class="input-label">
+              Vùng lương tối thiểu
+              <button type="button" class="info-btn" id="region-info-btn" aria-label="Xem thông tin vùng">
+                <i data-lucide="info" aria-hidden="true"></i>
+              </button>
+            </label>
             <div class="region-grid" id="region-grid">
               <label class="region-option active" data-region="I">
                 <input type="radio" name="region" value="I" checked>
@@ -247,6 +255,15 @@
                 </div>
                 <div class="region-amount">3.700.000 đ</div>
               </label>
+            </div>
+          </div>
+
+          <!-- Mode Toggle -->
+          <div class="input-group">
+            <label class="input-label">Hướng tính lương</label>
+            <div class="mode-toggle" id="mode-toggle">
+              <button type="button" class="mode-btn active" data-mode="gross-to-net">Gross → Net</button>
+              <button type="button" class="mode-btn" data-mode="net-to-gross">Net → Gross</button>
             </div>
           </div>
         </div>
@@ -430,6 +447,22 @@
   <footer class="site-footer">
     <p>&copy; 2025 Thue2026.com - Công cụ tính thuế TNCN miễn phí</p>
   </footer>
+
+  <!-- Region Info Modal -->
+  <dialog class="modal" id="region-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Vùng I gồm các tỉnh/thành</h3>
+        <button type="button" class="modal-close" id="modal-close" aria-label="Đóng">
+          <i data-lucide="x" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <p class="modal-desc">Thành phố lớn, khu công nghiệp phát triển</p>
+        <p class="modal-provinces">Hà Nội, TP. Hồ Chí Minh, Hải Phòng, Đà Nẵng, Bình Dương, Đồng Nai, Bà Rịa - Vũng Tàu</p>
+      </div>
+    </div>
+  </dialog>
 
   <script type="module" src="/scripts/main.js"></script>
 </body>

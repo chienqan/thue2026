@@ -1,25 +1,33 @@
-import { createIcons, Users, Minus, Plus, Sparkles, TrendingUp } from 'lucide';
-import { TAX_OLD, TAX_NEW, REGIONS, REGIONS_OLD, REGIONS_NEW } from './constants.js';
-import { grossToNet, getTaxBreakdown } from './calculator.js';
+import { createIcons, Users, Minus, Plus, Sparkles, TrendingUp, Info, X } from 'lucide';
+import { TAX_OLD, TAX_NEW, REGIONS, REGIONS_OLD, REGIONS_NEW, REGION_INFO } from './constants.js';
+import { grossToNet, netToGross, getTaxBreakdown } from './calculator.js';
 import { VND } from './format.js';
 
 // CSS is loaded via HTML <link> tags for optimal preloading
 
 // Initialize Lucide icons
 createIcons({
-  icons: { Users, Minus, Plus, Sparkles, TrendingUp }
+  icons: { Users, Minus, Plus, Sparkles, TrendingUp, Info, X }
 });
 
 // State
-const state = { salary: 100000000, deps: 0, region: 'I' };
+const state = { salary: 100000000, deps: 0, region: 'I', period: 'month', mode: 'gross-to-net' };
 
 // DOM references
 const $ = (id) => document.getElementById(id);
 const els = {
   salary: $('salary'),
+  salaryLabel: $('salary-label'),
+  periodToggle: $('period-toggle'),
+  modeToggle: $('mode-toggle'),
   deps: $('dependents'),
   regionGrid: $('region-grid'),
   regionInfo: $('region-info'),
+  regionInfoBtn: $('region-info-btn'),
+  regionModal: $('region-modal'),
+  modalTitle: $('modal-title'),
+  modalBody: $('modal-body'),
+  modalClose: $('modal-close'),
   oldNet: $('old-net'),
   oldTax: $('old-tax'),
   oldDeduct: $('old-deduction'),
@@ -61,25 +69,37 @@ function updateChart(oldR, newR) {
 }
 
 function update() {
-  const oldR = grossToNet(state.salary, state.deps, state.region, TAX_OLD, REGIONS_OLD);
-  const newR = grossToNet(state.salary, state.deps, state.region, TAX_NEW, REGIONS_NEW);
+  // Convert yearly to monthly for calculation
+  const monthlyInput = state.period === 'year' ? Math.round(state.salary / 12) : state.salary;
+  const mult = state.period === 'year' ? 12 : 1;
+  const periodSuffix = state.period === 'year' ? ' / năm' : ' / tháng';
+
+  // Choose calculation function based on mode
+  let oldR, newR;
+  if (state.mode === 'gross-to-net') {
+    oldR = grossToNet(monthlyInput, state.deps, state.region, TAX_OLD, REGIONS_OLD);
+    newR = grossToNet(monthlyInput, state.deps, state.region, TAX_NEW, REGIONS_NEW);
+  } else {
+    oldR = netToGross(monthlyInput, state.deps, state.region, TAX_OLD, REGIONS_OLD);
+    newR = netToGross(monthlyInput, state.deps, state.region, TAX_NEW, REGIONS_NEW);
+  }
   const hasSalary = state.salary > 0;
 
-  els.oldNet.innerHTML = `${VND.format(oldR.net)}<span class="currency">đ</span>`;
-  els.oldTax.textContent = VND.formatUnit(oldR.tax);
-  els.oldDeduct.textContent = hasSalary ? VND.formatUnit(oldR.deduct) : '0 đ';
+  els.oldNet.innerHTML = `${VND.format(oldR.net * mult)}<span class="currency">đ</span>`;
+  els.oldTax.textContent = VND.formatUnit(oldR.tax * mult);
+  els.oldDeduct.textContent = hasSalary ? VND.formatUnit(oldR.deduct * mult) : '0 đ';
 
-  els.newNet.innerHTML = `${VND.format(newR.net)}<span class="currency">đ</span>`;
-  els.newTax.textContent = VND.formatUnit(newR.tax);
-  els.newDeduct.textContent = hasSalary ? VND.formatUnit(newR.deduct) : '0 đ';
+  els.newNet.innerHTML = `${VND.format(newR.net * mult)}<span class="currency">đ</span>`;
+  els.newTax.textContent = VND.formatUnit(newR.tax * mult);
+  els.newDeduct.textContent = hasSalary ? VND.formatUnit(newR.deduct * mult) : '0 đ';
 
   // Net gain indicator
-  const netGain = newR.net - oldR.net;
+  const netGain = (newR.net - oldR.net) * mult;
   if (netGain > 0 && hasSalary) {
     const netGainFormatted = netGain >= 1000000
       ? `+${(netGain / 1000000).toFixed(2).replace('.00', '')} triệu`
       : `+${VND.format(netGain)}`;
-    els.netGainText.textContent = `${netGainFormatted} / tháng`;
+    els.netGainText.textContent = `${netGainFormatted}${periodSuffix}`;
     els.netGain.style.display = 'inline-flex';
     // Update sticky bar for mobile
     els.stickyResultText.textContent = `${netGainFormatted}`;
@@ -101,7 +121,7 @@ function update() {
 
   // Refresh icons for dynamically inserted content
   createIcons({
-    icons: { Users, Minus, Plus, Sparkles, TrendingUp }
+    icons: { Users, Minus, Plus, Sparkles, TrendingUp, Info, X }
   });
 
   // Region info
@@ -110,17 +130,17 @@ function update() {
   // Chart
   updateChart(oldR, newR);
 
-  // Details table
+  // Details table (multiply by mult for yearly display)
   const rows = [
-    ['Lương Gross', oldR.gross, newR.gross],
-    ['Bảo hiểm XH (8%)', -oldR.ins.si, -newR.ins.si],
-    ['Bảo hiểm YT (1.5%)', -oldR.ins.hi, -newR.ins.hi],
-    ['Bảo hiểm TN (1%)', -oldR.ins.ui, -newR.ins.ui],
-    ['Giảm trừ bản thân', hasSalary ? -TAX_OLD.PERSONAL : 0, hasSalary ? -TAX_NEW.PERSONAL : 0],
-    [`Giảm trừ NPT (×${state.deps})`, hasSalary ? -TAX_OLD.DEPENDENT * state.deps : 0, hasSalary ? -TAX_NEW.DEPENDENT * state.deps : 0],
-    ['Thu nhập chịu thuế', oldR.taxable, newR.taxable],
-    ['Thuế TNCN (*)', -oldR.tax, -newR.tax, 'negative'],
-    ['Thực lĩnh (Net)', oldR.net, newR.net, 'bold']
+    ['Lương Gross', oldR.gross * mult, newR.gross * mult],
+    ['Bảo hiểm XH (8%)', -oldR.ins.si * mult, -newR.ins.si * mult],
+    ['Bảo hiểm YT (1.5%)', -oldR.ins.hi * mult, -newR.ins.hi * mult],
+    ['Bảo hiểm TN (1%)', -oldR.ins.ui * mult, -newR.ins.ui * mult],
+    ['Giảm trừ bản thân', hasSalary ? -TAX_OLD.PERSONAL * mult : 0, hasSalary ? -TAX_NEW.PERSONAL * mult : 0],
+    [`Giảm trừ NPT (×${state.deps})`, hasSalary ? -TAX_OLD.DEPENDENT * state.deps * mult : 0, hasSalary ? -TAX_NEW.DEPENDENT * state.deps * mult : 0],
+    ['Thu nhập chịu thuế', oldR.taxable * mult, newR.taxable * mult],
+    ['Thuế TNCN (*)', -oldR.tax * mult, -newR.tax * mult, 'negative'],
+    ['Thực lĩnh (Net)', oldR.net * mult, newR.net * mult, 'bold']
   ];
 
   els.details.innerHTML = rows.map(([label, old, newVal, type]) => `
@@ -218,6 +238,51 @@ els.regionGrid.querySelectorAll('.region-option').forEach(opt => {
     els.regionGrid.querySelectorAll('.region-option').forEach(o => o.classList.remove('active'));
     opt.classList.add('active');
     state.region = opt.dataset.region;
+    update();
+  });
+});
+
+// Mode toggle updates label
+function updateSalaryLabel() {
+  const modeText = state.mode === 'gross-to-net' ? 'Thu nhập Gross theo' : 'Thu nhập Net theo';
+  els.salaryLabel.textContent = modeText;
+}
+
+// Update and show region modal
+function showRegionModal() {
+  const info = REGION_INFO[state.region];
+  els.modalTitle.textContent = `Vùng ${state.region} gồm những địa bàn nào?`;
+  els.modalBody.innerHTML = `
+    <p class="modal-desc">${info.desc}</p>
+    <p class="modal-provinces">${info.areas.join(', ')}</p>
+    <p class="modal-note">Vùng xác định theo nơi hoạt động của công ty, không phải nơi cư trú. Xem chi tiết tại Nghị định 128/2025/NĐ-CP.</p>
+  `;
+  els.regionModal.showModal();
+}
+
+// Modal handlers
+els.regionInfoBtn.addEventListener('click', showRegionModal);
+els.modalClose.addEventListener('click', () => els.regionModal.close());
+els.regionModal.addEventListener('click', (e) => {
+  if (e.target === els.regionModal) els.regionModal.close();
+});
+
+els.periodToggle.querySelectorAll('.period-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    els.periodToggle.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.period = btn.dataset.period;
+    updateSalaryLabel();
+    update();
+  });
+});
+
+els.modeToggle.querySelectorAll('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    els.modeToggle.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.mode = btn.dataset.mode;
+    updateSalaryLabel();
     update();
   });
 });
