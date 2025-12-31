@@ -17,7 +17,8 @@ src/
 │   ├── main.js            # UI orchestration & state management
 │   ├── calculator.js      # Tax calculation engine
 │   ├── constants.js       # Tax brackets & regional data
-│   └── format.js          # VND currency utilities
+│   ├── format.js          # VND currency utilities
+│   └── region-data.js     # Province-ward region mapping & detection
 ├── styles/
 │   ├── main.css           # Design system (Slate/Emerald palette)
 │   └── fonts.css          # Self-hosted font declarations
@@ -101,6 +102,24 @@ VND.parse("30.000.000")     // 30000000
 ```
 
 Uses Vietnamese locale for separator formatting (space as thousand separator).
+
+### `src/scripts/region-data.js`
+**Province-Ward Region Detection**
+
+Implements Nghị định 128/2025/NĐ-CP regional classification with 34 provinces mapped to Regions I-IV.
+
+**Exports**:
+- `REGION_DATA` - Hierarchical province → region → ward arrays
+- `PROVINCES` - Alphabetically sorted list of 63 provinces/cities
+- `getRegion(province, ward?)` - Returns region code (I|II|III|IV) with multi-pass matching
+- `getWardSuggestions(province, query, limit=10)` - Autocomplete suggestions
+
+**Algorithm**:
+1. Province lookup (exact match)
+2. Ward matching (exact → prefix match)
+3. Fallback to province default region
+
+**Optimization**: Stores only non-default areas to minimize bundle size (~42KB).
 
 ### `src/scripts/main.js`
 **UI Orchestration & State Management**
