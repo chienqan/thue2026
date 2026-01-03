@@ -11,13 +11,16 @@ createIcons({
 });
 
 // State
-const state = { salary: 100000000, deps: 0, region: 'I', period: 'month', mode: 'gross-to-net' };
+const state = { salary: 100000000, deps: 0, region: 'I', period: 'month', mode: 'gross-to-net', insBase: 0 };
 
 // DOM references
 const $ = (id) => document.getElementById(id);
 const els = {
   salary: $('salary'),
   salaryLabel: $('salary-label'),
+  insBase: $('ins-base'),
+  insToggle: $('ins-toggle'),
+  insCustomInput: $('ins-custom-input'),
   periodToggle: $('period-toggle'),
   modeToggle: $('mode-toggle'),
   deps: $('dependents'),
@@ -49,8 +52,38 @@ const els = {
   chartTaxOldVal: $('chart-tax-old-val'),
   chartTaxNewVal: $('chart-tax-new-val'),
   chartNetOldVal: $('chart-net-old-val'),
-  chartNetNewVal: $('chart-net-new-val')
+  chartNetNewVal: $('chart-net-new-val'),
+  monthlyBreakdown: $('monthly-breakdown'),
+  monthlyBody: $('monthly-body'),
+  monthlyFoot: $('monthly-foot')
 };
+
+function updateMonthlyBreakdown(result) {
+  const isYearly = state.period === 'year';
+  els.monthlyBreakdown.style.display = isYearly ? 'block' : 'none';
+  if (!isYearly) return;
+
+  const months = Array.from({ length: 12 }, (_, i) => `Tháng ${i + 1}`);
+  const { gross, tax, net } = result;
+
+  els.monthlyBody.innerHTML = months.map(m => `
+    <tr>
+      <td>${m}</td>
+      <td>${VND.format(gross)}</td>
+      <td>${VND.format(tax)}</td>
+      <td>${VND.format(net)}</td>
+    </tr>
+  `).join('');
+
+  els.monthlyFoot.innerHTML = `
+    <tr class="text-bold">
+      <td>Tổng năm</td>
+      <td>${VND.format(gross * 12)}</td>
+      <td>${VND.format(tax * 12)}</td>
+      <td>${VND.format(net * 12)}</td>
+    </tr>
+  `;
+}
 
 function updateChart(oldR, newR) {
   const maxTax = Math.max(oldR.tax, newR.tax, 1);
@@ -74,14 +107,19 @@ function update() {
   const mult = state.period === 'year' ? 12 : 1;
   const periodSuffix = state.period === 'year' ? ' / năm' : ' / tháng';
 
+  // Custom insurance base (null means use gross)
+  const monthlyInsBase = state.insBase > 0
+    ? (state.period === 'year' ? Math.round(state.insBase / 12) : state.insBase)
+    : null;
+
   // Choose calculation function based on mode
   let oldR, newR;
   if (state.mode === 'gross-to-net') {
-    oldR = grossToNet(monthlyInput, state.deps, state.region, TAX_OLD, REGIONS_OLD);
-    newR = grossToNet(monthlyInput, state.deps, state.region, TAX_NEW, REGIONS_NEW);
+    oldR = grossToNet(monthlyInput, state.deps, state.region, TAX_OLD, REGIONS_OLD, monthlyInsBase);
+    newR = grossToNet(monthlyInput, state.deps, state.region, TAX_NEW, REGIONS_NEW, monthlyInsBase);
   } else {
-    oldR = netToGross(monthlyInput, state.deps, state.region, TAX_OLD, REGIONS_OLD);
-    newR = netToGross(monthlyInput, state.deps, state.region, TAX_NEW, REGIONS_NEW);
+    oldR = netToGross(monthlyInput, state.deps, state.region, TAX_OLD, REGIONS_OLD, monthlyInsBase);
+    newR = netToGross(monthlyInput, state.deps, state.region, TAX_NEW, REGIONS_NEW, monthlyInsBase);
   }
   const hasSalary = state.salary > 0;
 
@@ -129,6 +167,9 @@ function update() {
 
   // Chart
   updateChart(oldR, newR);
+
+  // Monthly breakdown (only in yearly mode)
+  updateMonthlyBreakdown(newR);
 
   // Details table (multiply by mult for yearly display)
   const rows = [
@@ -215,6 +256,44 @@ els.salary.addEventListener('input', (e) => {
   timeout = setTimeout(update, 100);
 });
 
+// Insurance base input handler
+els.insBase.addEventListener('input', (e) => {
+  const cursorPos = e.target.selectionStart;
+  const beforeCursor = e.target.value.slice(0, cursorPos).replace(/[^\d]/g, '');
+  const digitsBefore = beforeCursor.length;
+
+  const val = e.target.value.replace(/[^\d]/g, '');
+  const num = parseInt(val, 10) || 0;
+  const formatted = val ? formatDigits(val) : '';
+  e.target.value = formatted;
+  state.insBase = num;
+
+  let digits = 0, newPos = 0;
+  for (let i = 0; i < formatted.length && digits < digitsBefore; i++) {
+    if (/\d/.test(formatted[i])) digits++;
+    newPos = i + 1;
+  }
+  e.target.selectionStart = e.target.selectionEnd = newPos;
+
+  clearTimeout(timeout);
+  timeout = setTimeout(update, 100);
+});
+
+// Insurance toggle handler
+els.insToggle.querySelectorAll('.ins-toggle-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    els.insToggle.querySelectorAll('.ins-toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const isCustom = btn.dataset.insMode === 'custom';
+    els.insCustomInput.style.display = isCustom ? 'block' : 'none';
+    if (!isCustom) {
+      state.insBase = 0;
+      els.insBase.value = '';
+      update();
+    }
+  });
+});
+
 document.querySelectorAll('.counter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     let v = parseInt(els.deps.value, 10) || 0;
@@ -269,9 +348,25 @@ els.regionModal.addEventListener('click', (e) => {
 
 els.periodToggle.querySelectorAll('.period-btn').forEach(btn => {
   btn.addEventListener('click', () => {
+    const prevPeriod = state.period;
+    const newPeriod = btn.dataset.period;
+    if (prevPeriod === newPeriod) return;
+
     els.periodToggle.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    state.period = btn.dataset.period;
+    state.period = newPeriod;
+
+    // Auto-convert salary when switching period
+    if (prevPeriod === 'month' && newPeriod === 'year') {
+      state.salary = state.salary * 12;
+      if (state.insBase > 0) state.insBase = state.insBase * 12;
+    } else if (prevPeriod === 'year' && newPeriod === 'month') {
+      state.salary = Math.round(state.salary / 12);
+      if (state.insBase > 0) state.insBase = Math.round(state.insBase / 12);
+    }
+    els.salary.value = VND.format(state.salary);
+    if (state.insBase > 0) els.insBase.value = VND.format(state.insBase);
+
     updateSalaryLabel();
     update();
   });

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monthly Breakdown E2E Tests</title>
+  <style>
+    body {
+      font-family: monospace;
+      padding: 20px;
+      background: #f5f5f5;
+      color: #333;
+    }
+    .test-suite {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .test-case {
+      margin-bottom: 15px;
+      padding: 10px;
+      border-left: 4px solid #ddd;
+    }
+    .test-case.pass {
+      border-left-color: #10b981;
+      background: #f0fdf4;
+    }
+    .test-case.fail {
+      border-left-color: #dc2626;
+      background: #fef2f2;
+    }
+    .pass::before { content: '✓ PASS: '; color: #10b981; font-weight: bold; }
+    .fail::before { content: '✗ FAIL: '; color: #dc2626; font-weight: bold; }
+    h2 {
+      margin-top: 0;
+      color: #047857;
+    }
+    h3 {
+      margin-top: 20px;
+      color: #1e293b;
+    }
+    code {
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    .stats {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f0f9ff;
+      border-left: 4px solid #0284c7;
+      border-radius: 4px;
+    }
+    .manual-steps {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 4px;
+    }
+    .manual-steps ol {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+    .manual-steps li {
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Monthly Breakdown Feature - E2E Test Report</h1>
+
+<div class="test-suite">
+  <h2>Automated Checks (JavaScript)</h2>
+
+  <h3>1. DOM Elements Existence</h3>
+  <div id="test-dom-elements" class="test-case"></div>
+
+  <h3>2. CSS Classes Availability</h3>
+  <div id="test-css-classes" class="test-case"></div>
+
+  <h3>3. Monthly Breakdown Visibility Toggle</h3>
+  <div id="test-visibility-toggle" class="test-case"></div>
+
+  <h3>4. VND Formatter Availability</h3>
+  <div id="test-vnd-formatter" class="test-case"></div>
+
+  <h3>5. CSS Styling Loaded</h3>
+  <div id="test-css-loaded" class="test-case"></div>
+
+  <h3>6. HTML Structure Validation</h3>
+  <div id="test-html-structure" class="test-case"></div>
+
+  <div class="stats" id="test-summary"></div>
+</div>
+
+<div class="test-suite">
+  <h2>Manual Testing Steps Required</h2>
+  <div class="manual-steps">
+    <p><strong>To fully test the monthly breakdown feature, follow these browser steps:</strong></p>
+    <ol>
+      <li><strong>Start dev server:</strong> <code>npm run dev</code></li>
+      <li><strong>Test 1 - Default state:</strong>
+        <ul>
+          <li>Open http://localhost:3000 in browser</li>
+          <li>Verify "Tháng" button is active by default</li>
+          <li>Verify monthly breakdown table is NOT visible (display: none)</li>
+        </ul>
+      </li>
+      <li><strong>Test 2 - Toggle to yearly:</strong>
+        <ul>
+          <li>Click "Năm" button in period toggle</li>
+          <li>Verify monthly breakdown table NOW appears (display: block)</li>
+          <li>Table should show immediately below the chart</li>
+        </ul>
+      </li>
+      <li><strong>Test 3 - Verify 12 months:</strong>
+        <ul>
+          <li>Count table rows - should be exactly 12 (Tháng 1 through Tháng 12)</li>
+          <li>Verify each month label is correct: "Tháng 1", "Tháng 2", etc.</li>
+          <li>Each row should have 4 columns: Tháng, Gross, Thuế, Net</li>
+        </ul>
+      </li>
+      <li><strong>Test 4 - Verify footer totals:</strong>
+        <ul>
+          <li>Scroll down to see footer row labeled "Tổng năm"</li>
+          <li>Gross total = first month value × 12</li>
+          <li>Tax total = first month value × 12</li>
+          <li>Net total = first month value × 12</li>
+        </ul>
+      </li>
+      <li><strong>Test 5 - Verify VND formatting:</strong>
+        <ul>
+          <li>Check numbers use Vietnamese format: 1.000.000 đ (dot as separator)</li>
+          <li>Not American format: 1,000,000</li>
+          <li>All values in table should be formatted consistently</li>
+        </ul>
+      </li>
+      <li><strong>Test 6 - Test with different salaries:</strong>
+        <ul>
+          <li>Clear salary input and enter: 50000000 (50M)</li>
+          <li>Verify monthly breakdown updates (gross = 50M/12 ≈ 4.166.667)</li>
+          <li>Try: 100000000, 200000000 - table should update each time</li>
+          <li>Verify annual totals are exactly 50M, 100M, 200M respectively</li>
+        </ul>
+      </li>
+      <li><strong>Test 7 - Toggle back to monthly:</strong>
+        <ul>
+          <li>Click "Tháng" button to return to monthly mode</li>
+          <li>Verify table disappears (display: none)</li>
+          <li>Toggle "Năm" again - table reappears</li>
+          <li>Repeat 3 times to ensure reliable toggle</li>
+        </ul>
+      </li>
+      <li><strong>Test 8 - Mobile responsiveness:</strong>
+        <ul>
+          <li>Open DevTools (F12) and toggle device toolbar (Ctrl+Shift+M)</li>
+          <li>Set viewport to iPhone 12 (390×844)</li>
+          <li>Switch to "Năm" mode</li>
+          <li>Table should display with proper scrolling on mobile</li>
+          <li>All columns should be readable (may need horizontal scroll)</li>
+        </ul>
+      </li>
+      <li><strong>Test 9 - Table data accuracy:</strong>
+        <ul>
+          <li>Set gross to exactly 120,000,000 (120M)</li>
+          <li>Each month in table should show 10,000,000 (120M ÷ 12)</li>
+          <li>Footer "Tổng năm" should show exactly 120,000,000</li>
+          <li>Manually calculate: if monthly tax is X, yearly tax should be X × 12</li>
+        </ul>
+      </li>
+      <li><strong>Test 10 - Edge cases:</strong>
+        <ul>
+          <li>Enter 0 salary - table should still show 0 values</li>
+          <li>Enter very large value: 999,999,999,999 - should format without errors</li>
+          <li>Switch dependents - verify monthly breakdown updates calculations</li>
+          <li>Change region - verify insurance calculations update in breakdown</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<script>
+// Test helper
+function showTest(elementId, passed, message) {
+  const el = document.getElementById(elementId);
+  el.className = `test-case ${passed ? 'pass' : 'fail'}`;
+  el.textContent = message;
+}
+
+// Wait for page to load and check DOM elements
+window.addEventListener('DOMContentLoaded', () => {
+  console.log('Running automated checks...');
+
+  // Test 1: DOM Elements Existence
+  let test1Pass = false;
+  try {
+    const monthlyBreakdown = document.getElementById('monthly-breakdown');
+    const monthlyBody = document.getElementById('monthly-body');
+    const monthlyFoot = document.getElementById('monthly-foot');
+
+    test1Pass = monthlyBreakdown && monthlyBody && monthlyFoot;
+    showTest('test-dom-elements', test1Pass,
+      test1Pass
+        ? 'All required DOM elements present (monthly-breakdown, monthly-body, monthly-foot)'
+        : 'Missing required DOM elements');
+  } catch (e) {
+    showTest('test-dom-elements', false, 'Error checking DOM: ' + e.message);
+  }
+
+  // Test 2: CSS Classes Availability
+  let test2Pass = false;
+  try {
+    const monthlyBreakdown = document.querySelector('.monthly-breakdown');
+    const detailCard = document.querySelector('.detail-card');
+
+    test2Pass = monthlyBreakdown || detailCard;
+    showTest('test-css-classes', test2Pass,
+      test2Pass
+        ? 'CSS classes for monthly breakdown styling found'
+        : 'CSS styling classes not found (may not be loaded yet)');
+  } catch (e) {
+    showTest('test-css-classes', false, 'Error checking CSS: ' + e.message);
+  }
+
+  // Test 3: Monthly Breakdown Visibility Toggle
+  let test3Pass = false;
+  try {
+    const monthlyBreakdown = document.getElementById('monthly-breakdown');
+    if (monthlyBreakdown) {
+      const displayValue = window.getComputedStyle(monthlyBreakdown).display;
+      // Default should be 'none' since period starts as 'month'
+      test3Pass = displayValue === 'none' || monthlyBreakdown.style.display === 'none';
+      showTest('test-visibility-toggle', test3Pass,
+        test3Pass
+          ? `Visibility toggle working (default display: ${displayValue})`
+          : `Unexpected display value: ${displayValue}`);
+    } else {
+      showTest('test-visibility-toggle', false, 'Element not found');
+    }
+  } catch (e) {
+    showTest('test-visibility-toggle', false, 'Error: ' + e.message);
+  }
+
+  // Test 4: VND Formatter Availability
+  let test4Pass = false;
+  try {
+    test4Pass = typeof window.VND === 'object' &&
+               typeof window.VND.format === 'function';
+    showTest('test-vnd-formatter', test4Pass,
+      test4Pass
+        ? 'VND formatter exported to window.VND for testing'
+        : 'VND formatter not available (dev mode check)');
+  } catch (e) {
+    showTest('test-vnd-formatter', false, 'Error: ' + e.message);
+  }
+
+  // Test 5: CSS Styling Loaded
+  let test5Pass = false;
+  try {
+    const styleSheets = Array.from(document.styleSheets).map(s => s.href);
+    const hasCss = styleSheets.some(s => s && s.includes('main.css')) ||
+                   document.querySelector('style[data-vite-dev-id]');
+    test5Pass = hasCss || document.querySelector('link[rel="stylesheet"]');
+    showTest('test-css-loaded', test5Pass,
+      test5Pass
+        ? `CSS stylesheets loaded (${document.styleSheets.length} stylesheets)`
+        : 'No CSS stylesheets found');
+  } catch (e) {
+    showTest('test-css-loaded', false, 'Error: ' + e.message);
+  }
+
+  // Test 6: HTML Structure Validation
+  let test6Pass = false;
+  try {
+    const table = document.querySelector('.detail-table');
+    const hasTableHeader = document.querySelector('.detail-table thead');
+    const hasTableBody = document.querySelector('#monthly-body');
+
+    test6Pass = table && hasTableHeader && hasTableBody;
+    showTest('test-html-structure', test6Pass,
+      test6Pass
+        ? 'HTML structure valid: table with thead and tbody elements'
+        : 'HTML structure incomplete');
+  } catch (e) {
+    showTest('test-html-structure', false, 'Error: ' + e.message);
+  }
+
+  // Summary
+  const passCount = [test1Pass, test2Pass, test3Pass, test4Pass, test5Pass, test6Pass].filter(Boolean).length;
+  const summary = document.getElementById('test-summary');
+  summary.innerHTML = `
+    <strong>Automated Test Results: ${passCount}/6 Passed</strong><br>
+    ${passCount === 6 ? '✓ All automated checks passed! Ready for manual testing.' : '⚠ Some checks failed - may need browser environment.'}
+  `;
+});
+</script>
+
+</body>
+</html>

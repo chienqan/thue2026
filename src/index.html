@@ -190,27 +190,49 @@
             <p class="input-hint" id="salary-hint">Tổng lương chưa trừ bảo hiểm và thuế</p>
           </div>
 
+          <!-- Insurance Base Toggle -->
+          <div class="input-group input-group--compact">
+            <div class="input-label-row">
+              <label class="input-label">Lương đóng BHXH</label>
+              <div class="ins-toggle" id="ins-toggle">
+                <button type="button" class="ins-toggle-btn active" data-ins-mode="gross">Trên lương</button>
+                <button type="button" class="ins-toggle-btn" data-ins-mode="custom">Tùy chọn</button>
+              </div>
+            </div>
+            <div class="ins-custom-input" id="ins-custom-input" style="display: none;">
+              <div class="input-wrapper input-wrapper--sm">
+                <input
+                  type="text"
+                  id="ins-base"
+                  class="input-field"
+                  placeholder="Nhập mức lương BHXH"
+                  inputmode="numeric"
+                  autocomplete="off">
+                <span class="input-suffix" aria-hidden="true">VND</span>
+              </div>
+            </div>
+          </div>
+
           <!-- Dependents -->
-          <div class="input-group">
-            <label class="input-label">
-              <i data-lucide="users"></i>
-              Số người phụ thuộc
-            </label>
-            <div class="counter-control" role="group" aria-label="Số người phụ thuộc">
-              <button type="button" class="counter-btn" data-action="decrement" aria-label="Giảm số người phụ thuộc">
-                <i data-lucide="minus" aria-hidden="true"></i>
-              </button>
-              <input
-                type="number"
-                id="dependents"
-                class="counter-input"
-                value="0"
-                min="0"
-                max="10"
-                aria-label="Số người phụ thuộc">
-              <button type="button" class="counter-btn" data-action="increment" aria-label="Tăng số người phụ thuộc">
-                <i data-lucide="plus" aria-hidden="true"></i>
-              </button>
+          <div class="input-group input-group--compact">
+            <div class="input-label-row">
+              <label class="input-label">Số người phụ thuộc</label>
+              <div class="counter-control counter-control--sm" role="group" aria-label="Số người phụ thuộc">
+                <button type="button" class="counter-btn" data-action="decrement" aria-label="Giảm số người phụ thuộc">
+                  <i data-lucide="minus" aria-hidden="true"></i>
+                </button>
+                <input
+                  type="number"
+                  id="dependents"
+                  class="counter-input"
+                  value="0"
+                  min="0"
+                  max="10"
+                  aria-label="Số người phụ thuộc">
+                <button type="button" class="counter-btn" data-action="increment" aria-label="Tăng số người phụ thuộc">
+                  <i data-lucide="plus" aria-hidden="true"></i>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -382,6 +404,26 @@
             </div>
             <span class="chart-label">Thực lĩnh</span>
           </div>
+        </div>
+      </div>
+
+      <!-- Monthly Breakdown (visible only in yearly mode) -->
+      <div class="monthly-breakdown" id="monthly-breakdown" style="display: none;">
+        <div class="detail-card">
+          <h3>Chi tiết theo tháng</h3>
+          <p>Phân bổ thu nhập theo từng tháng trong năm</p>
+          <table class="detail-table">
+            <thead>
+              <tr>
+                <th>Tháng</th>
+                <th>Gross</th>
+                <th>Thuế</th>
+                <th>Net</th>
+              </tr>
+            </thead>
+            <tbody id="monthly-body"></tbody>
+            <tfoot id="monthly-foot"></tfoot>
+          </table>
         </div>
       </div>
 

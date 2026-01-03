@@ -266,6 +266,14 @@ main {
     opacity: 0.7;
 }
 
+.optional-tag {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-transform: none;
+    letter-spacing: normal;
+}
+
 /* Input Label Row */
 .input-label-row {
     display: flex;
@@ -308,6 +316,70 @@ main {
     background: white;
     color: var(--emerald-600);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* Insurance Toggle */
+.ins-toggle {
+    display: flex;
+    gap: 4px;
+    padding: 3px;
+    background: var(--slate-100);
+    border-radius: var(--radius-sm);
+}
+
+.ins-toggle-btn {
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    border-radius: calc(var(--radius-sm) - 2px);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ins-toggle-btn:hover {
+    color: var(--text-primary);
+}
+
+.ins-toggle-btn.active {
+    background: white;
+    color: var(--emerald-600);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* Compact Input Group */
+.input-group--compact {
+    margin-bottom: 20px;
+}
+
+.input-group--compact .input-label-row {
+    margin-bottom: 0;
+}
+
+.ins-custom-input {
+    margin-top: 8px;
+}
+
+/* Small Input Variant */
+.input-wrapper--sm {
+    height: 44px;
+}
+
+.input-wrapper--sm .input-field {
+    padding: 10px 14px;
+    padding-right: 60px;
+    font-size: 16px;
+}
+
+.input-wrapper--sm .input-field::placeholder {
+    font-size: 13px;
+}
+
+.input-wrapper--sm .input-suffix {
+    font-size: 11px;
+    padding: 8px 12px;
 }
 
 /* Mode Toggle */
@@ -452,6 +524,28 @@ main {
 
 .counter-input:focus {
     outline: none;
+}
+
+/* Compact Counter Variant */
+.counter-control--sm {
+    border-width: 1px;
+    border-radius: var(--radius-sm);
+}
+
+.counter-control--sm .counter-btn {
+    width: 28px;
+    padding: 0;
+}
+
+.counter-control--sm .counter-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+.counter-control--sm .counter-input {
+    width: 36px;
+    font-size: 13px;
+    padding: 4px 0;
 }
 
 /* Region Grid */
@@ -1001,6 +1095,13 @@ main {
     font-size: 12px;
     color: var(--text-muted);
     font-weight: 500;
+}
+
+/* ========================================
+   MONTHLY BREAKDOWN
+   ======================================== */
+.monthly-breakdown {
+    margin-bottom: 32px;
 }
 
 /* ========================================

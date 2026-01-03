@@ -23,15 +23,17 @@ export function calcTax(income, brackets) {
  * @param {number} gross - Gross salary
  * @param {string} region - Region key (I, II, III, IV)
  * @param {object} regions - Region config with min wages (REGIONS_OLD or REGIONS_NEW)
- * @returns {{ si: number, hi: number, ui: number, total: number }}
+ * @param {number|null} insBase - Custom insurance base salary (optional, defaults to gross)
+ * @returns {{ si: number, hi: number, ui: number, total: number, base: number }}
  */
-export function calcInsurance(gross, region, regions) {
+export function calcInsurance(gross, region, regions, insBase = null) {
+  const base = Math.min(insBase || gross, gross); // Can't exceed gross
   const nationalCap = BASE_SALARY * CAP_MULT;
   const regionalCap = regions[region].min * CAP_MULT;
-  const si = Math.round(Math.min(gross * 0.08, nationalCap * 0.08));
-  const hi = Math.round(Math.min(gross * 0.015, nationalCap * 0.015));
-  const ui = Math.round(Math.min(gross * 0.01, regionalCap * 0.01));
-  return { si, hi, ui, total: si + hi + ui };
+  const si = Math.round(Math.min(base * 0.08, nationalCap * 0.08));
+  const hi = Math.round(Math.min(base * 0.015, nationalCap * 0.015));
+  const ui = Math.round(Math.min(base * 0.01, regionalCap * 0.01));
+  return { si, hi, ui, total: si + hi + ui, base };
 }
 
 /**
@@ -41,9 +43,10 @@ export function calcInsurance(gross, region, regions) {
  * @param {string} region - Region key (I, II, III, IV)
  * @param {object} tax - Tax config (TAX_OLD or TAX_NEW)
  * @param {object} regions - Region config (REGIONS_OLD or REGIONS_NEW)
+ * @param {number|null} insBase - Custom insurance base salary (optional)
  */
-export function grossToNet(gross, deps, region, tax, regions) {
-  const ins = calcInsurance(gross, region, regions);
+export function grossToNet(gross, deps, region, tax, regions, insBase = null) {
+  const ins = calcInsurance(gross, region, regions, insBase);
   const deduct = tax.PERSONAL + tax.DEPENDENT * deps;
   const taxable = Math.max(0, gross - ins.total - deduct);
   const taxAmt = calcTax(taxable, tax.BRACKETS);
@@ -64,19 +67,20 @@ export function grossToNet(gross, deps, region, tax, regions) {
  * @param {string} region - Region key (I, II, III, IV)
  * @param {object} tax - Tax config (TAX_OLD or TAX_NEW)
  * @param {object} regions - Region config (REGIONS_OLD or REGIONS_NEW)
+ * @param {number|null} insBase - Custom insurance base salary (optional)
  */
-export function netToGross(desiredNet, deps, region, tax, regions) {
-  if (desiredNet <= 0) return grossToNet(0, deps, region, tax, regions);
+export function netToGross(desiredNet, deps, region, tax, regions, insBase = null) {
+  if (desiredNet <= 0) return grossToNet(0, deps, region, tax, regions, insBase);
 
   let low = desiredNet;
   let high = desiredNet * 3; // Upper bound for high-tax scenarios
-  const tolerance = 100; // Within 100 VND accuracy
-  const maxIterations = 50;
+  const maxIterations = 100;
   let iterations = 0;
 
-  while (high - low > tolerance && iterations < maxIterations) {
+  // Binary search with 1 VND precision
+  while (high - low > 1 && iterations < maxIterations) {
     const mid = Math.floor((low + high) / 2);
-    const result = grossToNet(mid, deps, region, tax, regions);
+    const result = grossToNet(mid, deps, region, tax, regions, insBase);
 
     if (result.net < desiredNet) {
       low = mid;
@@ -86,8 +90,20 @@ export function netToGross(desiredNet, deps, region, tax, regions) {
     iterations++;
   }
 
-  const finalGross = Math.round((low + high) / 2);
-  return grossToNet(finalGross, deps, region, tax, regions);
+  // Fine-tune: check gross values around the result to find best match
+  let bestGross = high;
+  let bestDiff = Infinity;
+  for (let g = high - 2; g <= high + 2; g++) {
+    if (g < desiredNet) continue;
+    const result = grossToNet(g, deps, region, tax, regions, insBase);
+    const diff = Math.abs(result.net - desiredNet);
+    if (diff < bestDiff || (diff === bestDiff && g < bestGross)) {
+      bestDiff = diff;
+      bestGross = g;
+    }
+  }
+
+  return grossToNet(bestGross, deps, region, tax, regions, insBase);
 }
 
 /**
