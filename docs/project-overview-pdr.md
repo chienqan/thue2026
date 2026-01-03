@@ -10,7 +10,7 @@
 | **Purpose** | Real-time Vietnamese salary tax calculator comparing 2026 new regulations against 2025 old regulations |
 | **Status** | Active Development (Phase 03: UI Integration & Deployment) |
 | **Owner** | TBD |
-| **Repository** | /Users/chien/Downloads/my-project |
+| **Repository** | /Users/chien/Desktop/thue2026 |
 
 ## Project Vision & Goals
 
@@ -455,8 +455,8 @@ Per Operation: <100ms
 |-----------|------------|--------|
 | Phase 01 Complete | 2025-01-15 | ✓ Done |
 | Phase 02 Complete | 2025-01-20 | ✓ Done |
-| Phase 03 Complete | 2025-12-24 | 🔄 In Progress |
-| Phase 04 Complete | 2026-01-10 | ⏳ Pending |
+| Phase 03 Complete | 2025-12-24 | ✓ Done |
+| Phase 04 Complete | 2026-01-15 | 🔄 In Progress |
 | Live at thue2026.com | 2026-01-20 | ⏳ Pending |
 | Tax law effective | 2026-07-01 | ⏳ Future |
 

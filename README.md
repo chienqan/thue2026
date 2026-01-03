@@ -35,7 +35,7 @@ Real-time tax calculator comparing 2026 new Vietnamese salary tax regulations ag
 
 ```bash
 # Clone repository
-git clone <repo-url> && cd my-project
+git clone <repo-url> && cd thue2026
 
 # Install dependencies (using Bun)
 bun install
@@ -291,4 +291,4 @@ For issues, questions, or feedback:
 
 ---
 
-**Last Updated**: 2025-12-21 | **Status**: Active Development | **Deployment**: Bunny CDN
+**Last Updated**: 2026-01-03 | **Status**: Active Development | **Deployment**: Bunny CDN

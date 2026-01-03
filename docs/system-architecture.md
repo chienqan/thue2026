@@ -43,7 +43,7 @@
 │  │  │           │                                         │ │ │
 │  │  │           ├─→ TAX_OLD config                        │ │ │
 │  │  │           ├─→ TAX_NEW config                        │ │ │
-│  │  │           ├─→ REGIONS config                        │ │ │
+│  │  │           ├─→ REGIONS_OLD & REGIONS_NEW config      │ │ │
 │  │  │           └─→ Constants (constants.js)              │ │ │
 │  │  │                                                      │ │ │
 │  │  │           ↓                                         │ │ │

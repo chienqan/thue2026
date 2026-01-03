@@ -7,7 +7,7 @@
 **File Structure**:
 ```js
 // Imports first (ES6 modules)
-import { TAX_OLD, TAX_NEW, REGIONS } from './constants.js';
+import { TAX_OLD, TAX_NEW, REGIONS_OLD, REGIONS_NEW } from './constants.js';
 import { grossToNet } from './calculator.js';
 
 // Exports
@@ -22,7 +22,7 @@ export const VND = { ... };
 | Element | Convention | Example |
 |---------|-----------|---------|
 | Variables | camelCase | `grossIncome`, `regionKey` |
-| Constants | SCREAMING_SNAKE_CASE | `BASE_WAGE`, `CAP_MULT` |
+| Constants | SCREAMING_SNAKE_CASE | `BASE_SALARY`, `CAP_MULT` |
 | Functions | camelCase, verb-first | `calculateTax()`, `calcInsurance()` |
 | Classes | PascalCase | `TaxCalculator` (not used currently) |
 | DOM IDs | kebab-case | `#salary`, `#new-net`, `#chart-tax-old` |

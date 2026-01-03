@@ -28,22 +28,23 @@ git push origin main
 ```
 src/
 ├── scripts/
-│   ├── main.js         # UI orchestration, event handlers, state management
-│   ├── calculator.js   # Tax engine: calcTax(), calcInsurance(), grossToNet()
-│   ├── constants.js    # Tax brackets (TAX_OLD, TAX_NEW), REGIONS, rates
-│   └── format.js       # VND formatter: format(), formatUnit(), formatShort(), parse()
+│   ├── main.js           # UI orchestration, event handlers, state management
+│   ├── calculator.js     # Tax engine: calcTax(), calcInsurance(), grossToNet()
+│   ├── constants.js      # Tax brackets (TAX_OLD, TAX_NEW), REGIONS_OLD/NEW, rates
+│   ├── format.js         # VND formatter: format(), formatUnit(), formatShort(), parse()
+│   └── region-data.js    # Province-ward region detection (Nghị định 128/2025)
 ├── styles/
-│   ├── main.css        # Design system (Slate/Emerald palette)
-│   └── fonts.css       # @font-face declarations
-└── index.html          # SPA with SEO meta tags
+│   ├── main.css          # Design system (Slate/Emerald palette)
+│   └── fonts.css         # @font-face declarations
+└── index.html            # SPA with SEO meta tags
 
-public/                 # Static assets (robots.txt, sitemap.xml, _headers, _redirects)
-docs/                   # Project documentation (PDR, architecture, code standards)
+public/                   # Static assets (robots.txt, sitemap.xml, _headers, _redirects)
+docs/                     # Project documentation (PDR, architecture, code standards)
 ```
 
 ### Key Module Relationships
 - `main.js` imports from `calculator.js`, `constants.js`, `format.js`
-- `calculator.js` imports `REGIONS`, `BASE_WAGE`, `CAP_MULT` from `constants.js`
+- `calculator.js` imports `REGIONS_NEW`, `REGIONS_OLD`, `BASE_SALARY`, `CAP_MULT` from `constants.js`
 - State object: `{ salary, deps, region }` drives all calculations
 
 ### Tax Calculation Flow
@@ -57,7 +58,9 @@ docs/                   # Project documentation (PDR, architecture, code standar
 **2025 OLD** (7-bracket): 0-5M→5%, 5-10M→10%, 10-18M→15%, 18-32M→20%, 32-52M→25%, 52-80M→30%, 80M+→35%
 
 **Deductions**: Personal (NEW: 15.5M, OLD: 11M) | Dependent (NEW: 6.2M, OLD: 4.4M)
-**Insurance**: SI 8% + HI 1.5% + UI 1% = 10.5% (capped at 20x min wage)
+**Insurance**: SI 8% + HI 1.5% + UI 1% = 10.5% (capped at 20x regional minimum wage)
+
+**Regional Minimum Wages (2026)**: Zone I: 5.31M | Zone II: 4.73M | Zone III: 4.14M | Zone IV: 3.7M
 
 ## Workflows
 

@@ -1,5 +1,5 @@
 import { createIcons, Users, Minus, Plus, Sparkles, TrendingUp, Info, X } from 'lucide';
-import { TAX_OLD, TAX_NEW, REGIONS, REGIONS_OLD, REGION_INFO } from './constants.js';
+import { TAX_OLD, TAX_NEW, REGIONS_NEW, REGIONS_OLD, REGION_INFO } from './constants.js';
 import { grossToNet, netToGross, getTaxBreakdown } from './calculator.js';
 import { VND } from './format.js';
 
@@ -78,10 +78,10 @@ function update() {
   let oldR, newR;
   if (state.mode === 'gross-to-net') {
     oldR = grossToNet(monthlyInput, state.deps, state.region, TAX_OLD, REGIONS_OLD);
-    newR = grossToNet(monthlyInput, state.deps, state.region, TAX_NEW, REGIONS);
+    newR = grossToNet(monthlyInput, state.deps, state.region, TAX_NEW, REGIONS_NEW);
   } else {
     oldR = netToGross(monthlyInput, state.deps, state.region, TAX_OLD, REGIONS_OLD);
-    newR = netToGross(monthlyInput, state.deps, state.region, TAX_NEW, REGIONS);
+    newR = netToGross(monthlyInput, state.deps, state.region, TAX_NEW, REGIONS_NEW);
   }
   const hasSalary = state.salary > 0;
 
@@ -125,7 +125,7 @@ function update() {
   });
 
   // Region info
-  els.regionInfo.textContent = `Áp dụng vùng ${state.region} - Mức lương tối thiểu ${VND.format(REGIONS[state.region].min)} đ`;
+  els.regionInfo.textContent = `Áp dụng vùng ${state.region} - Mức lương tối thiểu ${VND.format(REGIONS_NEW[state.region].min)} đ`;
 
   // Chart
   updateChart(oldR, newR);

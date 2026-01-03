@@ -27,27 +27,20 @@ export const TAX_NEW = {
 
 // Regional minimum wages - OLD (2024)
 export const REGIONS_OLD = {
-  I: { min: 4_180_000, label: 'I' },
-  II: { min: 3_710_000, label: 'II' },
-  III: { min: 3_250_000, label: 'III' },
-  IV: { min: 2_900_000, label: 'IV' }
-};
-
-// Regional minimum wages - NEW (2025 from 1/7)
-export const REGIONS_NEW = {
   I: { min: 4_960_000, label: 'I' },
   II: { min: 4_410_000, label: 'II' },
   III: { min: 3_860_000, label: 'III' },
   IV: { min: 3_450_000, label: 'IV' }
 };
 
-// Regional minimum wages (2026) - keep for backward compatibility
-export const REGIONS = {
+// Regional minimum wages - NEW (2026)
+export const REGIONS_NEW = {
   I: { min: 5_310_000, label: 'I' },
   II: { min: 4_730_000, label: 'II' },
   III: { min: 4_140_000, label: 'III' },
   IV: { min: 3_700_000, label: 'IV' }
 };
+
 
 // Region info (Nghị định 128/2025/NĐ-CP, có hiệu lực từ 01/7/2025)
 // Vùng xác định theo nơi hoạt động của người sử dụng lao động

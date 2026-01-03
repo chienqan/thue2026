@@ -72,11 +72,12 @@ VND.parse("30.000.000")     → 30000000
 
 ### `constants.js`
 ```javascript
-TAX_OLD   → { BRACKETS: [...], PERSONAL: 11M, DEPENDENT: 4.4M }
-TAX_NEW   → { BRACKETS: [...], PERSONAL: 15.5M, DEPENDENT: 6.2M }
-REGIONS   → { I: {min: 5.31M}, II: {min: 4.73M}, III: {...}, IV: {...} }
-BASE_WAGE → 5,310,000
-CAP_MULT  → 20
+TAX_OLD         → { BRACKETS: [...], PERSONAL: 11M, DEPENDENT: 4.4M }
+TAX_NEW         → { BRACKETS: [...], PERSONAL: 15.5M, DEPENDENT: 6.2M }
+REGIONS_OLD     → { I: {min: 4.96M}, II: {min: 4.41M}, III: {min: 3.86M}, IV: {min: 3.45M} }
+REGIONS_NEW     → { I: {min: 5.31M}, II: {min: 4.73M}, III: {min: 4.14M}, IV: {min: 3.7M} }
+BASE_SALARY     → 2,340,000
+CAP_MULT        → 20
 ```
 
 ---
@@ -150,8 +151,8 @@ git push -u origin feat/feature-name
 
 | Event | Date | Status |
 |-------|------|--------|
-| Phase 03 Complete | 2025-12-24 | 🔄 in progress |
-| Phase 04 Complete | 2026-01-10 | ⏳ pending |
+| Phase 03 Complete | 2025-12-24 | ✓ Done |
+| Phase 04 Complete | 2026-01-15 | 🔄 in progress |
 | Deploy Live | 2026-01-20 | ⏳ pending |
 | Tax Law Effective | 2026-07-01 | 📅 future |
 
@@ -195,4 +196,4 @@ Documentation:         docs/ folder
 
 ---
 
-**Version**: 1.0 | **Updated**: 2025-12-19 | **Status**: Active Development
+**Version**: 1.0 | **Updated**: 2026-01-03 | **Status**: Active Development
