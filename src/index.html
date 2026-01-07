@@ -237,46 +237,20 @@
           </div>
 
           <!-- Region -->
-          <div class="input-group">
-            <label class="input-label">
-              Vùng lương tối thiểu
-              <button type="button" class="info-btn" id="region-info-btn" aria-label="Xem thông tin vùng">
-                <i data-lucide="info" aria-hidden="true"></i>
-              </button>
-            </label>
-            <div class="region-grid" id="region-grid">
-              <label class="region-option active" data-region="I">
-                <input type="radio" name="region" value="I" checked>
-                <div class="region-header">
-                  <span class="region-name">Vùng I</span>
-                  <span class="region-radio"></span>
-                </div>
-                <div class="region-amount">5.310.000 đ</div>
+          <div class="input-group input-group--compact">
+            <div class="input-label-row">
+              <label class="input-label">
+                Vùng
+                <button type="button" class="info-btn" id="region-info-btn" aria-label="Xem thông tin vùng">
+                  <i data-lucide="info" aria-hidden="true"></i>
+                </button>
               </label>
-              <label class="region-option" data-region="II">
-                <input type="radio" name="region" value="II">
-                <div class="region-header">
-                  <span class="region-name">Vùng II</span>
-                  <span class="region-radio"></span>
-                </div>
-                <div class="region-amount">4.730.000 đ</div>
-              </label>
-              <label class="region-option" data-region="III">
-                <input type="radio" name="region" value="III">
-                <div class="region-header">
-                  <span class="region-name">Vùng III</span>
-                  <span class="region-radio"></span>
-                </div>
-                <div class="region-amount">4.140.000 đ</div>
-              </label>
-              <label class="region-option" data-region="IV">
-                <input type="radio" name="region" value="IV">
-                <div class="region-header">
-                  <span class="region-name">Vùng IV</span>
-                  <span class="region-radio"></span>
-                </div>
-                <div class="region-amount">3.700.000 đ</div>
-              </label>
+              <div class="region-toggle" id="region-grid">
+                <button type="button" class="region-btn active" data-region="I">I</button>
+                <button type="button" class="region-btn" data-region="II">II</button>
+                <button type="button" class="region-btn" data-region="III">III</button>
+                <button type="button" class="region-btn" data-region="IV">IV</button>
+              </div>
             </div>
           </div>
 

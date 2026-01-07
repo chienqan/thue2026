@@ -362,6 +362,37 @@ main {
     margin-top: 8px;
 }
 
+/* Region Toggle */
+.region-toggle {
+    display: flex;
+    gap: 4px;
+    padding: 3px;
+    background: var(--slate-100);
+    border-radius: var(--radius-sm);
+}
+
+.region-btn {
+    padding: 5px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    border-radius: calc(var(--radius-sm) - 2px);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.region-btn:hover {
+    color: var(--text-primary);
+}
+
+.region-btn.active {
+    background: white;
+    color: var(--emerald-600);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
 /* Small Input Variant */
 .input-wrapper--sm {
     height: 44px;
@@ -548,98 +579,6 @@ main {
     padding: 4px 0;
 }
 
-/* Region Grid */
-.region-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
-
-.region-option {
-    position: relative;
-    padding: 12px 14px;
-    border: 2px solid var(--border-default);
-    border-radius: var(--radius-md);
-    background: var(--bg-card);
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.region-option:hover {
-    border-color: var(--slate-300);
-    background: var(--slate-50);
-}
-
-.region-option.active {
-    border-color: var(--emerald-500);
-    background: var(--emerald-50);
-}
-
-.region-option input {
-    position: absolute;
-    opacity: 0;
-}
-
-.region-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 4px;
-}
-
-.region-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.region-option.active .region-name {
-    color: var(--emerald-700);
-}
-
-.region-radio {
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--slate-300);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    background: white;
-}
-
-.region-option.active .region-radio {
-    border-color: var(--emerald-500);
-    background: var(--emerald-500);
-}
-
-.region-radio::after {
-    content: '';
-    width: 6px;
-    height: 6px;
-    background: white;
-    border-radius: 50%;
-    opacity: 0;
-    transform: scale(0);
-    transition: all 0.15s ease;
-}
-
-.region-option.active .region-radio::after {
-    opacity: 1;
-    transform: scale(1);
-}
-
-.region-amount {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-secondary);
-}
-
-.region-option.active .region-amount {
-    color: var(--emerald-text);
-}
 
 /* Info Button */
 .info-btn {

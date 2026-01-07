@@ -215,8 +215,8 @@ function update() {
         <tr>
           <td>Bậc ${bracketNum}</td>
           <td>${r}</td>
-          <td>${o ? VND.format(o.tax) : (oldHasRate ? '—' : '<span class="text-muted">-</span>')}</td>
-          <td class="text-green">${n ? VND.format(n.tax) : (newHasRate ? '—' : '<span class="text-muted">-</span>')}</td>
+          <td>${o ? VND.format(o.tax) : (oldHasRate ? '—' : '<span class="text-muted">—</span>')}</td>
+          <td class="text-green">${n ? VND.format(n.tax) : (newHasRate ? '—' : '<span class="text-muted">—</span>')}</td>
         </tr>
       `;
     }).join('');
@@ -312,11 +312,11 @@ els.deps.addEventListener('change', (e) => {
 });
 
 // Region selection
-els.regionGrid.querySelectorAll('.region-option').forEach(opt => {
-  opt.addEventListener('click', () => {
-    els.regionGrid.querySelectorAll('.region-option').forEach(o => o.classList.remove('active'));
-    opt.classList.add('active');
-    state.region = opt.dataset.region;
+els.regionGrid.querySelectorAll('.region-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    els.regionGrid.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.region = btn.dataset.region;
     update();
   });
 });
