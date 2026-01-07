@@ -215,8 +215,8 @@ function update() {
         <tr>
           <td>Bậc ${bracketNum}</td>
           <td>${r}</td>
-          <td>${o ? VND.format(o.tax) : (oldHasRate ? '—' : '<span class="text-muted">N/A</span>')}</td>
-          <td class="text-green">${n ? VND.format(n.tax) : (newHasRate ? '—' : '<span class="text-muted">N/A</span>')}</td>
+          <td>${o ? VND.format(o.tax) : (oldHasRate ? '—' : '<span class="text-muted">-</span>')}</td>
+          <td class="text-green">${n ? VND.format(n.tax) : (newHasRate ? '—' : '<span class="text-muted">-</span>')}</td>
         </tr>
       `;
     }).join('');
