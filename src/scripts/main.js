@@ -279,17 +279,35 @@ els.insBase.addEventListener('input', (e) => {
   timeout = setTimeout(update, 100);
 });
 
+// Insurance base focus handler - auto-switch to custom mode
+els.insBase.addEventListener('focus', () => {
+  els.insToggle.querySelectorAll('.ins-toggle-btn').forEach(b => b.classList.remove('active'));
+  els.insToggle.querySelector('[data-ins-mode="custom"]').classList.add('active');
+});
+
+// Insurance base blur handler - revert if empty
+els.insBase.addEventListener('blur', () => {
+  if (!els.insBase.value.trim()) {
+    els.insToggle.querySelectorAll('.ins-toggle-btn').forEach(b => b.classList.remove('active'));
+    els.insToggle.querySelector('[data-ins-mode="gross"]').classList.add('active');
+    state.insBase = 0;
+    update();
+  }
+});
+
 // Insurance toggle handler
 els.insToggle.querySelectorAll('.ins-toggle-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     els.insToggle.querySelectorAll('.ins-toggle-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const isCustom = btn.dataset.insMode === 'custom';
-    els.insCustomInput.style.display = isCustom ? 'block' : 'none';
     if (!isCustom) {
       state.insBase = 0;
       els.insBase.value = '';
       update();
+    } else {
+      // Focus on input when switching to custom
+      els.insBase.focus();
     }
   });
 });
